@@ -32,5 +32,5 @@ Material:
     - _Threshold: 5
     m_Colors:
     - _PositionOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _Spring: {r: 0, g: 0, b: 0, a: 0}
+    - _Spring: {r: 0.000015926611, g: -0.000026565544, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -5,7 +5,6 @@ Shader "Unlit/springy"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Threshold ("Threshold", Range (-5, 5)) = 0.5
         _Spring ("Position Offset", Vector) = (0, 0, 0, 0)
     }
     SubShader
@@ -38,36 +37,35 @@ Shader "Unlit/springy"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float _Threshold;
             float2 _Spring;
 
             v2f vert (appdata v)
             {
-                 if (v.vertex.x > _Threshold)
-                {
-                    // Adjust the x-coordinate as neede
-                }
-                // Calculate the center position in the object's local space
-                
-                
                 v2f o;
                 
                 o.vertex = UnityObjectToClipPos(v.vertex);
-               
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
-                float3 center = mul(unity_ObjectToWorld, _WorldSpaceCameraPos).xyz;
-                if (v.vertex.x > center.x && _Spring.x > 0)
-                {
-                    o.vertex.x += _Spring.x;
-                    // Adjust the x-coordinate as neede
-                }
-                if (v.vertex.x < center.x && _Spring.x < 0)
-                {
-                    o.vertex.x += _Spring.x;
-                    // Adjust the x-coordinate as neede
-                }
-                // v.vertex.y += _Spring.y;
+                // float3 center = mul(unity_ObjectToWorld, _WorldSpaceCameraPos).xyz;
+                // if (o.vertex.x > center.x && _Spring.x > 0)
+                // {
+                //     o.vertex.x += _Spring.x;
+                // }
+                // if (o.vertex.x < center.x && _Spring.x < 0)
+                // {
+                //     o.vertex.x += _Spring.x;
+                // }
+                // if (o.vertex.y > center.y && _Spring.y > 0)
+                // {
+                //     o.vertex.y += _Spring.y;
+                // }
+                // if (o.vertex.y < center.y && _Spring.y < 0)
+                // {
+                //     o.vertex.y += _Spring.y;
+                // }
+
+                o.vertex.x += _Spring.x;
+                // o.vertex.y += _Spring.y;
                 
                 UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
