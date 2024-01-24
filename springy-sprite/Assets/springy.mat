@@ -29,8 +29,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _RestLength: 0.39
+    - _SpringConstant: 1.47
     - _Threshold: 5
     m_Colors:
     - _PositionOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _Spring: {r: 0.000015926611, g: -0.000026565544, b: 0, a: 0}
+    - _Spring: {r: -7.132391e-10, g: 0.00000001661514, b: 0, a: 0}
   m_BuildTextureStacks: []

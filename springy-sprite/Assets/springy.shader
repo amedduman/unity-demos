@@ -6,6 +6,8 @@ Shader "Unlit/springy"
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Spring ("Position Offset", Vector) = (0, 0, 0, 0)
+        _RestLength ("Rest Length", Float) = 1
+        _SpringConstant ("Spring Constant", Float) = 1
     }
     SubShader
     {
@@ -38,6 +40,8 @@ Shader "Unlit/springy"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             float2 _Spring;
+            float _RestLength;
+            float _SpringConstant;
 
             v2f vert (appdata v)
             {
@@ -45,6 +49,16 @@ Shader "Unlit/springy"
                 
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+
+                float3 center = mul(unity_ObjectToWorld, _WorldSpaceCameraPos).xyz;
+
+                float2 springForce = o.vertex - center;
+                const float mag = length(springForce.xy);
+                const float k = min(_RestLength, mag - _RestLength);
+                float2 springFnorm = normalize(springForce);
+                springForce = springFnorm * (-1 * k * _SpringConstant);
+                o.vertex.x += springForce.x;
+                o.vertex.y += springForce.y;
 
                 // float3 center = mul(unity_ObjectToWorld, _WorldSpaceCameraPos).xyz;
                 // if (o.vertex.x > center.x && _Spring.x > 0)
