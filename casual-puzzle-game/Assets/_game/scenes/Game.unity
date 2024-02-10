@@ -289,7 +289,8 @@ MonoBehaviour:
   grid: {fileID: 538449041}
   tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}
   width: 4
-  height: 5
+  height: 8
+  buffer: {x: 0, y: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

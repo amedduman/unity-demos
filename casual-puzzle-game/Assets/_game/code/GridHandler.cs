@@ -15,6 +15,7 @@ namespace CasualPuzzle
         [SerializeField] Tile tilePrefab; 
         [SerializeField] int width;
         [SerializeField] int height;
+        [SerializeField] Vector2 buffer;
 
         Tile[] tiles;
         
@@ -41,11 +42,13 @@ namespace CasualPuzzle
             {
                 bounds.Encapsulate(tile.spriteRenderer.bounds);
             }
-            bounds.Encapsulate(new Vector3(1,1,0)); 
+            bounds.Expand(new Vector3(buffer.x, buffer.y, 0));
+            
             var cam = FindObjectOfType<CameraController>();
             
             var gridTopRightPos = grid.CellToWorld(new Vector3Int(width, height));
             var camPos = gridTopRightPos / 2;
+            
             
             cam.SetPositionAndOrthographicSize(camPos, bounds);
             
