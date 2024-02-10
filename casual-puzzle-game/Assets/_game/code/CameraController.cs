@@ -5,14 +5,25 @@ namespace CasualPuzzle
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
     {
+        [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] Camera cam;
 
-        public void SetPositionAndOrthographicSize(Vector3 pos, Bounds bounds)
+        void OnEnable()
         {
-            var vertical = bounds.size.y;
-            var horizontal = bounds.size.x * ((float)cam.pixelHeight / cam.pixelWidth);
+            onGridCreated.AddListener(SetPositionAndOrthographicSize);
+        }
+        
+        void OnDisable()
+        {
+            onGridCreated.RemoveListener(SetPositionAndOrthographicSize);
+        }
+
+        void SetPositionAndOrthographicSize(GridData gridData)
+        {
+            var vertical = gridData.bounds.size.y;
+            var horizontal = gridData.bounds.size.x * ((float)cam.pixelHeight / cam.pixelWidth);
             var size = Mathf.Max(horizontal, vertical) * .5f;
-            cam.transform.position = pos;
+            cam.transform.position = gridData.center;
             cam.orthographicSize = size;
         }
     }

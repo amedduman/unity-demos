@@ -11,6 +11,7 @@ namespace CasualPuzzle
 
         #region fields
 
+        [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
         [SerializeField] int width;
@@ -44,14 +45,10 @@ namespace CasualPuzzle
             }
             bounds.Expand(new Vector3(buffer.x, buffer.y, 0));
             
-            var cam = FindObjectOfType<CameraController>();
-            
             var gridTopRightPos = grid.CellToWorld(new Vector3Int(width, height));
             var camPos = gridTopRightPos / 2;
             
-            
-            cam.SetPositionAndOrthographicSize(camPos, bounds);
-            
+            onGridCreated.Invoke(new GridData(camPos, bounds));
         }
     }
 }
