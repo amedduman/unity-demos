@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6357e4c60bc41aa80a22510fcff684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
   onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
   grid: {fileID: 538449041}
   tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}

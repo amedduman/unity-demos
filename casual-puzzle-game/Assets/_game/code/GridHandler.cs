@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CasualPuzzle
 {
     [RequireComponent(typeof(Grid))]
     public class GridHandler : MonoBehaviour
     {
-
         #region fields
 
+        [SerializeField] InputHandler inputHandler;
         [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
@@ -21,10 +19,28 @@ namespace CasualPuzzle
         Tile[] tiles;
         
         #endregion
-        
-        void Start()
+
+        void OnEnable()
         {
+            inputHandler.Touch += OnTouch;
+        }
+
+        void OnDisable()
+        {
+            inputHandler.Touch -= OnTouch;
+        }
+
+        void Start()
+        { 
             tiles = new Tile[width * height];
+            GenerateGrid();
+            SetCam();
+            
+            inputHandler.Enable();
+        }
+
+        void GenerateGrid()
+        {
             int index = 0;
             for (int x = 0; x < width; x++)
             {
@@ -37,7 +53,10 @@ namespace CasualPuzzle
                     index++;
                 }
             }
+        }
 
+        void SetCam()
+        {
             Bounds bounds = new Bounds();
             foreach (Tile tile in tiles)
             {
@@ -49,6 +68,13 @@ namespace CasualPuzzle
             var camPos = gridTopRightPos / 2;
             
             onGridCreated.Invoke(new GridData(camPos, bounds));
+        }
+        
+        void OnTouch()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var x = grid.WorldToCell(ray.origin);
+            Debug.Log(x);
         }
     }
 }

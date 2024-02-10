@@ -23,7 +23,7 @@ namespace CasualPuzzle
             var vertical = gridData.bounds.size.y;
             var horizontal = gridData.bounds.size.x * ((float)cam.pixelHeight / cam.pixelWidth);
             var size = Mathf.Max(horizontal, vertical) * .5f;
-            cam.transform.position = gridData.center;
+            cam.transform.position = new Vector3(gridData.center.x, gridData.center.y, -10);
             cam.orthographicSize = size;
         }
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CasualPuzzle
@@ -12,14 +10,14 @@ namespace CasualPuzzle
 
     public struct GridData
     {
+        public Vector3 center;
+        public Bounds bounds;
+        
         public GridData(Vector3 center, Bounds bounds)
         {
             this.center = center;
             this.bounds = bounds;
         }
-        
-        public Vector3 center;
-        public Bounds bounds;
     }
 }
 
