@@ -7,6 +7,8 @@ namespace CasualPuzzle
     {
         [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] Camera cam;
+        [SerializeField] SpriteRenderer frame;
+        [SerializeField] Transform outerFrame;
 
         void OnEnable()
         {
@@ -25,6 +27,9 @@ namespace CasualPuzzle
             var size = Mathf.Max(horizontal, vertical) * .5f;
             cam.transform.position = new Vector3(gridData.center.x, gridData.center.y, -10);
             cam.orthographicSize = size;
+            
+            frame.size = new Vector2(gridData.boundsBeforeBuffer.extents.x  * 2, gridData.boundsBeforeBuffer.extents.y  * 2);
+            outerFrame.localScale = new Vector2(gridData.boundsBeforeBuffer.extents.x  * 4, gridData.boundsBeforeBuffer.extents.y  * 4);
         }
     }
 }

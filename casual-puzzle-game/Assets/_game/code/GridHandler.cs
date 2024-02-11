@@ -58,16 +58,19 @@ namespace CasualPuzzle
         void SetCam()
         {
             Bounds bounds = new Bounds();
+            Bounds boundsBeforeBuffer = new Bounds();
             foreach (Tile tile in tiles)
             {
                 bounds.Encapsulate(tile.spriteRenderer.bounds);
             }
+
+            boundsBeforeBuffer = bounds;
             bounds.Expand(new Vector3(buffer.x, buffer.y, 0));
             
             var gridTopRightPos = grid.CellToWorld(new Vector3Int(width, height));
             var camPos = gridTopRightPos / 2;
             
-            onGridCreated.Invoke(new GridData(camPos, bounds));
+            onGridCreated.Invoke(new GridData(camPos, bounds, boundsBeforeBuffer));
         }
         
         void OnTouch()
