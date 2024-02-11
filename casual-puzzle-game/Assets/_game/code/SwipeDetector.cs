@@ -35,10 +35,10 @@ namespace CasualPuzzle
             if(distance < deadZoneRange) return;
 
             float degree = 30;
-            if     (GetAngle(Vector2.right) < degree  && GetAngle(Vector2.right) > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.right));
-            else if(GetAngle(Vector2.left)  < degree  && GetAngle(Vector2.left)  > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.left));
-            else if(GetAngle(Vector2.up)    < degree  && GetAngle(Vector2.up)    > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.up));
-            else if(GetAngle(Vector2.down)  < degree  && GetAngle(Vector2.down)  > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.down));
+            if     (GetAngle(Vector2.right) < degree  && GetAngle(Vector2.right) > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.right, touchStarPos));
+            else if(GetAngle(Vector2.left)  < degree  && GetAngle(Vector2.left)  > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.left, touchStarPos));
+            else if(GetAngle(Vector2.up)    < degree  && GetAngle(Vector2.up)    > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.up, touchStarPos));
+            else if(GetAngle(Vector2.down)  < degree  && GetAngle(Vector2.down)  > 0) onSwipeInput.Invoke(new SwipeData(SwipeE.down, touchStarPos));
         }
 
         float GetAngle(Vector2 dir)

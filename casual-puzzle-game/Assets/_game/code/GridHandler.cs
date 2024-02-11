@@ -21,23 +21,34 @@ namespace CasualPuzzle
         [SerializeField] List<Item> items;
 
         Tile[] tiles;
+        bool ignoreInput;
+        Camera cam;
+        Vector3Int[] directions;
         
         #endregion
 
         void OnEnable()
         {
-            inputHandler.TouchStart += OnTouchStart;
             onSwipeInput.AddListener(HandleSwipe);
         }
 
         void OnDisable()
         {
-            inputHandler.TouchStart -= OnTouchStart;
             onSwipeInput.RemoveListener(HandleSwipe);
         }
 
         void Start()
-        { 
+        {
+            cam = Camera.main;
+
+            directions = new[]
+            {
+                Vector3Int.right,
+                Vector3Int.left,
+                Vector3Int.up,
+                Vector3Int.down
+            };
+            
             tiles = new Tile[width * height];
             GenerateGrid();
             SetCam();
@@ -109,22 +120,47 @@ namespace CasualPuzzle
             }
         }
         
-        void OnTouchStart()
+        void HandleSwipe(SwipeData swipeData)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            var cellUnderCursor = grid.WorldToCell(ray.origin);
+            if (ignoreInput)return;
+
+            var worldPos = cam.ScreenToWorldPoint(new Vector3(swipeData.touchStartPos.x, swipeData.touchStartPos.y, 0));
+            var cellUnderCursor = grid.WorldToCell(worldPos);
             if (DoesCellHaveTile(cellUnderCursor))
             {
-                foreach (Tile neighbor in GetTileInTheCell(cellUnderCursor).neighbors)
+                GetTileInTheCell(cellUnderCursor).spriteRenderer.color = Color.blue;
+                var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
+                if (DoesCellHaveTile(adjacentCell))
                 {
-                    neighbor.spriteRenderer.color = Color.blue;
+                    GetTileInTheCell(adjacentCell).spriteRenderer.color = Color.red;
                 }
             }
         }
-        
-        void HandleSwipe(SwipeData swipeData)
+
+        Vector3Int GetAdjacentCell(Vector3Int cell, SwipeE swipe)
         {
-            Debug.Log(swipeData.swipe);
+            Vector3Int result = Vector3Int.zero;
+            switch (swipe)
+            {
+                case SwipeE.none:
+                    break;
+                case SwipeE.right:
+                    result = cell + Vector3Int.right;
+                    break;
+                case SwipeE.left:
+                    result = cell + Vector3Int.left;
+                    break;
+                case SwipeE.up:
+                    result = cell + Vector3Int.up;
+                    break;
+                case SwipeE.down:
+                    result = cell + Vector3Int.down;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(swipe), swipe, null);
+            }
+
+            return result;
         }
 
         bool DoesCellHaveTile(Vector3Int gridPos)

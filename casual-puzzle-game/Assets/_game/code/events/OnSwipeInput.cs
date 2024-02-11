@@ -20,9 +20,11 @@ namespace CasualPuzzle
     public struct SwipeData
     {
         public SwipeE swipe;
-        public SwipeData(SwipeE swipeType)
+        public Vector2 touchStartPos;
+        public SwipeData(SwipeE swipeType, Vector2 touchStartPos)
         {
             swipe = swipeType;
+            this.touchStartPos = touchStartPos;
         }
     }
 }
