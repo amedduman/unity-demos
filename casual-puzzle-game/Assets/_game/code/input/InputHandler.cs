@@ -9,7 +9,8 @@ namespace CasualPuzzle
     public class InputHandler : ScriptableObject, GameInputActions.IGameplayActions
     {
         public Vector2 mousePos { get; private set; }
-        public event UnityAction Touch = delegate { };
+        public event UnityAction TouchStart = delegate { };
+        public event UnityAction TouchEnd = delegate { };
         GameInputActions gameInputActions;
 
         public void Enable()
@@ -31,8 +32,11 @@ namespace CasualPuzzle
         {
             switch (context.phase)
             {
-                case InputActionPhase.Performed:
-                    Touch.Invoke();
+                case InputActionPhase.Started:
+                    TouchStart.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    TouchEnd.Invoke();
                     break;
             }
         }

@@ -400,6 +400,52 @@ MonoBehaviour:
   - {fileID: 3700808777013227160, guid: 0fa72a843191b2e4c924dfe0c98fd45e, type: 3}
   - {fileID: 3392096551297788790, guid: 858a256717922b94c8c31524c3075d55, type: 3}
   - {fileID: 494914935499541898, guid: 26017852f58bdfe4584111c080628521, type: 3}
+--- !u!1 &594188549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 594188551}
+  - component: {fileID: 594188550}
+  m_Layer: 0
+  m_Name: SwipeDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &594188550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594188549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 397c9d2b07a65446abeb03fea0434c16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
+  deadZoneRange: 50
+--- !u!4 &594188551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594188549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &797494503
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,3 +939,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 538449040}
+  - {fileID: 594188551}

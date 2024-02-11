@@ -25,12 +25,12 @@ namespace CasualPuzzle
 
         void OnEnable()
         {
-            inputHandler.Touch += OnTouch;
+            inputHandler.TouchStart += OnTouchStart;
         }
 
         void OnDisable()
         {
-            inputHandler.Touch -= OnTouch;
+            inputHandler.TouchStart -= OnTouchStart;
         }
 
         void Start()
@@ -106,7 +106,7 @@ namespace CasualPuzzle
             }
         }
         
-        void OnTouch()
+        void OnTouchStart()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             var cellUnderCursor = grid.WorldToCell(ray.origin);
