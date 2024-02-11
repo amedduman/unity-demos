@@ -391,7 +391,7 @@ MonoBehaviour:
   onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
   grid: {fileID: 538449041}
   tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}
-  width: 4
+  width: 9
   height: 8
   buffer: {x: 0, y: 1}
   items:

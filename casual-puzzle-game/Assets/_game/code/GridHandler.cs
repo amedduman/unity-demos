@@ -54,6 +54,8 @@ namespace CasualPuzzle
                     Vector3Int gridPos = new Vector3Int(x, y, 0);
                     var tileWorldPos = grid.GetCellCenterWorld(gridPos);
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
+
+                    tile.gameObject.name = $"{x}, {y}";
                     tile.gridPos = gridPos;
                     tiles[index] = tile;
                     index++;
@@ -161,7 +163,32 @@ namespace CasualPuzzle
 
         bool HasMatch()
         {
+            foreach (Tile tile in tiles)
+            {
+                if (GetMatchCount(tile) >= 3)
+                    return true;
+            }
             return false;
+        }
+
+        int GetMatchCount(Tile tile)
+        {
+            var gridPos = tile.gridPos;
+
+            var currentCellGridPos = gridPos + new Vector3Int(1, 0, 0);
+            int matchCount = 0;
+            
+            while (DoesCellHaveTile(currentCellGridPos))
+            {
+                var t = GetTileInTheCell(currentCellGridPos);
+                if (t.item.myType == tile.item.myType)
+                    matchCount++;
+                else
+                    break;
+                currentCellGridPos += new Vector3Int(1, 0, 0);
+            }
+
+            return matchCount;
         }
 
         Item GetRandom()
