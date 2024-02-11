@@ -12,6 +12,7 @@ namespace CasualPuzzle
 
         [SerializeField] InputHandler inputHandler;
         [SerializeField] OnGridCreated onGridCreated;
+        [SerializeField] OnSwipeInput onSwipeInput;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
         [SerializeField] int width;
@@ -26,11 +27,13 @@ namespace CasualPuzzle
         void OnEnable()
         {
             inputHandler.TouchStart += OnTouchStart;
+            onSwipeInput.AddListener(HandleSwipe);
         }
 
         void OnDisable()
         {
             inputHandler.TouchStart -= OnTouchStart;
+            onSwipeInput.RemoveListener(HandleSwipe);
         }
 
         void Start()
@@ -117,6 +120,11 @@ namespace CasualPuzzle
                     neighbor.spriteRenderer.color = Color.blue;
                 }
             }
+        }
+        
+        void HandleSwipe(SwipeData swipeData)
+        {
+            Debug.Log(swipeData.swipe);
         }
 
         bool DoesCellHaveTile(Vector3Int gridPos)

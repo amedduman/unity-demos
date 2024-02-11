@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CasualPuzzle
 {
-    [CreateAssetMenu(menuName = "_game/OnGridCreated")]
+    [CreateAssetMenu(menuName = "_game/events/OnGridCreated")]
     public class OnGridCreated : EventSO<GridData>
     {
         

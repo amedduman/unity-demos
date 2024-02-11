@@ -389,6 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
   onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
+  onSwipeInput: {fileID: 11400000, guid: 7f1bd248dea9d4f5a839fef3a590fe53, type: 2}
   grid: {fileID: 538449041}
   tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}
   width: 9
@@ -430,6 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
+  onSwipeInput: {fileID: 11400000, guid: 7f1bd248dea9d4f5a839fef3a590fe53, type: 2}
   deadZoneRange: 50
 --- !u!4 &594188551
 Transform:
