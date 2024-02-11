@@ -128,11 +128,13 @@ namespace CasualPuzzle
             var cellUnderCursor = grid.WorldToCell(worldPos);
             if (DoesCellHaveTile(cellUnderCursor))
             {
-                GetTileInTheCell(cellUnderCursor).spriteRenderer.color = Color.blue;
+                
                 var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
                 if (DoesCellHaveTile(adjacentCell))
                 {
-                    GetTileInTheCell(adjacentCell).spriteRenderer.color = Color.red;
+                    var a =GetTileInTheCell(cellUnderCursor);
+                    var b = GetTileInTheCell(adjacentCell);
+                    TrySwapTileItems(a,b);
                 }
             }
         }
@@ -161,6 +163,13 @@ namespace CasualPuzzle
             }
 
             return result;
+        }
+
+        void TrySwapTileItems(Tile a, Tile b)
+        {
+            (a.item, b.item) = (b.item, a.item);
+            a.SetItemPos();
+            b.SetItemPos();
         }
 
         bool DoesCellHaveTile(Vector3Int gridPos)

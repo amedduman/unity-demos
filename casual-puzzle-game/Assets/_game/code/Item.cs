@@ -15,5 +15,10 @@ namespace CasualPuzzle
     public class Item : MonoBehaviour
     {
         [field:SerializeField] public ItemE myType { get; private set; }
+
+        public void MoveToPos()
+        {
+            
+        }
     }
 }

@@ -9,5 +9,10 @@ namespace CasualPuzzle
         public Item item { get; set; }
         public Vector3Int gridPos { get; set; }
         public List<Tile> neighbors;
+
+        public void SetItemPos()
+        {
+            item.transform.position = transform.position;
+        }
     }
 }
