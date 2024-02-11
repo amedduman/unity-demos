@@ -1,8 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+namespace CasualPuzzle
 {
-    [field: SerializeField] public SpriteRenderer spriteRenderer;
+    public class Tile : MonoBehaviour
+    {
+        [field: SerializeField] public SpriteRenderer spriteRenderer;
+        public Item item { get; set; }
+        public Vector3Int gridPos { get; set; }
+        public List<Tile> neighbors;
+    }
 }

@@ -394,6 +394,12 @@ MonoBehaviour:
   width: 4
   height: 8
   buffer: {x: 0, y: 1}
+  items:
+  - {fileID: 1439552692426514181, guid: 48e2b867fa77df2489266abb9c52c1db, type: 3}
+  - {fileID: -40025887115541503, guid: 28dd42fca7a476d478e583d0b8d8e192, type: 3}
+  - {fileID: 3700808777013227160, guid: 0fa72a843191b2e4c924dfe0c98fd45e, type: 3}
+  - {fileID: 3392096551297788790, guid: 858a256717922b94c8c31524c3075d55, type: 3}
+  - {fileID: 494914935499541898, guid: 26017852f58bdfe4584111c080628521, type: 3}
 --- !u!1 &797494503
 GameObject:
   m_ObjectHideFlags: 0
