@@ -165,30 +165,60 @@ namespace CasualPuzzle
         {
             foreach (Tile tile in tiles)
             {
-                if (GetMatchCount(tile) >= 3)
+                if (GetMatchCount(tile).horizontalMatchCount >= 3 || GetMatchCount(tile).verticalMatchCount   >= 3)
                     return true;
             }
             return false;
         }
 
-        int GetMatchCount(Tile tile)
+        [ContextMenu("mark tiles")]
+        void MarkTiles()
+        {
+            foreach (Tile tile in tiles)
+            {
+                if (GetMatchCount(tile).horizontalMatchCount >= 3 || GetMatchCount(tile).verticalMatchCount   >= 3)
+                    tile.spriteRenderer.color = Color.blue;
+            }
+        }
+
+        MatchSearchResult GetMatchCount(Tile tile)
         {
             var gridPos = tile.gridPos;
-
-            var currentCellGridPos = gridPos + new Vector3Int(1, 0, 0);
-            int matchCount = 0;
+            MatchSearchResult result = new MatchSearchResult();
             
-            while (DoesCellHaveTile(currentCellGridPos))
+            
+            List<Vector3Int> directions = new List<Vector3Int>
             {
-                var t = GetTileInTheCell(currentCellGridPos);
-                if (t.item.myType == tile.item.myType)
-                    matchCount++;
+                new Vector3Int(1, 0, 0), // horizontal
+                new Vector3Int(0, 1, 0), // vertical
+            };
+
+            for (int i = 0; i < directions.Count; i++)
+            {
+                var currentCellGridPos = gridPos + directions[i];
+                int matchCount = 1;
+            
+                while (DoesCellHaveTile(currentCellGridPos))
+                {
+                    var t = GetTileInTheCell(currentCellGridPos);
+                    if (t.item.myType == tile.item.myType)
+                        matchCount++;
+                    else
+                        break;
+                    currentCellGridPos += directions[i];
+                }
+
+                if (i == 0)
+                {
+                    result.horizontalMatchCount = matchCount;
+                }
                 else
-                    break;
-                currentCellGridPos += new Vector3Int(1, 0, 0);
+                {
+                    result.verticalMatchCount = matchCount;
+                }
             }
 
-            return matchCount;
+            return result;
         }
 
         Item GetRandom()
@@ -196,5 +226,18 @@ namespace CasualPuzzle
             var rnd = Random.Range(0, items.Count);
             return items[rnd];
         }
+    }
+
+    public struct MatchSearchResult
+    {
+        public MatchSearchResult(int h = 0, int v = 0)
+        {
+            horizontalMatchCount = 0;
+            verticalMatchCount = 0;
+        }
+        public int horizontalMatchCount;
+        public int verticalMatchCount;
+        // public int totalMatchCount => horizontalMatchCount + verticalMatchCount;
+
     }
 }
