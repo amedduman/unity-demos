@@ -264,6 +264,10 @@ namespace CasualPuzzle
                                 itemsToMoveDown.Add(tile.item);
                             }
                         }
+                        else
+                        {
+                            emptiedTiles.Add(tile);
+                        }
                     }
                 }
 
