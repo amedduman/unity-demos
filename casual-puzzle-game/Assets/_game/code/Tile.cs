@@ -19,15 +19,8 @@ namespace CasualPuzzle
         public Tween DestroyItem()
         {
             var t = item.DestroyProcess();
-            var x = item.destroyCancellationToken;
-            x.Register(DoStuff);
             item = null;
             return t;
-        }
-
-        void DoStuff()
-        {
-            Debug.Log("item is destroyed");
         }
     }
 }

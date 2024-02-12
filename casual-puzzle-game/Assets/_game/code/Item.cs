@@ -20,7 +20,7 @@ namespace CasualPuzzle
 
         public Tween MoveToPos(Vector3 pos)
         {
-            return transform.DOMove(pos, .3f);
+            return transform.DOMove(pos, .3f).SetEase(Ease.Linear);
         }
 
         public Tween DestroyProcess()

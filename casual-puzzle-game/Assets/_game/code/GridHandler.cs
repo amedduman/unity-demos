@@ -234,12 +234,60 @@ namespace CasualPuzzle
                 {
                     var t = matchTile.DestroyItem();
                     s.Join(t);
-                    
                 }
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
 
-                Debug.Log("cleaned up");
+                StartCoroutine(MoveItems());
             }
+        }
+
+        IEnumerator MoveItems()
+        {
+            while (HasEmptyTile())
+            {
+                HashSet<Item> itemsToMoveDown = new HashSet<Item>();
+            
+                foreach (Tile tile in tiles)
+                {
+                    if (tile.item == null)
+                    {
+                        var upGridCell = tile.gridPos + Vector3Int.up;
+                        if (DoesCellHaveTile(upGridCell))
+                        {
+                            var upTile = GetTileInTheCell(upGridCell);
+                            if (upTile.item != null)
+                            {
+                                tile.item = upTile.item;
+                                upTile.item = null;
+                                itemsToMoveDown.Add(tile.item);
+                            }
+                        }
+                    }
+                }
+
+                var s = DOTween.Sequence();
+                
+                foreach (Item item in itemsToMoveDown)
+                {
+                    var t = item.MoveToPos(item.transform.position + Vector3Int.down);
+                    s.Join(t);
+                }
+
+                yield return new DOTweenCYInstruction.WaitForCompletion(s);
+            }
+        }
+
+        bool HasEmptyTile()
+        {
+            foreach (Tile tile in tiles)
+            {
+                if (tile.item == null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         bool DoesCellHaveTile(Vector3Int gridPos)
