@@ -286,9 +286,12 @@ namespace CasualPuzzle
                 }
 
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
-
-                ignoreInput = false;
             }
+            
+            if (HasMatch())
+                CleanMatches();
+            else
+                ignoreInput = false;
         }
 
         bool HasEmptyTile()
