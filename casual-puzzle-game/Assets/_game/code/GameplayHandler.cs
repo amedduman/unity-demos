@@ -7,7 +7,6 @@ using Random = UnityEngine.Random;
 
 namespace CasualPuzzle
 {
-    [RequireComponent(typeof(Grid))]
     public class GameplayHandler : MonoBehaviour
     {
 
@@ -18,9 +17,8 @@ namespace CasualPuzzle
         [SerializeField] OnSwipeInput onSwipeInput;
         [SerializeField] TileData tileData;
         [SerializeField] GridData gridData;
+        [SerializeField] SwipedCellData swipedCellData;
         [SerializeField] ItemsToSpawnData itemsToSpawnData;
-        [SerializeField] Grid grid;
-        Camera cam;
         bool ignoreInput;
 
         #endregion
@@ -28,13 +26,12 @@ namespace CasualPuzzle
         void Awake()
         {
             ignoreInput = true;
-            cam = Camera.main;
         }
 
         void OnEnable()
         {
             onGridCreated.AddListener(SpawnItems);
-            onSwipeInput.AddListener(HandleSwipe);
+            onSwipeInput.AddListener(HandleSwipe, 10);
         }
 
         void OnDisable()
@@ -60,7 +57,7 @@ namespace CasualPuzzle
                 foreach (Tile tile in tileData.tiles)
                 {
                     var tr = tile.transform;
-                    var i = Instantiate(GetRandomItem(), tr.position, Quaternion.identity, tr);
+                    var i = Instantiate(GetRandomItemPrefab(), tr.position, Quaternion.identity, tr);
                     tile.item = i;
                 }    
             } while (HasMatch());
@@ -72,11 +69,10 @@ namespace CasualPuzzle
         {
             if (ignoreInput)return;
 
-            var worldPos = cam.ScreenToWorldPoint(new Vector3(swipeData.touchStartPos.x, swipeData.touchStartPos.y, 0));
-            var cellUnderCursor = grid.WorldToCell(worldPos);
+            // var worldPos = cam.ScreenToWorldPoint(new Vector3(swipeData.touchStartPos.x, swipeData.touchStartPos.y, 0));
+            var cellUnderCursor = swipedCellData.cellPos;
             if (DoesCellHaveTile(cellUnderCursor))
             {
-                
                 var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
                 if (DoesCellHaveTile(adjacentCell))
                 {
@@ -85,6 +81,8 @@ namespace CasualPuzzle
                     TrySwapTileItems(a,b);
                 }
             }
+
+            Debug.Log("gameplay");
         }
         
         Vector3Int GetAdjacentCell(Vector3Int cell, SwipeE swipe)
@@ -247,7 +245,7 @@ namespace CasualPuzzle
                 {
                     if (emptiedTile.cellPos.y == gridData.height - 1)
                     {
-                        var item = Instantiate(GetRandomItem(), emptiedTile.transform.position + Vector3Int.up, Quaternion.identity, emptiedTile.transform);
+                        var item = Instantiate(GetRandomItemPrefab(), emptiedTile.transform.position + Vector3Int.up, Quaternion.identity, emptiedTile.transform);
                         emptiedTile.item = item;
                         itemsToMoveDown.Add(item);
                     }
@@ -331,7 +329,7 @@ namespace CasualPuzzle
             return result;
         }
         
-        Item GetRandomItem()
+        Item GetRandomItemPrefab()
         {
             var rnd = Random.Range(0, itemsToSpawnData.items.Count);
             return itemsToSpawnData.items[rnd];
