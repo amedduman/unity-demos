@@ -246,6 +246,7 @@ namespace CasualPuzzle
             while (HasEmptyTile())
             {
                 HashSet<Item> itemsToMoveDown = new HashSet<Item>();
+                HashSet<Tile> emptiedTiles = new HashSet<Tile>();
             
                 foreach (Tile tile in tiles)
                 {
@@ -259,6 +260,7 @@ namespace CasualPuzzle
                             {
                                 tile.item = upTile.item;
                                 upTile.item = null;
+                                emptiedTiles.Add(upTile);
                                 itemsToMoveDown.Add(tile.item);
                             }
                         }
@@ -266,6 +268,14 @@ namespace CasualPuzzle
                 }
 
                 var s = DOTween.Sequence();
+
+                foreach (Tile emptiedTile in emptiedTiles)
+                {
+                    if (emptiedTile.gridPos.y == height - 1)
+                    {
+                        Debug.Log(emptiedTile.name);
+                    }
+                }
                 
                 foreach (Item item in itemsToMoveDown)
                 {
