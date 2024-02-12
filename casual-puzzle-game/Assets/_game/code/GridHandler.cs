@@ -224,9 +224,21 @@ namespace CasualPuzzle
                     
             }
 
-            foreach (Tile matchTile in matchTiles)
+            StartCoroutine(DestroyItems());
+            return;
+
+            IEnumerator DestroyItems()
             {
-                Destroy(matchTile.item.gameObject);
+                var s = DOTween.Sequence();
+                foreach (Tile matchTile in matchTiles)
+                {
+                    var t = matchTile.DestroyItem();
+                    s.Join(t);
+                    
+                }
+                yield return new DOTweenCYInstruction.WaitForCompletion(s);
+
+                Debug.Log("cleaned up");
             }
         }
 

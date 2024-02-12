@@ -23,6 +23,11 @@ namespace CasualPuzzle
             return transform.DOMove(pos, .3f);
         }
 
+        public Tween DestroyProcess()
+        {
+            return transform.DOScale(Vector3.zero, .2f).OnComplete(() => Destroy(gameObject));
+        }
+
         void OnDisable()
         {
             DOTween.Kill(transform);
