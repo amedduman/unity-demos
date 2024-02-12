@@ -273,7 +273,9 @@ namespace CasualPuzzle
                 {
                     if (emptiedTile.gridPos.y == height - 1)
                     {
-                        Debug.Log(emptiedTile.name);
+                        var item = Instantiate(GetRandomItem(), emptiedTile.transform.position + Vector3Int.up, Quaternion.identity, emptiedTile.transform);
+                        emptiedTile.item = item;
+                        itemsToMoveDown.Add(item);
                     }
                 }
                 
@@ -284,6 +286,8 @@ namespace CasualPuzzle
                 }
 
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
+
+                ignoreInput = false;
             }
         }
 
@@ -335,7 +339,7 @@ namespace CasualPuzzle
                 }
                 foreach (Tile tile in tiles)
                 {
-                    var i = Instantiate(GetRandom(), tile.transform.position, Quaternion.identity, tile.transform);
+                    var i = Instantiate(GetRandomItem(), tile.transform.position, Quaternion.identity, tile.transform);
                     tile.item = i;
                 }    
             } while (HasMatch());
@@ -402,7 +406,7 @@ namespace CasualPuzzle
             return result;
         }
 
-        Item GetRandom()
+        Item GetRandomItem()
         {
             var rnd = Random.Range(0, items.Count);
             return items[rnd];
