@@ -8,8 +8,7 @@ namespace CasualPuzzle
     {
         [field: SerializeField] public SpriteRenderer spriteRenderer;
         public Item item { get; set; }
-        public Vector3Int gridPos { get; set; }
-        public List<Tile> neighbors;
+        public Vector3Int cellPos { get; set; }
 
         public Tween SetItemPos()
         { 

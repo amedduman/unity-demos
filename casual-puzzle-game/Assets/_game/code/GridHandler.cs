@@ -25,7 +25,6 @@ namespace CasualPuzzle
         Tile[] tiles;
         bool ignoreInput;
         Camera cam;
-        Vector3Int[] directions;
         
         #endregion
 
@@ -43,18 +42,9 @@ namespace CasualPuzzle
         {
             cam = Camera.main;
 
-            directions = new[]
-            {
-                Vector3Int.right,
-                Vector3Int.left,
-                Vector3Int.up,
-                Vector3Int.down
-            };
-            
             tiles = new Tile[width * height];
             GenerateGrid();
             SetCam();
-            SetNeighbors();
             SpawnItems();
             
             inputHandler.Enable();
@@ -72,7 +62,7 @@ namespace CasualPuzzle
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
 
                     tile.gameObject.name = $"{x}, {y}";
-                    tile.gridPos = gridPos;
+                    tile.cellPos = gridPos;
                     tiles[index] = tile;
                     index++;
                 }
@@ -82,13 +72,12 @@ namespace CasualPuzzle
         void SetCam()
         {
             Bounds bounds = new Bounds();
-            Bounds boundsBeforeBuffer = new Bounds();
             foreach (Tile tile in tiles)
             {
                 bounds.Encapsulate(tile.spriteRenderer.bounds);
             }
 
-            boundsBeforeBuffer = bounds;
+            Bounds boundsBeforeBuffer = bounds;
             bounds.Expand(new Vector3(buffer.x, buffer.y, 0));
             
             var gridTopRightPos = grid.CellToWorld(new Vector3Int(width, height));
@@ -97,31 +86,6 @@ namespace CasualPuzzle
             onGridCreated.Invoke(new GridData(camPos, bounds, boundsBeforeBuffer));
         }
 
-        void SetNeighbors()
-        {
-            foreach (Tile tile in tiles)
-            {
-                Vector3Int left = tile.gridPos + new Vector3Int(-1, 0, 0);
-                Vector3Int right = tile.gridPos + new Vector3Int(1, 0, 0);
-                Vector3Int up = tile.gridPos + new Vector3Int(0, 1, 0);
-                Vector3Int down = tile.gridPos + new Vector3Int(0, -1, 0);
-
-                List<Vector3Int> cells = new List<Vector3Int>
-                {
-                    left,
-                    right,
-                    up,
-                    down
-                };
-
-                foreach (Vector3Int cell in cells)
-                {
-                    if(DoesCellHaveTile(cell))
-                        tile.neighbors.Add(GetTileInTheCell(cell));
-                }
-            }
-        }
-        
         void HandleSwipe(SwipeData swipeData)
         {
             if (ignoreInput)return;
@@ -179,7 +143,7 @@ namespace CasualPuzzle
 
                 if (HasMatch())
                 {
-                    CleanMatches();
+                    ClearMatches();
                     yield break;
                 }
                 
@@ -198,7 +162,7 @@ namespace CasualPuzzle
             }
         }
 
-        void CleanMatches()
+        void ClearMatches()
         {
             HashSet<Tile> matchTiles = new HashSet<Tile>();
             foreach (Tile tile in tiles)
@@ -210,7 +174,7 @@ namespace CasualPuzzle
                 {
                     for (int i = 0; i < hMatch; i++)
                     {
-                        matchTiles.Add(GetTileInTheCell(tile.gridPos + Vector3Int.right * i));
+                        matchTiles.Add(GetTileInTheCell(tile.cellPos + Vector3Int.right * i));
                     }
                 }
 
@@ -218,7 +182,7 @@ namespace CasualPuzzle
                 {
                     for (int i = 0; i < vMatch; i++)
                     {
-                        matchTiles.Add(GetTileInTheCell(tile.gridPos + Vector3Int.up * i));
+                        matchTiles.Add(GetTileInTheCell(tile.cellPos + Vector3Int.up * i));
                     }
                 }
                     
@@ -252,7 +216,7 @@ namespace CasualPuzzle
                 {
                     if (tile.item == null)
                     {
-                        var upGridCell = tile.gridPos + Vector3Int.up;
+                        var upGridCell = tile.cellPos + Vector3Int.up;
                         if (DoesCellHaveTile(upGridCell))
                         {
                             var upTile = GetTileInTheCell(upGridCell);
@@ -275,7 +239,7 @@ namespace CasualPuzzle
 
                 foreach (Tile emptiedTile in emptiedTiles)
                 {
-                    if (emptiedTile.gridPos.y == height - 1)
+                    if (emptiedTile.cellPos.y == height - 1)
                     {
                         var item = Instantiate(GetRandomItem(), emptiedTile.transform.position + Vector3Int.up, Quaternion.identity, emptiedTile.transform);
                         emptiedTile.item = item;
@@ -293,7 +257,7 @@ namespace CasualPuzzle
             }
             
             if (HasMatch())
-                CleanMatches();
+                ClearMatches();
             else
                 ignoreInput = false;
         }
@@ -315,7 +279,7 @@ namespace CasualPuzzle
         {
             foreach (Tile tile in tiles)
             {
-                if (tile.gridPos.x == gridPos.x && tile.gridPos.y == gridPos.y)
+                if (tile.cellPos.x == gridPos.x && tile.cellPos.y == gridPos.y)
                 {
                     return true;
                 }
@@ -328,7 +292,7 @@ namespace CasualPuzzle
         {
             foreach (Tile tile in tiles)
             {
-                if (tile.gridPos.x == gridPos.x && tile.gridPos.y == gridPos.y)
+                if (tile.cellPos.x == gridPos.x && tile.cellPos.y == gridPos.y)
                     return tile;
             }
 
@@ -363,26 +327,16 @@ namespace CasualPuzzle
             return false;
         }
 
-        [ContextMenu("mark tiles")]
-        void MarkTiles()
-        {
-            foreach (Tile tile in tiles)
-            {
-                if (GetMatchCount(tile).horizontalMatchCount >= 3 || GetMatchCount(tile).verticalMatchCount   >= 3)
-                    tile.spriteRenderer.color = Color.blue;
-            }
-        }
-
         MatchSearchResult GetMatchCount(Tile tile)
         {
-            var gridPos = tile.gridPos;
+            var gridPos = tile.cellPos;
             MatchSearchResult result = new MatchSearchResult();
             
             
             List<Vector3Int> directions = new List<Vector3Int>
             {
-                new Vector3Int(1, 0, 0), // horizontal
-                new Vector3Int(0, 1, 0), // vertical
+                Vector3Int.right, // horizontal
+                Vector3Int.up, // vertical
             };
 
             for (int i = 0; i < directions.Count; i++)
@@ -422,14 +376,7 @@ namespace CasualPuzzle
 
     public struct MatchSearchResult
     {
-        public MatchSearchResult(int h = 0, int v = 0)
-        {
-            horizontalMatchCount = 0;
-            verticalMatchCount = 0;
-        }
         public int horizontalMatchCount;
         public int verticalMatchCount;
-        // public int totalMatchCount => horizontalMatchCount + verticalMatchCount;
-
     }
 }
