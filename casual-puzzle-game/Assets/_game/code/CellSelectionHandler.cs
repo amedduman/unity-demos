@@ -22,7 +22,6 @@ namespace CasualPuzzle
             var worldPos = cam.ScreenToWorldPoint(new Vector3(swipeData.touchStartPos.x, swipeData.touchStartPos.y, 0));
             var cellUnderCursor = grid.WorldToCell(worldPos);
             swipedCellData.SetCellPos(this, cellUnderCursor);
-            Debug.Log("cell selction");
         }
     }
 }

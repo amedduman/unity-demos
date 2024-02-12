@@ -69,7 +69,6 @@ namespace CasualPuzzle
         {
             if (ignoreInput)return;
 
-            // var worldPos = cam.ScreenToWorldPoint(new Vector3(swipeData.touchStartPos.x, swipeData.touchStartPos.y, 0));
             var cellUnderCursor = swipedCellData.cellPos;
             if (DoesCellHaveTile(cellUnderCursor))
             {
@@ -81,8 +80,6 @@ namespace CasualPuzzle
                     TrySwapTileItems(a,b);
                 }
             }
-
-            Debug.Log("gameplay");
         }
         
         Vector3Int GetAdjacentCell(Vector3Int cell, SwipeE swipe)
