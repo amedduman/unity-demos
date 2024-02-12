@@ -171,15 +171,11 @@ namespace CasualPuzzle
         {
             ignoreInput = true;
             StartCoroutine(SwapCo());
-            
+            return;
 
             IEnumerator SwapCo()
             {
-                (a.item, b.item) = (b.item, a.item);
-                var s = DOTween.Sequence();
-                s.Join(a.SetItemPos());
-                s.Join(b.SetItemPos());
-                yield return new DOTweenCYInstruction.WaitForCompletion(s);
+                yield return new DOTweenCYInstruction.WaitForCompletion(Swap());
 
                 if (HasMatch())
                 {
@@ -187,13 +183,18 @@ namespace CasualPuzzle
                     yield break;
                 }
                 
-                (a.item, b.item) = (b.item, a.item);
-                var s2 = DOTween.Sequence();
-                s2.Join(a.SetItemPos());
-                s2.Join(b.SetItemPos());
-                yield return new DOTweenCYInstruction.WaitForCompletion(s2);
+                yield return new DOTweenCYInstruction.WaitForCompletion(Swap());
 
                 ignoreInput = false;
+            }
+
+            Sequence Swap()
+            {
+                (a.item, b.item) = (b.item, a.item);
+                var s = DOTween.Sequence();
+                s.Join(a.SetItemPos());
+                s.Join(b.SetItemPos());
+                return s;
             }
         }
 
