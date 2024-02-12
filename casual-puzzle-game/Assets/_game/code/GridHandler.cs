@@ -179,7 +179,7 @@ namespace CasualPuzzle
 
                 if (HasMatch())
                 {
-                    ignoreInput = false;
+                    CleanMatches();
                     yield break;
                 }
                 
@@ -195,6 +195,38 @@ namespace CasualPuzzle
                 s.Join(a.SetItemPos());
                 s.Join(b.SetItemPos());
                 return s;
+            }
+        }
+
+        void CleanMatches()
+        {
+            HashSet<Tile> matchTiles = new HashSet<Tile>();
+            foreach (Tile tile in tiles)
+            {
+                int hMatch = GetMatchCount(tile).horizontalMatchCount;
+                int vMatch = GetMatchCount(tile).verticalMatchCount;
+                
+                if (hMatch >= 3)
+                {
+                    for (int i = 0; i < hMatch; i++)
+                    {
+                        matchTiles.Add(GetTileInTheCell(tile.gridPos + Vector3Int.right * i));
+                    }
+                }
+
+                if (vMatch >= 3)
+                {
+                    for (int i = 0; i < vMatch; i++)
+                    {
+                        matchTiles.Add(GetTileInTheCell(tile.gridPos + Vector3Int.up * i));
+                    }
+                }
+                    
+            }
+
+            foreach (Tile matchTile in matchTiles)
+            {
+                Destroy(matchTile.item.gameObject);
             }
         }
 
