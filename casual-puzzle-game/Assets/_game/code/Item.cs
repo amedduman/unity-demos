@@ -1,3 +1,5 @@
+using System;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CasualPuzzle
@@ -16,9 +18,14 @@ namespace CasualPuzzle
     {
         [field:SerializeField] public ItemE myType { get; private set; }
 
-        public void MoveToPos()
+        public Tween MoveToPos(Vector3 pos)
         {
-            
+            return transform.DOMove(pos, .3f);
+        }
+
+        void OnDisable()
+        {
+            DOTween.Kill(transform);
         }
     }
 }

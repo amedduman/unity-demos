@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CasualPuzzle
@@ -10,9 +11,9 @@ namespace CasualPuzzle
         public Vector3Int gridPos { get; set; }
         public List<Tile> neighbors;
 
-        public void SetItemPos()
-        {
-            item.transform.position = transform.position;
+        public Tween SetItemPos()
+        { 
+            return item.MoveToPos(transform.position);
         }
     }
 }

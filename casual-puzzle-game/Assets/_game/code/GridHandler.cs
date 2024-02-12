@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -167,9 +169,32 @@ namespace CasualPuzzle
 
         void TrySwapTileItems(Tile a, Tile b)
         {
-            (a.item, b.item) = (b.item, a.item);
-            a.SetItemPos();
-            b.SetItemPos();
+            ignoreInput = true;
+            StartCoroutine(SwapCo());
+            
+
+            IEnumerator SwapCo()
+            {
+                (a.item, b.item) = (b.item, a.item);
+                var s = DOTween.Sequence();
+                s.Join(a.SetItemPos());
+                s.Join(b.SetItemPos());
+                yield return new DOTweenCYInstruction.WaitForCompletion(s);
+
+                if (HasMatch())
+                {
+                    ignoreInput = false;
+                    yield break;
+                }
+                
+                (a.item, b.item) = (b.item, a.item);
+                var s2 = DOTween.Sequence();
+                s2.Join(a.SetItemPos());
+                s2.Join(b.SetItemPos());
+                yield return new DOTweenCYInstruction.WaitForCompletion(s2);
+
+                ignoreInput = false;
+            }
         }
 
         bool DoesCellHaveTile(Vector3Int gridPos)
