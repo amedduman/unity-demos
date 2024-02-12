@@ -341,6 +341,7 @@ GameObject:
   - component: {fileID: 538449040}
   - component: {fileID: 538449041}
   - component: {fileID: 538449042}
+  - component: {fileID: 538449043}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -387,20 +388,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6357e4c60bc41aa80a22510fcff684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
+  gridData: {fileID: 11400000, guid: fea28280131384313bb8d6dd31b287f4, type: 2}
+  tileData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
+  grid: {fileID: 538449041}
+  tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}
+  buffer: {x: 0, y: 1}
+--- !u!114 &538449043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538449039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4aadb400ddb64bc0a5b0caae7c46eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
   onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
   onSwipeInput: {fileID: 11400000, guid: 7f1bd248dea9d4f5a839fef3a590fe53, type: 2}
+  tileData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
+  gridData: {fileID: 11400000, guid: fea28280131384313bb8d6dd31b287f4, type: 2}
+  itemsToSpawnData: {fileID: 11400000, guid: f12e6349483364f38a59326e6d4a465c, type: 2}
   grid: {fileID: 538449041}
-  tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}
-  width: 5
-  height: 7
-  buffer: {x: 0, y: 1}
-  items:
-  - {fileID: 1439552692426514181, guid: 48e2b867fa77df2489266abb9c52c1db, type: 3}
-  - {fileID: -40025887115541503, guid: 28dd42fca7a476d478e583d0b8d8e192, type: 3}
-  - {fileID: 3700808777013227160, guid: 0fa72a843191b2e4c924dfe0c98fd45e, type: 3}
-  - {fileID: 3392096551297788790, guid: 858a256717922b94c8c31524c3075d55, type: 3}
-  - {fileID: 494914935499541898, guid: 26017852f58bdfe4584111c080628521, type: 3}
 --- !u!1 &594188549
 GameObject:
   m_ObjectHideFlags: 0

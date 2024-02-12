@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614d1cdc75694839a558df4913cba48b, type: 3}
+  m_Name: ItemsToSpawnData
+  m_EditorClassIdentifier: 
+  <items>k__BackingField:
+  - {fileID: 1439552692426514181, guid: 48e2b867fa77df2489266abb9c52c1db, type: 3}
+  - {fileID: -40025887115541503, guid: 28dd42fca7a476d478e583d0b8d8e192, type: 3}
+  - {fileID: 3392096551297788790, guid: 858a256717922b94c8c31524c3075d55, type: 3}
+  - {fileID: 494914935499541898, guid: 26017852f58bdfe4584111c080628521, type: 3}
+  - {fileID: 3700808777013227160, guid: 0fa72a843191b2e4c924dfe0c98fd45e, type: 3}

@@ -20,16 +20,16 @@ namespace CasualPuzzle
             onGridCreated.RemoveListener(SetPositionAndOrthographicSize);
         }
 
-        void SetPositionAndOrthographicSize(GridData gridData)
+        void SetPositionAndOrthographicSize(GridCreatedEventData gridCreatedEventData)
         {
-            var vertical = gridData.bounds.size.y;
-            var horizontal = gridData.bounds.size.x * ((float)cam.pixelHeight / cam.pixelWidth);
+            var vertical = gridCreatedEventData.bounds.size.y;
+            var horizontal = gridCreatedEventData.bounds.size.x * ((float)cam.pixelHeight / cam.pixelWidth);
             var size = Mathf.Max(horizontal, vertical) * .5f;
-            cam.transform.position = new Vector3(gridData.center.x, gridData.center.y, -10);
+            cam.transform.position = new Vector3(gridCreatedEventData.center.x, gridCreatedEventData.center.y, -10);
             cam.orthographicSize = size;
             
-            frame.size = new Vector2(gridData.boundsBeforeBuffer.extents.x  * 2, gridData.boundsBeforeBuffer.extents.y  * 2);
-            outerFrame.localScale = new Vector2(gridData.boundsBeforeBuffer.extents.x  * 4, gridData.boundsBeforeBuffer.extents.y  * 4);
+            frame.size = new Vector2(gridCreatedEventData.boundsBeforeBuffer.extents.x  * 2, gridCreatedEventData.boundsBeforeBuffer.extents.y  * 2);
+            outerFrame.localScale = new Vector2(gridCreatedEventData.boundsBeforeBuffer.extents.x  * 4, gridCreatedEventData.boundsBeforeBuffer.extents.y  * 4);
         }
     }
 }
