@@ -31,15 +31,19 @@ namespace CasualPuzzle
             {
                 for (int y = 0; y < gridData.height; y++)
                 {
-                    if (x == 3 && y == 2) continue;
-                    if (x == 2 && y == 2) continue;
-                    if (x == 1 && y == 2) continue;
+                    if (x == 3 && y == 4) continue;
+                    if (x == 2 && y == 4) continue;
+                    if (x == 1 && y == 4) continue;
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     var tileWorldPos = grid.GetCellCenterWorld(cellPos);
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
 
                     tile.gameObject.name = $"{x}, {y}";
                     tile.cellPos = cellPos;
+                    if (tile.cellPos.y == gridData.height - 1)
+                    {
+                        tile.IsSpawner = true;
+                    }
                     tileData.SetTileData(this, tile);
                 }
             }
