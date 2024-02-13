@@ -15,38 +15,32 @@ namespace CasualPuzzle
         
         [SerializeField] Vector2 buffer;
         
-
-        Tile[] tiles;
-        Camera cam;
-        
         #endregion
 
         void Start()
         {
-            cam = Camera.main;
-
-            tiles = new Tile[gridData.width * gridData.height];
-            tileData.InitTileArray(this, gridData.width, gridData.height);
             GenerateTiles();
             SetCam();
         }
         
         void GenerateTiles()
         {
-            int index = 0;
+            tileData.ResetTileData();
+            
             for (int x = 0; x < gridData.width; x++)
             {
                 for (int y = 0; y < gridData.height; y++)
                 {
+                    if (x == 3 && y == 2) continue;
+                    if (x == 2 && y == 2) continue;
+                    if (x == 1 && y == 2) continue;
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     var tileWorldPos = grid.GetCellCenterWorld(cellPos);
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
 
                     tile.gameObject.name = $"{x}, {y}";
                     tile.cellPos = cellPos;
-                    tiles[index] = tile;
-                    tileData.SetTileData(this, index, tile);
-                    index++;
+                    tileData.SetTileData(this, tile);
                 }
             }
         }
@@ -54,7 +48,7 @@ namespace CasualPuzzle
         void SetCam()
         {
             Bounds bounds = new Bounds();
-            foreach (Tile tile in tiles)
+            foreach (Tile tile in tileData.tiles)
             {
                 bounds.Encapsulate(tile.spriteRenderer.bounds);
             }

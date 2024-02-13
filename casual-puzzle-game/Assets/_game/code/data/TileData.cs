@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CasualPuzzle
@@ -5,16 +7,17 @@ namespace CasualPuzzle
     [CreateAssetMenu(menuName = "_game/data/tile data")]
     public class TileData : ScriptableObject
     {
-        public Tile[] tiles { get; private set; }
+        public List<Tile> tiles { get; private set; } = new List<Tile>();
 
-        public void InitTileArray(GridHandler gridHandler, int width, int height)
+        // since this is a scriptable object we need to reset its fields
+        public void ResetTileData()
         {
-            tiles = new Tile[width * height];
+            tiles.Clear();
         }
-        
-        public void SetTileData(GridHandler gridHandler, int index, Tile tile)
+
+        public void SetTileData(GridHandler gridHandler, Tile tile)
         {
-            tiles[index] = tile;
+            tiles.Add(tile);
         }
     }
 }

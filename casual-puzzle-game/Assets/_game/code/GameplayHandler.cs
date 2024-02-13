@@ -49,7 +49,7 @@ namespace CasualPuzzle
         {
             do
             {
-                for (int i = tileData.tiles.Length - 1; i >= 0; i--)
+                for (int i = tileData.tiles.Count - 1; i >= 0; i--)
                 {
                     if(tileData.tiles[i].item != null)
                         Destroy(tileData.tiles[i].item.gameObject);
