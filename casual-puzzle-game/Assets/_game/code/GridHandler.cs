@@ -33,6 +33,7 @@ namespace CasualPuzzle
                 {
                     if (x == 3 && y == 4) continue;
                     if (x == 2 && y == 4) continue;
+                    if (x == 2 && y == 3) continue;
                     if (x == 1 && y == 4) continue;
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     var tileWorldPos = grid.GetCellCenterWorld(cellPos);

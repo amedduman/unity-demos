@@ -222,9 +222,9 @@ namespace CasualPuzzle
                             tile.item = item;
                             itemsToMove.Add(item);
                         }
-                        else if (DoesCellHaveTile(tile.cellPos + Vector3Int.up))
+                        else if (DoesCellHaveTile(tile.cellPos + Vector3Int.up)) // up tile is empty
                         {
-                            tile.spriteRenderer.color = Color.blue;
+                            // tile.spriteRenderer.color = Color.blue;
                             var t = GetTileInTheCell(tile.cellPos + Vector3Int.up);
                             if (t.item != null)
                             {
@@ -233,7 +233,7 @@ namespace CasualPuzzle
                                 itemsToMove.Add(tile.item);
                             }
                         }
-                        else
+                        else // there is no up tile
                         {
                             var upperCell = GetUpperCell(tile.cellPos);
                             if (DoesCellHaveTile(upperCell))
@@ -272,6 +272,11 @@ namespace CasualPuzzle
 
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
             }
+            
+            if (HasMatch())
+                ClearMatches();
+            else
+                ignoreInput = false;
         }
         
         IEnumerator MoveItems()
