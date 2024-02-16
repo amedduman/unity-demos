@@ -9,14 +9,12 @@ namespace CasualPuzzle
 {
     public class GameplayHandler : MonoBehaviour
     {
-
         #region fields
 
         [SerializeField] InputHandler inputHandler;
         [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] OnSwipeInput onSwipeInput;
         [SerializeField] TileData tileData;
-        [SerializeField] GridData gridData;
         [SerializeField] SwipedCellData swipedCellData;
         [SerializeField] ItemsToSpawnData itemsToSpawnData;
         bool ignoreInput;
@@ -197,7 +195,7 @@ namespace CasualPuzzle
                 var s = DOTween.Sequence();
                 foreach (Tile matchTile in matchTiles)
                 {
-                    var t = matchTile.DestroyItem();
+                    var t = matchTile.ClearItem();
                     s.Join(t);
                 }
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
@@ -214,43 +212,16 @@ namespace CasualPuzzle
                 {
                     if (tile.item == null)
                     {
-                        
                         if (tile.IsSpawner)
                         {
                             var item = Instantiate(GetRandomItemPrefab(), tile.transform.position + Vector3Int.up, Quaternion.identity, tile.transform);
                             tile.item = item;
                         }
-                        if (tile.TryGetNearestUpperFullTile(out Tile upperFullTile))
+                        else if (tile.TryGetNearestUpperFullTile(out Tile upperFullTile))
                         {
                             tile.item = upperFullTile.item;
                             upperFullTile.item = null;
                         }
-                        // else if (DoesCellHaveTile(tile.cellPos + Vector3Int.up))
-                        // {
-                        //     var t = GetTileInTheCell(tile.cellPos + Vector3Int.up);
-                        //     if (t.item != null)
-                        //     {
-                        //         tile.item = t.item;
-                        //         t.item = null;
-                        //     }
-                        // }
-                        // else
-                        // {
-                        //     var upperCell = GetUpperCell(tile.cellPos);
-                        //     if (DoesCellHaveTile(upperCell))
-                        //     {
-                        //         var upperTile = GetTileInTheCell(upperCell);
-                        //         if (upperTile.item != null)
-                        //         {
-                        //             tile.item = upperTile.item;
-                        //             upperTile.item = null;
-                        //         }
-                        //     }
-                        //     else
-                        //     {
-                        //         Debug.LogError("this shouldn't happen");
-                        //     }
-                        // }
                     }
                 }
                 
@@ -262,7 +233,6 @@ namespace CasualPuzzle
                         var t = tile.SetItemPos();
                         s.Join(t);
                     }
-                    
                 }
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
             }
@@ -271,41 +241,6 @@ namespace CasualPuzzle
                 ClearMatches();
             else
                 ignoreInput = false;
-        }
-        
-        Vector3Int GetUpperCell(Vector3Int cell)
-        {
-            if (cell.y == gridData.height - 1) return cell;
-            
-            var oneUpCell = cell + Vector3Int.up;
-            if (DoesCellHaveTile(oneUpCell))
-            {
-                return oneUpCell;
-            }
-
-            Vector3Int nearestRightUpCell = cell + Vector3Int.up;
-            Vector3Int nearestLeftUpCell = cell + Vector3Int.up;
-
-            for (int i = 0; i < gridData.width; i++)
-            {
-                nearestRightUpCell += Vector3Int.right;
-                if (DoesCellHaveTile(nearestRightUpCell))
-                {
-                    GetTileInTheCell(nearestRightUpCell).spriteRenderer.color = Color.red;
-                    return nearestRightUpCell;
-                }
-                
-                nearestLeftUpCell += Vector3Int.left;
-                if (DoesCellHaveTile(nearestLeftUpCell))
-                {
-                    GetTileInTheCell(nearestLeftUpCell).spriteRenderer.color = Color.blue;
-                    return nearestLeftUpCell;
-                }
-            }
-
-            Debug.Log(cell);
-            
-            throw new NotImplementedException();
         }
         
         bool HasEmptyTile()

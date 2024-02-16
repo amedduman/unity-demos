@@ -7,7 +7,7 @@ namespace CasualPuzzle
 {
     public class Tile : MonoBehaviour
     {
-        [SerializeField] ItemsToSpawnData itemPrefabs;
+        // [SerializeField] ItemsToSpawnData itemPrefabs;
         [SerializeField] TileData tileData;
         [SerializeField] GridData gridData;
         [SerializeField] public SpriteRenderer spriteRenderer;
@@ -91,27 +91,27 @@ namespace CasualPuzzle
             iceSprite.enabled = true;
         }
 
-        public void SpawnItem()
-        {
-            var tr = transform;
-            var i = Instantiate(GetRandomItemPrefab(), tr.position, Quaternion.identity, tr);
-            item = i;
-        }
-        
-        Item GetRandomItemPrefab()
-        {
-            var rnd = Random.Range(0, itemPrefabs.items.Count);
-            return itemPrefabs.items[rnd];
-        }
-        
-        public void TryDestroyItemImmediate()
-        {
-            if (item != null)
-            {
-                Destroy(item.gameObject);
-                item = null;
-            }
-        }
+        // public void SpawnItem()
+        // {
+        //     var tr = transform;
+        //     var i = Instantiate(GetRandomItemPrefab(), tr.position, Quaternion.identity, tr);
+        //     item = i;
+        // }
+        //
+        // Item GetRandomItemPrefab()
+        // {
+        //     var rnd = Random.Range(0, itemPrefabs.items.Count);
+        //     return itemPrefabs.items[rnd];
+        // }
+        //
+        // public void TryDestroyItemImmediate()
+        // {
+        //     if (item != null)
+        //     {
+        //         Destroy(item.gameObject);
+        //         item = null;
+        //     }
+        // }
 
         public bool IsFrozen()
         {
@@ -123,7 +123,7 @@ namespace CasualPuzzle
             return item.MoveToPos(transform.position);
         }
 
-        public Tween DestroyItem()
+        public Tween ClearItem()
         {
             var t = item.DestroyProcess();
             item = null;
