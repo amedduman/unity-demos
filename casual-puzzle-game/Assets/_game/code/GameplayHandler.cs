@@ -214,7 +214,8 @@ namespace CasualPuzzle
                     {
                         if (tile.IsSpawner)
                         {
-                            var item = Instantiate(GetRandomItemPrefab(), tile.transform.position + Vector3Int.up, Quaternion.identity, tile.transform);
+                            var tr = tile.transform;
+                            var item = Instantiate(GetRandomItemPrefab(), tr.position + Vector3Int.up, Quaternion.identity, tr);
                             tile.item = item;
                         }
                         else if (tile.TryGetNearestUpperFullTile(out Tile upperFullTile))

@@ -1,13 +1,14 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace CasualPuzzle
 {
     public class Tile : MonoBehaviour
     {
-        // [SerializeField] ItemsToSpawnData itemPrefabs;
+
+        #region fields
+
         [SerializeField] TileData tileData;
         [SerializeField] GridData gridData;
         [SerializeField] public SpriteRenderer spriteRenderer;
@@ -15,6 +16,8 @@ namespace CasualPuzzle
         [HideInInspector] public Item item;
         [HideInInspector] public Vector3Int cellPos;
         [HideInInspector] public bool IsSpawner;
+
+        #endregion
 
         public bool TryGetNearestUpperFullTile(out Tile upperTile)
         {
@@ -90,28 +93,6 @@ namespace CasualPuzzle
         {
             iceSprite.enabled = true;
         }
-
-        // public void SpawnItem()
-        // {
-        //     var tr = transform;
-        //     var i = Instantiate(GetRandomItemPrefab(), tr.position, Quaternion.identity, tr);
-        //     item = i;
-        // }
-        //
-        // Item GetRandomItemPrefab()
-        // {
-        //     var rnd = Random.Range(0, itemPrefabs.items.Count);
-        //     return itemPrefabs.items[rnd];
-        // }
-        //
-        // public void TryDestroyItemImmediate()
-        // {
-        //     if (item != null)
-        //     {
-        //         Destroy(item.gameObject);
-        //         item = null;
-        //     }
-        // }
 
         public bool IsFrozen()
         {
