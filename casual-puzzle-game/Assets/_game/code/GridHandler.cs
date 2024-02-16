@@ -32,8 +32,8 @@ namespace CasualPuzzle
                 for (int y = 0; y < gridData.height; y++)
                 {
                     if (x == 3 && y == 4) continue;
-                    if (x == 2 && y == 4) continue;
-                    if (x == 2 && y == 3) continue;
+                    // if (x == 2 && y == 4) continue;
+                    // if (x == 2 && y == 3) continue;
                     if (x == 1 && y == 4) continue;
                     Vector3Int cellPos = new Vector3Int(x, y, 0);
                     var tileWorldPos = grid.GetCellCenterWorld(cellPos);
@@ -44,6 +44,15 @@ namespace CasualPuzzle
                     if (tile.cellPos.y == gridData.height - 1)
                     {
                         tile.IsSpawner = true;
+                    }
+
+                    if (tile.cellPos is { x: 2, y: 3 })
+                    {
+                        tile.Freeze();
+                    }
+                    if (tile.cellPos is { x: 2, y: 4 })
+                    {
+                        tile.Freeze();
                     }
                     tileData.SetTileData(this, tile);
                 }

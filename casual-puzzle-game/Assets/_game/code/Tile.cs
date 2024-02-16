@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Core;
 using UnityEngine;
 
 namespace CasualPuzzle
@@ -94,9 +96,20 @@ namespace CasualPuzzle
             iceSprite.enabled = true;
         }
 
+        void UnFreeze()
+        {
+            iceSprite.enabled = false;
+        }
+
         public bool IsFrozen()
         {
             return iceSprite.enabled;
+        }
+
+        void HandleNeighborMatch()
+        {
+            if (IsFrozen() == false) return;
+            UnFreeze();
         }
         
         public Tween SetItemPos()
@@ -104,11 +117,46 @@ namespace CasualPuzzle
             return item.MoveToPos(transform.position);
         }
 
-        public Tween ClearItem()
+        public Tween HandleMatch()
         {
+            LetTheNeighborTilesKnowAboutMatch();
             var t = item.DestroyProcess();
             item = null;
             return t;
         }
+
+        void LetTheNeighborTilesKnowAboutMatch()
+        {
+            var directions = new List<Vector3Int>
+            {
+                Vector3Int.right, 
+                Vector3Int.left, 
+                Vector3Int.up, 
+                Vector3Int.down
+            };
+            foreach (var dir in directions)
+            {
+                if (TryGetTileInTheCell(out Tile tile, cellPos + dir))
+                {
+                    tile.HandleNeighborMatch();
+                }
+            }
+        }
+        
+        bool TryGetTileInTheCell(out Tile tile, Vector3Int cell)
+        {
+            foreach (Tile t in tileData.tiles)
+            {
+                if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
+                {
+                    tile = t;
+                    return true;
+                }
+            }
+
+            tile = null;
+            return false;
+        }
+        
     }
 }

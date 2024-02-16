@@ -67,15 +67,26 @@ namespace CasualPuzzle
         {
             if (ignoreInput)return;
 
+            // var cellUnderCursor = swipedCellData.cellPos;
+            // if (DoesCellHaveTile(cellUnderCursor))
+            // {
+            //     var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
+            //     if (DoesCellHaveTile(adjacentCell))
+            //     {
+            //         var a =GetTileInTheCell(cellUnderCursor);
+            //         var b = GetTileInTheCell(adjacentCell);
+            //         TrySwapTileItems(a,b);
+            //     }
+            // }
+
             var cellUnderCursor = swipedCellData.cellPos;
-            if (DoesCellHaveTile(cellUnderCursor))
+            if (TryGetTileInTheCell(out Tile tile, cellUnderCursor))
             {
+                if (tile.IsFrozen()) return;
                 var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
-                if (DoesCellHaveTile(adjacentCell))
+                if (TryGetTileInTheCell(out Tile adjacentTile, adjacentCell))
                 {
-                    var a =GetTileInTheCell(cellUnderCursor);
-                    var b = GetTileInTheCell(adjacentCell);
-                    TrySwapTileItems(a,b);
+                    TrySwapTileItems(tile,adjacentTile);
                 }
             }
         }
@@ -128,6 +139,21 @@ namespace CasualPuzzle
             }
 
             throw new NotImplementedException();
+        }
+
+        bool TryGetTileInTheCell(out Tile tile, Vector3Int cell)
+        {
+            foreach (Tile t in tileData.tiles)
+            {
+                if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
+                {
+                    tile = t;
+                    return true;
+                }
+            }
+
+            tile = null;
+            return false;
         }
         
         void TrySwapTileItems(Tile a, Tile b)
@@ -195,7 +221,7 @@ namespace CasualPuzzle
                 var s = DOTween.Sequence();
                 foreach (Tile matchTile in matchTiles)
                 {
-                    var t = matchTile.ClearItem();
+                    var t = matchTile.HandleMatch();
                     s.Join(t);
                 }
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
@@ -287,7 +313,7 @@ namespace CasualPuzzle
                 while (DoesCellHaveTile(currentCellGridPos))
                 {
                     var t = GetTileInTheCell(currentCellGridPos);
-                    if (t.item.myType == tile.item.myType)
+                    if (t.item.myType == tile.item.myType && t.IsFrozen() == false)
                         matchCount++;
                     else
                         break;
