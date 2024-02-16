@@ -202,55 +202,55 @@ namespace CasualPuzzle
                 }
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
 
-                // StartCoroutine(MoveItems());
-                StartCoroutine(MoveItems2());
+                StartCoroutine(MoveItems());
             }
         }
 
-        IEnumerator MoveItems2()
+        IEnumerator MoveItems()
         {
             while (HasEmptyTile())
             {
-                HashSet<Item> itemsToMove = new HashSet<Item>();
                 foreach (Tile tile in tileData.tiles)
                 {
                     if (tile.item == null)
                     {
+                        
                         if (tile.IsSpawner)
                         {
                             var item = Instantiate(GetRandomItemPrefab(), tile.transform.position + Vector3Int.up, Quaternion.identity, tile.transform);
                             tile.item = item;
-                            itemsToMove.Add(item);
                         }
-                        else if (DoesCellHaveTile(tile.cellPos + Vector3Int.up)) // up tile is empty
+                        if (tile.TryGetNearestUpperFullTile(out Tile upperFullTile))
                         {
-                            // tile.spriteRenderer.color = Color.blue;
-                            var t = GetTileInTheCell(tile.cellPos + Vector3Int.up);
-                            if (t.item != null)
-                            {
-                                tile.item = t.item;
-                                t.item = null;
-                                itemsToMove.Add(tile.item);
-                            }
+                            tile.item = upperFullTile.item;
+                            upperFullTile.item = null;
                         }
-                        else // there is no up tile
-                        {
-                            var upperCell = GetUpperCell(tile.cellPos);
-                            if (DoesCellHaveTile(upperCell))
-                            {
-                                var upperTile = GetTileInTheCell(upperCell);
-                                if (upperTile.item != null)
-                                {
-                                    tile.item = upperTile.item;
-                                    upperTile.item = null;
-                                    itemsToMove.Add(tile.item);
-                                }
-                            }
-                            else
-                            {
-                                Debug.LogError("this shouldn't happen");
-                            }
-                        }
+                        // else if (DoesCellHaveTile(tile.cellPos + Vector3Int.up))
+                        // {
+                        //     var t = GetTileInTheCell(tile.cellPos + Vector3Int.up);
+                        //     if (t.item != null)
+                        //     {
+                        //         tile.item = t.item;
+                        //         t.item = null;
+                        //     }
+                        // }
+                        // else
+                        // {
+                        //     var upperCell = GetUpperCell(tile.cellPos);
+                        //     if (DoesCellHaveTile(upperCell))
+                        //     {
+                        //         var upperTile = GetTileInTheCell(upperCell);
+                        //         if (upperTile.item != null)
+                        //         {
+                        //             tile.item = upperTile.item;
+                        //             upperTile.item = null;
+                        //         }
+                        //     }
+                        //     else
+                        //     {
+                        //         Debug.LogError("this shouldn't happen");
+                        //     }
+                        // }
                     }
                 }
                 
@@ -264,12 +264,6 @@ namespace CasualPuzzle
                     }
                     
                 }
-                // foreach (Item item in itemsToMove)
-                // {
-                //     var t = item.MoveToPos();
-                //     s.Join(t);
-                // }
-
                 yield return new DOTweenCYInstruction.WaitForCompletion(s);
             }
             
@@ -279,63 +273,6 @@ namespace CasualPuzzle
                 ignoreInput = false;
         }
         
-        IEnumerator MoveItems()
-        {
-            while (HasEmptyTile())
-            {
-                HashSet<Item> itemsToMoveDown = new HashSet<Item>();
-                HashSet<Tile> emptiedTiles = new HashSet<Tile>();
-            
-                foreach (Tile tile in tileData.tiles)
-                {
-                    if (tile.item == null)
-                    {
-                        var upperCell = GetUpperCell(tile.cellPos);
-                        if (DoesCellHaveTile(upperCell))
-                        {
-                            var upTile = GetTileInTheCell(upperCell);
-                            if (upTile.item != null)
-                            {
-                                tile.item = upTile.item;
-                                upTile.item = null;
-                                emptiedTiles.Add(upTile);
-                                itemsToMoveDown.Add(tile.item);
-                            }
-                        }
-                        else
-                        {
-                            emptiedTiles.Add(tile);
-                        }
-                    }
-                }
-
-                var s = DOTween.Sequence();
-
-                foreach (Tile emptiedTile in emptiedTiles)
-                {
-                    if (emptiedTile.cellPos.y == gridData.height - 1)
-                    {
-                        var item = Instantiate(GetRandomItemPrefab(), emptiedTile.transform.position + Vector3Int.up, Quaternion.identity, emptiedTile.transform);
-                        emptiedTile.item = item;
-                        itemsToMoveDown.Add(item);
-                    }
-                }
-                
-                foreach (Item item in itemsToMoveDown)
-                {
-                    var t = item.MoveToPos(item.transform.position + Vector3Int.down);
-                    s.Join(t);
-                }
-
-                yield return new DOTweenCYInstruction.WaitForCompletion(s);
-            }
-            
-            if (HasMatch())
-                ClearMatches();
-            else
-                ignoreInput = false;
-        }
-
         Vector3Int GetUpperCell(Vector3Int cell)
         {
             if (cell.y == gridData.height - 1) return cell;
