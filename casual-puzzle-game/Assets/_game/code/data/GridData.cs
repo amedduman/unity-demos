@@ -9,7 +9,7 @@ namespace CasualPuzzle
     {
         [field:SerializeField] public int columns { get; private set; } = 5;
         [field:SerializeField] public int rows { get; private set; } = 8;
-        public int[] gridValues = new int[8];
+        public int[] gridValues;
         readonly List<Tile> myTiles  = new List<Tile>();
         public IReadOnlyList<Tile> tiles => myTiles.AsReadOnly();
 
@@ -24,12 +24,13 @@ namespace CasualPuzzle
             myTiles.Add(tile);
         }
 
-        void OnValidate()
+        [ContextMenu("update")]
+        void UpdateGrid()
         {
             gridValues = new int[rows * columns];
             for (int i = 0; i < gridValues.Length; i++)
             {
-                gridValues[i] = i;
+               gridValues[i] = 1;
             }
         }
     }

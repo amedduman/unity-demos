@@ -389,8 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
-  gridData: {fileID: 11400000, guid: fea28280131384313bb8d6dd31b287f4, type: 2}
-  tileData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
+  gridData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
   grid: {fileID: 538449041}
   tilePrefab: {fileID: 4848668910854752622, guid: c88490191d6234632b9d312454898c20, type: 3}
   buffer: {x: 0, y: 1}
@@ -691,8 +690,7 @@ MonoBehaviour:
   inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
   onGridCreated: {fileID: 11400000, guid: 0cf1d528e642a4d3d9725462e538a7a3, type: 2}
   onSwipeInput: {fileID: 11400000, guid: 7f1bd248dea9d4f5a839fef3a590fe53, type: 2}
-  tileData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
-  gridData: {fileID: 11400000, guid: fea28280131384313bb8d6dd31b287f4, type: 2}
+  gridData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
   swipedCellData: {fileID: 11400000, guid: ffb63ded7c197413eba404615f40dbc3, type: 2}
   itemsToSpawnData: {fileID: 11400000, guid: f12e6349483364f38a59326e6d4a465c, type: 2}
 --- !u!4 &1198591078

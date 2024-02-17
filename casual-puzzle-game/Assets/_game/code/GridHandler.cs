@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.Tilemaps;
 
 namespace CasualPuzzle
 {
@@ -20,8 +21,50 @@ namespace CasualPuzzle
 
         void Start()
         {
-            GenerateTiles();
+            // GenerateTiles();
+            GenerateTiles2();
             SetCam();
+        }
+        
+        void GenerateTiles2()
+        {
+            gridData.ResetTileData();
+            int index = 0;
+            for (int x = 0; x < gridData.rows; x++)
+            {
+                for (int y = 0; y < gridData.columns; y++)
+                {
+                    if (gridData.gridValues[index] == 0)
+                    {
+                        index++;
+                        continue;
+                    }
+                    Vector3Int cellPos = new Vector3Int(y, x, 0);
+                    var tileWorldPos = grid.GetCellCenterWorld(cellPos);
+                    var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
+                    
+                    tile.gameObject.name = $"{y}, {x}";
+                    tile.cellPos = cellPos;
+                    // if (tile.cellPos.y == gridData.rows - 1)
+                    // {
+                    //     tile.IsSpawner = true;
+                    // }
+
+                    if (gridData.gridValues[index] == 5)
+                    {
+                        tile.IsSpawner = true;
+                    }
+                    else if (gridData.gridValues[index] == 9)
+                    {
+                        tile.Freeze();
+                    }
+                    
+                    
+                    gridData.SetTileData(this, tile);
+                    
+                    index++;
+                }
+            }
         }
         
         void GenerateTiles()
