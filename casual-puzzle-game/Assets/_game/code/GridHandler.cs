@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CasualPuzzle
 {
@@ -8,8 +9,8 @@ namespace CasualPuzzle
         #region fields
 
         [SerializeField] OnGridCreated onGridCreated;
-        [SerializeField] GridData gridData;
-        [SerializeField] TileData tileData;
+        // [SerializeField] GridData gridData;
+        [FormerlySerializedAs("tileData")] [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
         
@@ -25,11 +26,11 @@ namespace CasualPuzzle
         
         void GenerateTiles()
         {
-            tileData.ResetTileData();
+            gridData.ResetTileData();
             
-            for (int x = 0; x < gridData.width; x++)
+            for (int x = 0; x < gridData.columns; x++)
             {
-                for (int y = 0; y < gridData.height; y++)
+                for (int y = 0; y < gridData.rows; y++)
                 {
                     if (x == 3 && y == 4) continue;
                     // if (x == 2 && y == 4) continue;
@@ -41,7 +42,7 @@ namespace CasualPuzzle
 
                     tile.gameObject.name = $"{x}, {y}";
                     tile.cellPos = cellPos;
-                    if (tile.cellPos.y == gridData.height - 1)
+                    if (tile.cellPos.y == gridData.rows - 1)
                     {
                         tile.IsSpawner = true;
                     }
@@ -54,7 +55,7 @@ namespace CasualPuzzle
                     {
                         tile.Freeze();
                     }
-                    tileData.SetTileData(this, tile);
+                    gridData.SetTileData(this, tile);
                 }
             }
         }
@@ -62,7 +63,7 @@ namespace CasualPuzzle
         void SetCam()
         {
             Bounds bounds = new Bounds();
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 bounds.Encapsulate(tile.spriteRenderer.bounds);
             }
@@ -70,7 +71,7 @@ namespace CasualPuzzle
             Bounds boundsBeforeBuffer = bounds;
             bounds.Expand(new Vector3(buffer.x, buffer.y, 0));
             
-            var gridTopRightPos = grid.CellToWorld(new Vector3Int(gridData.width, gridData.height));
+            var gridTopRightPos = grid.CellToWorld(new Vector3Int(gridData.columns, gridData.rows));
             var camPos = gridTopRightPos / 2;
             
             onGridCreated.Invoke(new GridCreatedEventData(camPos, bounds, boundsBeforeBuffer));

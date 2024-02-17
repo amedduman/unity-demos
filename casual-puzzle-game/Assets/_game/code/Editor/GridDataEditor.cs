@@ -3,8 +3,8 @@ using UnityEditor;
 
 namespace CasualPuzzle
 {
-    [CustomEditor(typeof(TileData))]
-    public class TileDataEditor : Editor
+    [CustomEditor(typeof(GridData))]
+    public class GridDataEditor : Editor
     {
         SerializedProperty gridValues;
 
@@ -17,8 +17,7 @@ namespace CasualPuzzle
         {
             serializedObject.Update();
 
-            int columns = 6;
-            int rows = 8;
+            
             // int index = 0;
             // for (int y = 0; y < height; y++)
             // {
@@ -31,8 +30,13 @@ namespace CasualPuzzle
             //     EditorGUILayout.EndHorizontal();
             // }
             
-            
+            DrawDefaultInspector();
             EditorGUI.BeginChangeCheck();
+            
+            GridData targetScript = (GridData)target;
+
+            int columns = targetScript.columns;
+            int rows = targetScript.rows;
 
             for (int i = 0; i < rows; i++)
             {

@@ -130,9 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a1475490e734efa86f3f376b3eac62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefabs: {fileID: 11400000, guid: f12e6349483364f38a59326e6d4a465c, type: 2}
-  tileData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
-  gridData: {fileID: 11400000, guid: fea28280131384313bb8d6dd31b287f4, type: 2}
+  gridData: {fileID: 11400000, guid: 4c50f6267b7df45e3bcbf13c3ab26069, type: 2}
   spriteRenderer: {fileID: 2301838789562082719}
   iceSprite: {fileID: 686483990102597524}
   item: {fileID: 0}

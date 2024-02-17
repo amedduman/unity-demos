@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace CasualPuzzle
@@ -14,7 +15,7 @@ namespace CasualPuzzle
         [SerializeField] InputHandler inputHandler;
         [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] OnSwipeInput onSwipeInput;
-        [SerializeField] TileData tileData;
+        [FormerlySerializedAs("tileData")] [SerializeField] GridData gridData;
         [SerializeField] SwipedCellData swipedCellData;
         [SerializeField] ItemsToSpawnData itemsToSpawnData;
         bool ignoreInput;
@@ -47,12 +48,12 @@ namespace CasualPuzzle
         {
             do
             {
-                for (int i = tileData.tiles.Count - 1; i >= 0; i--)
+                for (int i = gridData.tiles.Count - 1; i >= 0; i--)
                 {
-                    if(tileData.tiles[i].item != null)
-                        Destroy(tileData.tiles[i].item.gameObject);
+                    if(gridData.tiles[i].item != null)
+                        Destroy(gridData.tiles[i].item.gameObject);
                 }
-                foreach (Tile tile in tileData.tiles)
+                foreach (Tile tile in gridData.tiles)
                 {
                     var tr = tile.transform;
                     var i = Instantiate(GetRandomItemPrefab(), tr.position, Quaternion.identity, tr);
@@ -119,7 +120,7 @@ namespace CasualPuzzle
         
         bool DoesCellHaveTile(Vector3Int gridPos)
         {
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 if (tile.cellPos.x == gridPos.x && tile.cellPos.y == gridPos.y)
                 {
@@ -132,7 +133,7 @@ namespace CasualPuzzle
         
         Tile GetTileInTheCell(Vector3Int gridPos)
         {
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 if (tile.cellPos.x == gridPos.x && tile.cellPos.y == gridPos.y)
                     return tile;
@@ -143,7 +144,7 @@ namespace CasualPuzzle
 
         bool TryGetTileInTheCell(out Tile tile, Vector3Int cell)
         {
-            foreach (Tile t in tileData.tiles)
+            foreach (Tile t in gridData.tiles)
             {
                 if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
                 {
@@ -190,7 +191,7 @@ namespace CasualPuzzle
         void ClearMatches()
         {
             HashSet<Tile> matchTiles = new HashSet<Tile>();
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 int hMatch = GetMatchCount(tile).horizontalMatchCount;
                 int vMatch = GetMatchCount(tile).verticalMatchCount;
@@ -234,7 +235,7 @@ namespace CasualPuzzle
         {
             while (HasEmptyTile())
             {
-                foreach (Tile tile in tileData.tiles)
+                foreach (Tile tile in gridData.tiles)
                 {
                     if (tile.item == null)
                     {
@@ -253,7 +254,7 @@ namespace CasualPuzzle
                 }
                 
                 var s = DOTween.Sequence();
-                foreach (Tile tile in tileData.tiles)
+                foreach (Tile tile in gridData.tiles)
                 {
                     if (tile.item != null)
                     {
@@ -272,7 +273,7 @@ namespace CasualPuzzle
         
         bool HasEmptyTile()
         {
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 if (tile.item == null)
                 {
@@ -285,7 +286,7 @@ namespace CasualPuzzle
         
         bool HasMatch()
         {
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 if (GetMatchCount(tile).horizontalMatchCount >= 3 || GetMatchCount(tile).verticalMatchCount   >= 3)
                     return true;

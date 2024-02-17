@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using DG.Tweening.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CasualPuzzle
 {
@@ -11,8 +11,8 @@ namespace CasualPuzzle
 
         #region fields
 
-        [SerializeField] TileData tileData;
-        [SerializeField] GridData gridData;
+        [FormerlySerializedAs("tileData")] [SerializeField] GridData gridData;
+        // [SerializeField] GridData gridData;
         [SerializeField] public SpriteRenderer spriteRenderer;
         [SerializeField] SpriteRenderer iceSprite;
         [HideInInspector] public Item item;
@@ -38,7 +38,7 @@ namespace CasualPuzzle
             Vector3Int nearestRightUpCell = cell + Vector3Int.up;
             Vector3Int nearestLeftUpCell = cell + Vector3Int.up;
 
-            for (int i = 0; i < gridData.width; i++)
+            for (int i = 0; i < gridData.columns; i++)
             {
                 nearestRightUpCell += Vector3Int.right;
                 if (DoesCellHaveTile(nearestRightUpCell))
@@ -69,7 +69,7 @@ namespace CasualPuzzle
         
         bool DoesCellHaveTile(Vector3Int gridPos)
         {
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 if (tile.cellPos.x == gridPos.x && tile.cellPos.y == gridPos.y)
                 {
@@ -82,7 +82,7 @@ namespace CasualPuzzle
         
         Tile GetTileInTheCell(Vector3Int gridPos)
         {
-            foreach (Tile tile in tileData.tiles)
+            foreach (Tile tile in gridData.tiles)
             {
                 if (tile.cellPos.x == gridPos.x && tile.cellPos.y == gridPos.y)
                     return tile;
@@ -145,7 +145,7 @@ namespace CasualPuzzle
         
         bool TryGetTileInTheCell(out Tile tile, Vector3Int cell)
         {
-            foreach (Tile t in tileData.tiles)
+            foreach (Tile t in gridData.tiles)
             {
                 if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
                 {
