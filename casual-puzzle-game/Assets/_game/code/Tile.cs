@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace CasualPuzzle
 {
@@ -11,10 +10,10 @@ namespace CasualPuzzle
 
         #region fields
 
-        [FormerlySerializedAs("tileData")] [SerializeField] GridData gridData;
-        // [SerializeField] GridData gridData;
+        [SerializeField] GridData gridData;
         [SerializeField] public SpriteRenderer spriteRenderer;
         [SerializeField] SpriteRenderer iceSprite;
+        [SerializeField] Animator iceAnimator;
         [HideInInspector] public Item item;
         [HideInInspector] public Vector3Int cellPos;
         [HideInInspector] public bool IsSpawner;
@@ -90,20 +89,26 @@ namespace CasualPuzzle
 
             throw new NotImplementedException();
         }
+
+        bool isFrozen;
         
         public void Freeze()
         {
             iceSprite.enabled = true;
+            isFrozen = true;
         }
 
         void UnFreeze()
         {
-            iceSprite.enabled = false;
+            iceAnimator.Play("UI_overlay_ice_explode");
+            isFrozen = false;
+            // iceSprite.enabled = false;
         }
 
         public bool IsFrozen()
         {
-            return iceSprite.enabled;
+            return isFrozen;
+            // return iceSprite.enabled;
         }
 
         void HandleNeighborMatch()
