@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace CasualPuzzle
@@ -15,7 +14,7 @@ namespace CasualPuzzle
         [SerializeField] InputHandler inputHandler;
         [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] OnSwipeInput onSwipeInput;
-        [FormerlySerializedAs("tileData")] [SerializeField] GridData gridData;
+        [SerializeField] GridData gridData;
         [SerializeField] SwipedCellData swipedCellData;
         [SerializeField] ItemsToSpawnData itemsToSpawnData;
         bool ignoreInput;
@@ -68,18 +67,6 @@ namespace CasualPuzzle
         {
             if (ignoreInput)return;
 
-            // var cellUnderCursor = swipedCellData.cellPos;
-            // if (DoesCellHaveTile(cellUnderCursor))
-            // {
-            //     var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
-            //     if (DoesCellHaveTile(adjacentCell))
-            //     {
-            //         var a =GetTileInTheCell(cellUnderCursor);
-            //         var b = GetTileInTheCell(adjacentCell);
-            //         TrySwapTileItems(a,b);
-            //     }
-            // }
-
             var cellUnderCursor = swipedCellData.cellPos;
             if (TryGetTileInTheCell(out Tile tile, cellUnderCursor))
             {
@@ -87,6 +74,7 @@ namespace CasualPuzzle
                 var adjacentCell = GetAdjacentCell(cellUnderCursor, swipeData.swipe);
                 if (TryGetTileInTheCell(out Tile adjacentTile, adjacentCell))
                 {
+                    if (adjacentTile.IsFrozen()) return;
                     TrySwapTileItems(tile,adjacentTile);
                 }
             }

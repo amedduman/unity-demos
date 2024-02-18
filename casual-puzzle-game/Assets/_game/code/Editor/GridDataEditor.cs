@@ -16,19 +16,6 @@ namespace CasualPuzzle
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-
-            
-            // int index = 0;
-            // for (int y = 0; y < height; y++)
-            // {
-            //     EditorGUILayout.BeginHorizontal();
-            //     for (int x = 0; x < width; x++)
-            //     {
-            //         EditorGUILayout.PropertyField(gridValues.GetArrayElementAtIndex(index), GUIContent.none, GUILayout.Width(40));
-            //         index++;
-            //     }
-            //     EditorGUILayout.EndHorizontal();
-            // }
             
             DrawDefaultInspector();
             EditorGUI.BeginChangeCheck();

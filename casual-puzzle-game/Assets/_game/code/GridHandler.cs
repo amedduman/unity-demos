@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Tilemaps;
 
 namespace CasualPuzzle
 {
@@ -10,8 +8,7 @@ namespace CasualPuzzle
         #region fields
 
         [SerializeField] OnGridCreated onGridCreated;
-        // [SerializeField] GridData gridData;
-        [FormerlySerializedAs("tileData")] [SerializeField] GridData gridData;
+        [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
         
@@ -21,34 +18,29 @@ namespace CasualPuzzle
 
         void Start()
         {
-            // GenerateTiles();
-            GenerateTiles2();
+            GenerateTiles();
             SetCam();
         }
         
-        void GenerateTiles2()
+        void GenerateTiles()
         {
             gridData.ResetTileData();
             int index = 0;
-            for (int x = 0; x < gridData.rows; x++)
+            for (int r = 0; r < gridData.rows; r++)
             {
-                for (int y = 0; y < gridData.columns; y++)
+                for (int c = 0; c < gridData.columns; c++)
                 {
                     if (gridData.gridValues[index] == 0)
                     {
                         index++;
                         continue;
                     }
-                    Vector3Int cellPos = new Vector3Int(y, x, 0);
+                    Vector3Int cellPos = new Vector3Int(c, r, 0);
                     var tileWorldPos = grid.GetCellCenterWorld(cellPos);
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
                     
-                    tile.gameObject.name = $"{y}, {x}";
+                    tile.gameObject.name = $"{c}, {r}";
                     tile.cellPos = cellPos;
-                    // if (tile.cellPos.y == gridData.rows - 1)
-                    // {
-                    //     tile.IsSpawner = true;
-                    // }
 
                     if (gridData.gridValues[index] == 5)
                     {
@@ -59,46 +51,9 @@ namespace CasualPuzzle
                         tile.Freeze();
                     }
                     
-                    
                     gridData.SetTileData(this, tile);
                     
                     index++;
-                }
-            }
-        }
-        
-        void GenerateTiles()
-        {
-            gridData.ResetTileData();
-            
-            for (int x = 0; x < gridData.columns; x++)
-            {
-                for (int y = 0; y < gridData.rows; y++)
-                {
-                    if (x == 3 && y == 4) continue;
-                    // if (x == 2 && y == 4) continue;
-                    // if (x == 2 && y == 3) continue;
-                    if (x == 1 && y == 4) continue;
-                    Vector3Int cellPos = new Vector3Int(x, y, 0);
-                    var tileWorldPos = grid.GetCellCenterWorld(cellPos);
-                    var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
-
-                    tile.gameObject.name = $"{x}, {y}";
-                    tile.cellPos = cellPos;
-                    if (tile.cellPos.y == gridData.rows - 1)
-                    {
-                        tile.IsSpawner = true;
-                    }
-
-                    if (tile.cellPos is { x: 2, y: 3 })
-                    {
-                        tile.Freeze();
-                    }
-                    if (tile.cellPos is { x: 2, y: 4 })
-                    {
-                        tile.Freeze();
-                    }
-                    gridData.SetTileData(this, tile);
                 }
             }
         }
