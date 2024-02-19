@@ -329,7 +329,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -438,14 +438,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -5177388603050735206, guid: b035711b584ab4851aaa12e6318d3363, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -477,6 +477,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tweens:
   - rid: 3689549151740887040
+  - rid: 3689549151740887043
+  - rid: 3689549151740887044
   - rid: 3689549151740887042
   references:
     version: 2
@@ -484,14 +486,32 @@ MonoBehaviour:
     - rid: 3689549151740887040
       type: {class: Mover, ns: , asm: Assembly-CSharp}
       data:
-        tr: {fileID: 1262662137}
-        pos: {x: 0, y: 0, z: 0}
-        duration: 1
+        name: btn move to initial
+        space: 10
+        tr: {fileID: 1465673073}
+        pos: {x: 0, y: -1120, z: 0}
+        duration: 0
     - rid: 3689549151740887042
       type: {class: Mover, ns: , asm: Assembly-CSharp}
       data:
+        name: move button
+        space: 10
         tr: {fileID: 1465673073}
-        pos: {x: 0, y: 0, z: 0}
+        pos: {x: 0, y: -200, z: 0}
+        duration: 1
+    - rid: 3689549151740887043
+      type: {class: Scaler, ns: , asm: Assembly-CSharp}
+      data:
+        name: scale zero bg
+        tr: {fileID: 1262662137}
+        scale: {x: 0, y: 0, z: 0}
+        duration: 0
+    - rid: 3689549151740887044
+      type: {class: Scaler, ns: , asm: Assembly-CSharp}
+      data:
+        name: scale up
+        tr: {fileID: 1262662137}
+        scale: {x: 1, y: 1, z: 1}
         duration: 1
 --- !u!1 &1262662136
 GameObject:

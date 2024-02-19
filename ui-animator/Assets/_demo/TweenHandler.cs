@@ -2,18 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using NaughtyAttributes;
 using UnityEngine;
 
 public class TweenHandler : MonoBehaviour
 {
     [SerializeReference, SubclassSelector] public List<TweenHandle> tweens;
 
-    void Update()
+    [Button]
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(ExecuteTweens());
-        }
+        StartCoroutine(ExecuteTweens());
     }
 
     IEnumerator ExecuteTweens()
@@ -32,22 +31,51 @@ public class TweenHandler : MonoBehaviour
     }
 }
 
+public enum SpaceE
+{
+    world = 0,
+    local = 10,
+}
+
 [Serializable]
 public abstract class TweenHandle
 {
+    public string name;
     public abstract Tween Do();
 }
 
 [Serializable]
 public class Mover : TweenHandle
 {
+    [SerializeField] SpaceE space;
     [SerializeField] RectTransform tr;
     [SerializeField] Vector3 pos;
     [SerializeField] float duration;
     
     public override Tween Do()
     {
-        return tr.DOMove(pos, duration);
+        switch (space)
+        {
+            case SpaceE.world:
+                return tr.DOMove(pos, duration);
+            case SpaceE.local:
+                return tr.DOLocalMove(pos, duration);
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+}
+
+[Serializable]
+public class Scaler : TweenHandle
+{
+    [SerializeField] RectTransform tr;
+    [SerializeField] Vector3 scale;
+    [SerializeField] float duration;
+    
+    public override Tween Do()
+    {
+        return tr.DOScale(scale, duration);
     }
 }
 
