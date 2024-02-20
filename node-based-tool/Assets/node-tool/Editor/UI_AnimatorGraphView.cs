@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,11 +10,26 @@ namespace UI_Animator
     {
         public UI_AnimatorGraphView()
         {
+            SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
             AddElement(CreateStartNode());
+        }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            var compatiblePorts = new List<Port>();
+
+            foreach (Port port in ports)
+            {
+                if(startPort == port || startPort.node == port.node) continue;
+                
+                compatiblePorts.Add(port);
+            }
+
+            return compatiblePorts;
         }
 
         UI_AnimatorNode CreateStartNode()
@@ -42,9 +58,20 @@ namespace UI_Animator
             
             node.SetPosition(new Rect(300, 200, 100, 150));
 
+            var btn = new Button(() => { AddOutputPort(node);});
+            btn.text = "Add";
+            node.titleContainer.Add(btn);
+
             AddPort(node, Direction.Input, "input");
             
             AddElement(node);
+        }
+
+        void AddOutputPort(UI_AnimatorNode node)
+        {
+            var outputPortCount = node.outputContainer.Query("connector").ToList().Count;
+            var portName = $"output {outputPortCount + 1}";
+            AddPort(node, Direction.Output, portName);
         }
 
         Port AddPort(UI_AnimatorNode node, Direction portDirection, string portName, Port.Capacity capacity = Port.Capacity.Single)
