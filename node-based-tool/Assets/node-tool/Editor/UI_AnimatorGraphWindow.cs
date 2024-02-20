@@ -32,12 +32,29 @@ namespace UI_Animator
         void InstantiateToolbar()
         {
             var tb = new Toolbar();
+            
+            string fileName = "New Graph";
+            var fileNameTextField = new TextField("File Name:");
+            fileNameTextField.SetValueWithoutNotify(fileName);
+            fileNameTextField.MarkDirtyRepaint();
+            fileNameTextField.RegisterValueChangedCallback(evt => fileName = evt.newValue);
+            tb.Add(fileNameTextField);
+            
+            tb.Add(new Button(() => SaveData(fileName)) {text = "Save Data"});
 
-            var nodeCreateBtn = new Button(() => { graphView.CreateNode("CreatedNode"); });
-            nodeCreateBtn.text = "Create Node";
-            tb.Add(nodeCreateBtn);
+            tb.Add(new Button(() => { graphView.CreateNode("CreatedNode"); }) { text = "Create Node" });
             
             rootVisualElement.Add(tb);
+        }
+
+        void SaveData(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                EditorUtility.DisplayDialog("Invalid File name", "Please Enter a valid filename", "OK");
+                return;
+            }
+            GraphSaveUtility.Save(fileName, graphView.nodes.ToList());
         }
 
         void OnDisable()
