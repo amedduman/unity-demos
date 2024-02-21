@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc24578a2174ae4ae3be68cb6e9724a, type: 3}
   m_Name: New Graph
   m_EditorClassIdentifier: 
-  nodeGuids: []
+  nodes:
+  - <guid>k__BackingField: bfd6f77f-0980-4c85-99a6-a3b81c2c747e
+    <rect>k__BackingField:
+      serializedVersion: 2
+      x: 300
+      y: 200
+      width: 146
+      height: 77
+  edges: []

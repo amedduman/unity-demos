@@ -6,16 +6,16 @@ using UnityEngine.UIElements;
 
 namespace UI_Animator
 {
-    public class UI_AnimatorGraphView : GraphView
+    public class BaseGraphView : GraphView
     {
-        public UI_AnimatorGraphView()
+        public BaseGraphView()
         {
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            AddElement(CreateStartNode());
+            // AddElement(CreateStartNode());
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -32,10 +32,9 @@ namespace UI_Animator
             return compatiblePorts;
         }
 
-        UI_AnimatorNode CreateStartNode()
+        BaseNode CreateStartNode()
         {
-            // var node = new UI_AnimatorNode(Guid.NewGuid())
-            var node = new UI_AnimatorNode()
+            var node = new BaseNode()
             {
                 title = "Start",
                 entry = true,
@@ -49,16 +48,18 @@ namespace UI_Animator
             return node;
         }
 
-        public void CreateNode(string nodeTitle)
+        public void CreateNode(string nodeTitle, Rect rect, string guid = "")
         {
-            // var node = new UI_AnimatorNode(Guid.NewGuid())
-            var node = new UI_AnimatorNode()
+            var node = new BaseNode()
             {
                 title = nodeTitle,
                 testText = nodeTitle
             };
+
+            if (guid != "")
+                node.viewDataKey = guid;
             
-            node.SetPosition(new Rect(300, 200, 100, 150));
+            node.SetPosition(rect);
 
             var btn = new Button(() => { AddOutputPort(node);});
             btn.text = "Add";
@@ -69,14 +70,14 @@ namespace UI_Animator
             AddElement(node);
         }
 
-        void AddOutputPort(UI_AnimatorNode node)
+        void AddOutputPort(BaseNode node)
         {
             var outputPortCount = node.outputContainer.Query("connector").ToList().Count;
             var portName = $"output {outputPortCount + 1}";
             AddPort(node, Direction.Output, portName);
         }
 
-        Port AddPort(UI_AnimatorNode node, Direction portDirection, string portName, Port.Capacity capacity = Port.Capacity.Single)
+        Port AddPort(BaseNode node, Direction portDirection, string portName, Port.Capacity capacity = Port.Capacity.Single)
         {
             var p = node.InstantiatePort(Orientation.Horizontal, portDirection, capacity, typeof(float));
             p.portName = portName;
