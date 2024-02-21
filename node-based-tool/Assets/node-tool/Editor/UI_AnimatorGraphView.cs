@@ -34,7 +34,8 @@ namespace UI_Animator
 
         UI_AnimatorNode CreateStartNode()
         {
-            var node = new UI_AnimatorNode(Guid.NewGuid())
+            // var node = new UI_AnimatorNode(Guid.NewGuid())
+            var node = new UI_AnimatorNode()
             {
                 title = "Start",
                 entry = true,
@@ -50,7 +51,8 @@ namespace UI_Animator
 
         public void CreateNode(string nodeTitle)
         {
-            var node = new UI_AnimatorNode(Guid.NewGuid())
+            // var node = new UI_AnimatorNode(Guid.NewGuid())
+            var node = new UI_AnimatorNode()
             {
                 title = nodeTitle,
                 testText = nodeTitle

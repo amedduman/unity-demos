@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEditor;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine;
 
 namespace UI_Animator
 {
@@ -9,36 +9,29 @@ namespace UI_Animator
     {
         public static void Save(GraphDataContainerSo containerSo, List<Node> nodes)
         {
-            // var dialogueContainerObject = ScriptableObject.CreateInstance<GraphDataContainerSo>();
-            //
-            // if (AssetDatabase.IsValidFolder("Assets/Resources") == false)
-            //     AssetDatabase.CreateFolder("Assets", "Resources");
-            //
-            // Object loadedAsset = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphDataContainerSo));
-            //
-            // if (loadedAsset == null || AssetDatabase.Contains(loadedAsset) == false) 
-            // {
-            //     AssetDatabase.CreateAsset(dialogueContainerObject, $"Assets/Resources/{fileName}.asset");
-            // }
-            //
-            // Object loadedAsset2 = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphDataContainerSo));
-
-            List<ISavedNodeData> savedNodeDataList = new List<ISavedNodeData>();
-            foreach (Node node in nodes)
-            {
-                savedNodeDataList.Add(node as ISavedNodeData);
-            }
-            
-            WriteData(containerSo, savedNodeDataList);
+            // var savedNodeDataList = nodes.Select(node => node as ISavedNodeData).ToList();
+            WriteData(containerSo, nodes);
+            // WriteData(containerSo, savedNodeDataList);
         }
 
-        static void WriteData(GraphDataContainerSo container, List<ISavedNodeData> nodeDataList)
+        // static void WriteData(GraphDataContainerSo container, List<ISavedNodeData> nodeDataList)
+        // {
+        //     container.nodeGuids.Clear();
+        //
+        //     foreach (var node in nodeDataList)
+        //     {
+        //         container.nodeGuids.Add(node.guid.ToString());
+        //     }
+        // }
+        
+        static void WriteData(GraphDataContainerSo container, List<Node> nodes)
         {
-            container.nodeGuids.Clear();
+            container.ResetData();
 
-            foreach (var node in nodeDataList)
+            foreach (var node in nodes)
             {
-                container.nodeGuids.Add(node.guid.ToString());
+                container.keys.Add(node.viewDataKey);
+                container.rects.Add(node.GetPosition());
             }
         }
     }

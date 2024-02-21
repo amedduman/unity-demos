@@ -35,32 +35,20 @@ namespace UI_Animator
         {
             var tb = new Toolbar();
             
-            string fileName = "New Graph";
-            // var fileNameTextField = new TextField("File Name:");
-            // fileNameTextField.SetValueWithoutNotify(fileName);
-            // fileNameTextField.MarkDirtyRepaint();
-            // fileNameTextField.RegisterValueChangedCallback(evt => fileName = evt.newValue);
-            // tb.Add(fileNameTextField);
-            
-            tb.Add(new Button(() => SaveData(fileName)) {text = "Save Data"});
-
+            tb.Add(new Button(SaveData) {text = "Save Data"});
             tb.Add(new Button(() => { graphView.CreateNode("CreatedNode"); }) { text = "Create Node" });
             
             rootVisualElement.Add(tb);
         }
 
-        void SaveData(string fileName)
+        void SaveData()
         {
-            // if (string.IsNullOrEmpty(fileName))
-            // {
-            //     EditorUtility.DisplayDialog("Invalid File name", "Please Enter a valid filename", "OK");
-            //     return;
-            // }
             GraphSaveUtility.Save(graphDataContainer, graphView.nodes.ToList());
         }
 
         void OnDisable()
         {
+            graphDataContainer = null;
             rootVisualElement.Remove(graphView);
         }
     }
