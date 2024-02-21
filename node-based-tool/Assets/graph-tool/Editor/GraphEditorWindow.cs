@@ -1,22 +1,37 @@
 using System;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace UI_Animator
 {
-    public class UI_AnimatorGraphWindow : EditorWindow
+    public class GraphEditorWindow : EditorWindow
     {
         BaseGraphView graphView;
         static GraphDataContainerSo graphDataContainer;
         
-        public static void Open(GraphDataContainerSo container)
+        [OnOpenAsset]
+        public static bool Open(int instanceId, int line)
+        {
+            UnityEngine.Object obj = EditorUtility.InstanceIDToObject(instanceId);
+
+            if (obj is GraphDataContainerSo containerSo)
+            {
+                Open(containerSo);
+                return true;
+            }
+
+            return false;
+        }
+        
+        static void Open(GraphDataContainerSo container)
         {
             graphDataContainer = container;
             
-            var window = GetWindow<UI_AnimatorGraphWindow>();
-            window.titleContent = new GUIContent("UI Animator");
+            var window = GetWindow<GraphEditorWindow>();
+            window.titleContent = new GUIContent("Graph");
         }
 
         void OnEnable()
