@@ -11,9 +11,9 @@ namespace UI_Animator
         {
             Object obj = EditorUtility.InstanceIDToObject(instanceId);
 
-            if (obj is GraphDataContainerSo)
+            if (obj is GraphDataContainerSo containerSo)
             {
-                UI_AnimatorGraphWindow.Open();
+                UI_AnimatorGraphWindow.Open(containerSo);
                 return true;
             }
 

@@ -7,21 +7,21 @@ namespace UI_Animator
 {
     public static class GraphSaveUtility
     {
-        public static void Save(string fileName, List<Node> nodes)
+        public static void Save(GraphDataContainerSo containerSo, List<Node> nodes)
         {
-            var dialogueContainerObject = ScriptableObject.CreateInstance<GraphDataContainerSo>();
-            
-            if (AssetDatabase.IsValidFolder("Assets/Resources") == false)
-                AssetDatabase.CreateFolder("Assets", "Resources");
-
-            Object loadedAsset = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphDataContainerSo));
-
-            if (loadedAsset == null || AssetDatabase.Contains(loadedAsset) == false) 
-            {
-                AssetDatabase.CreateAsset(dialogueContainerObject, $"Assets/Resources/{fileName}.asset");
-            }
-            
-            Object loadedAsset2 = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphDataContainerSo));
+            // var dialogueContainerObject = ScriptableObject.CreateInstance<GraphDataContainerSo>();
+            //
+            // if (AssetDatabase.IsValidFolder("Assets/Resources") == false)
+            //     AssetDatabase.CreateFolder("Assets", "Resources");
+            //
+            // Object loadedAsset = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphDataContainerSo));
+            //
+            // if (loadedAsset == null || AssetDatabase.Contains(loadedAsset) == false) 
+            // {
+            //     AssetDatabase.CreateAsset(dialogueContainerObject, $"Assets/Resources/{fileName}.asset");
+            // }
+            //
+            // Object loadedAsset2 = AssetDatabase.LoadAssetAtPath($"Assets/Resources/{fileName}.asset", typeof(GraphDataContainerSo));
 
             List<ISavedNodeData> savedNodeDataList = new List<ISavedNodeData>();
             foreach (Node node in nodes)
@@ -29,7 +29,7 @@ namespace UI_Animator
                 savedNodeDataList.Add(node as ISavedNodeData);
             }
             
-            WriteData(loadedAsset2 as GraphDataContainerSo, savedNodeDataList);
+            WriteData(containerSo, savedNodeDataList);
         }
 
         static void WriteData(GraphDataContainerSo container, List<ISavedNodeData> nodeDataList)
