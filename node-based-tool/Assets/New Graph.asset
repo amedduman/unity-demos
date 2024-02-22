@@ -12,33 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc24578a2174ae4ae3be68cb6e9724a, type: 3}
   m_Name: New Graph
   m_EditorClassIdentifier: 
-  nodes:
-  - <guid>k__BackingField: cb4b7e52-1309-447a-a7a3-20e06935520e
-    <rect>k__BackingField:
-      serializedVersion: 2
-      x: 300
-      y: 332
-      width: 146
-      height: 77
-  - <guid>k__BackingField: 04a32bb1-ba1e-4de6-95d3-59619cf0bc90
-    <rect>k__BackingField:
-      serializedVersion: 2
-      x: 121
-      y: 200
-      width: 146
-      height: 77
-  - <guid>k__BackingField: bfd6f77f-0980-4c85-99a6-a3b81c2c747e
-    <rect>k__BackingField:
-      serializedVersion: 2
-      x: 419
-      y: 200
-      width: 146
-      height: 77
-  - <guid>k__BackingField: baa7f7f5-f589-4a7e-b2ee-0a51750b328c
-    <rect>k__BackingField:
-      serializedVersion: 2
-      x: 169
-      y: 123
-      width: 146
-      height: 77
+  nodes: []
   edges: []

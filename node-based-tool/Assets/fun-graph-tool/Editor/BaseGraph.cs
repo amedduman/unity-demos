@@ -4,14 +4,14 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UI_Animator
+namespace Fun
 {
-    public class BaseGraphView : GraphView
+    public class BaseGraph : GraphView
     {
-        NodeSearchProvider searchProvider = ScriptableObject.CreateInstance<NodeSearchProvider>();
+        readonly NodeSearchProvider searchProvider;
         public GraphEditorWindow window { get; private set; }
         
-        public BaseGraphView(GraphEditorWindow window)
+        public BaseGraph(GraphEditorWindow window)
         {
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
@@ -23,7 +23,6 @@ namespace UI_Animator
             searchProvider = ScriptableObject.CreateInstance<NodeSearchProvider>();
             searchProvider.graphView = this;
             nodeCreationRequest = ShowSearchWindow;
-            // AddSearchWindow();
         }
 
         void ShowSearchWindow(NodeCreationContext context)
@@ -31,13 +30,6 @@ namespace UI_Animator
             searchProvider.target = (VisualElement)focusController.focusedElement;
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchProvider);
         }
-
-        // void AddSearchWindow()
-        // {
-        //     
-        //     nodeCreationRequest = context =>    
-        //         SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchProvider);
-        // }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
@@ -53,30 +45,8 @@ namespace UI_Animator
             return compatiblePorts;
         }
 
-        // Node CreateStartNode()
-        // {
-        //     // var node = new BaseNode()
-        //     // {
-        //     //     // title = "Start",
-        //     //     entry = true,
-        //     //     testText = "Test"
-        //     // };
-        //     var node = new Node();
-        //
-        //     node.SetPosition(new Rect(100, 200, 100, 150));
-        //     
-        //     AddPort(node, Direction.Output, "next");
-        //     
-        //     return node;
-        // }
-
         public void CreateNode(string nodeTitle, Rect rect, string guid = "")
         {
-            //var node = new BaseNode()
-            //{
-            //     title = nodeTitle,
-            //     testText = nodeTitle
-            //};
             var node = new Node();
 
             if (guid != "")
@@ -93,12 +63,9 @@ namespace UI_Animator
             AddElement(node);
         }
 
-        public void AddNode(BaseNode baseNode)
+        public void AddNode(NodeData nodeData)
         {
-            var node = new Node();
-
-            node.SetPosition(baseNode.rect);
-            node.title = baseNode.title;
+            var node = new NodeEditor(nodeData);
             
             node.RefreshPorts();
             node.RefreshExpandedState();

@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace UI_Animator
+namespace Fun
 {
     [NodeInfo("SomeNodes/Log")]
-    public class LogNode : BaseNode
+    public class LogNodeData : NodeData
     {
     }
 }

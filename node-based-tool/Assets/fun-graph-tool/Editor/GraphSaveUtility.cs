@@ -1,17 +1,17 @@
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
-namespace UI_Animator
+namespace Fun
 {
     public static class GraphSaveUtility
     {
-        public static void Save(GraphDataContainerSo containerSo, BaseGraphView graphView)
+        public static void Save(GraphDataContainerSo containerSo, BaseGraph graphView)
         {
             containerSo.ResetData();
 
             foreach (var node in graphView.nodes)
             {
-                containerSo.nodes.Add(new NodeData(node.viewDataKey, node.GetPosition()));
+                containerSo.nodes.Add(new NodeDataToSave(node.viewDataKey, node.GetPosition()));
             }
 
             foreach (Edge edge in graphView.edges)
@@ -26,7 +26,7 @@ namespace UI_Animator
             AssetDatabase.Refresh();
         }
 
-        public static void Load(GraphDataContainerSo containerSo, BaseGraphView graphView)
+        public static void Load(GraphDataContainerSo containerSo, BaseGraph graphView)
         {
             foreach (var node in containerSo.nodes)
             {

@@ -5,11 +5,11 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UI_Animator
+namespace Fun
 {
     public class GraphEditorWindow : EditorWindow
     {
-        BaseGraphView graphView;
+        BaseGraph graphView;
         static GraphDataContainerSo graphDataContainer;
         
         [OnOpenAsset]
@@ -44,7 +44,7 @@ namespace UI_Animator
 
         void InstantiateGraphView()
         {
-            graphView = new BaseGraphView(this);
+            graphView = new BaseGraph(this);
             graphView.StretchToParentSize();
             rootVisualElement.Add(graphView);
         }
@@ -54,7 +54,6 @@ namespace UI_Animator
             var tb = new Toolbar();
             
             tb.Add(new Button(SaveData) {text = "Save Data"});
-            // tb.Add(new Button(() => { graphView.CreateNode("CreatedNode", new Rect(300, 200, 100, 150)); }) { text = "Create Node" });
             
             rootVisualElement.Add(tb);
         }

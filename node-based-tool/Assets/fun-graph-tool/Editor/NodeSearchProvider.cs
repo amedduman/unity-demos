@@ -6,11 +6,11 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UI_Animator
+namespace Fun
 {
     public class NodeSearchProvider : ScriptableObject, ISearchWindowProvider
     {
-        public BaseGraphView graphView;
+        public BaseGraph graphView;
         public VisualElement target;
         public List<SearchContextElement> elements;
         
@@ -72,10 +72,10 @@ namespace UI_Animator
             var graphMousePos = graphView.contentViewContainer.WorldToLocal(windowMousePos);
 
             var element = (SearchContextElement)SearchTreeEntry.userData;
-            BaseNode node = (BaseNode)element.target;
-            node.rect = new Rect(graphMousePos, new Vector2(100,100));
-            node.title = element.title.Split("/").Last();
-            graphView.AddNode(node);
+            NodeData nodeData = (NodeData)element.target;
+            nodeData.rect = new Rect(graphMousePos, new Vector2(100,100));
+            nodeData.title = element.title.Split("/").Last();
+            graphView.AddNode(nodeData);
             return true;
         }
     }

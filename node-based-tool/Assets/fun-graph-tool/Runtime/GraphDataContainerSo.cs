@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI_Animator
+namespace Fun
 {
     public class GraphDataContainerSo : ScriptableObject
     {
-        public List<NodeData> nodes = new List<NodeData>();
+        public List<NodeDataToSave> nodes = new List<NodeDataToSave>();
         public List<EdgeData> edges = new List<EdgeData>();
 
         [ContextMenu("resetData")]
@@ -17,12 +17,12 @@ namespace UI_Animator
     }
 
     [System.Serializable]
-    public struct NodeData
+    public struct NodeDataToSave
     {
         [field:SerializeField] public string guid{get; private set;}
         [field:SerializeField] public Rect rect{get; private set;}
 
-        public NodeData(string guid, Rect rect)
+        public NodeDataToSave(string guid, Rect rect)
         {
             this.guid = guid;
             this.rect = rect;
