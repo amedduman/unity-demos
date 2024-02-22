@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 namespace Fun
 {
@@ -14,7 +15,7 @@ namespace Fun
 
             Type t = nodeData.GetType();
             var info = t.GetCustomAttribute<NodeInfoAttribute>();
-
+            
             if (info.hasEnter)
             {
                 var p = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(float));
@@ -32,6 +33,19 @@ namespace Fun
                 
                 RefreshPorts(); 
                 RefreshExpandedState();
+            }
+
+            foreach (var field in t.GetFields())
+            {
+                if (field.GetCustomAttribute<ExposedFieldAttribute>() != null)
+                {
+                    var p = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, field.FieldType);
+                    p.portName = field.Name;
+                    inputContainer.Add(p);
+                
+                    RefreshPorts(); 
+                    RefreshExpandedState();
+                }
             }
 
             SetNode();
