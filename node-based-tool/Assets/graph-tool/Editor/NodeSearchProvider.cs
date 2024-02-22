@@ -10,7 +10,7 @@ namespace UI_Animator
 {
     public class NodeSearchProvider : ScriptableObject, ISearchWindowProvider
     {
-        public GraphView graphView;
+        public BaseGraphView graphView;
         public VisualElement target;
         public List<SearchContextElement> elements;
         
@@ -58,7 +58,7 @@ namespace UI_Animator
 
                 var entry = new SearchTreeEntry(new GUIContent(entryTitle.Last()));
                 entry.level = entryTitle.Length;
-                entry.userData = new SearchContextElement(element.target, element.title);
+                entry.userData = element;
                 tree.Add(entry);
             }
 
@@ -67,14 +67,16 @@ namespace UI_Animator
 
         public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
         {
-            switch (SearchTreeEntry.userData)
-            {
-                case BaseNode:
-                    Debug.Log("base node selected");
-                    return true;
-                default:
-                    return true;
-            }
+            var windowMousePos = graphView.ChangeCoordinatesTo(graphView,
+                context.screenMousePosition - graphView.window.position.position);
+            var graphMousePos = graphView.contentViewContainer.WorldToLocal(windowMousePos);
+
+            var element = (SearchContextElement)SearchTreeEntry.userData;
+            BaseNode node = (BaseNode)element.target;
+            node.rect = new Rect(graphMousePos, new Vector2(100,100));
+            node.title = element.title.Split("/").Last();
+            graphView.AddNode(node);
+            return true;
         }
     }
 

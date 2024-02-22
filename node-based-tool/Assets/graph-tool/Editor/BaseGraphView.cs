@@ -9,31 +9,35 @@ namespace UI_Animator
     public class BaseGraphView : GraphView
     {
         NodeSearchProvider searchProvider = ScriptableObject.CreateInstance<NodeSearchProvider>();
+        public GraphEditorWindow window { get; private set; }
         
-        public BaseGraphView()
+        public BaseGraphView(GraphEditorWindow window)
         {
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
+            this.window = window;
+            
             searchProvider = ScriptableObject.CreateInstance<NodeSearchProvider>();
             searchProvider.graphView = this;
             nodeCreationRequest = ShowSearchWindow;
-            AddSearchWindow();
+            // AddSearchWindow();
         }
 
         void ShowSearchWindow(NodeCreationContext context)
         {
-            
+            searchProvider.target = (VisualElement)focusController.focusedElement;
+            SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchProvider);
         }
 
-        void AddSearchWindow()
-        {
-            
-            nodeCreationRequest = context =>    
-                SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchProvider);
-        }
+        // void AddSearchWindow()
+        // {
+        //     
+        //     nodeCreationRequest = context =>    
+        //         SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchProvider);
+        // }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
@@ -49,22 +53,22 @@ namespace UI_Animator
             return compatiblePorts;
         }
 
-        Node CreateStartNode()
-        {
-            // var node = new BaseNode()
-            // {
-            //     // title = "Start",
-            //     entry = true,
-            //     testText = "Test"
-            // };
-            var node = new Node();
-
-            node.SetPosition(new Rect(100, 200, 100, 150));
-            
-            AddPort(node, Direction.Output, "next");
-            
-            return node;
-        }
+        // Node CreateStartNode()
+        // {
+        //     // var node = new BaseNode()
+        //     // {
+        //     //     // title = "Start",
+        //     //     entry = true,
+        //     //     testText = "Test"
+        //     // };
+        //     var node = new Node();
+        //
+        //     node.SetPosition(new Rect(100, 200, 100, 150));
+        //     
+        //     AddPort(node, Direction.Output, "next");
+        //     
+        //     return node;
+        // }
 
         public void CreateNode(string nodeTitle, Rect rect, string guid = "")
         {
@@ -85,6 +89,19 @@ namespace UI_Animator
             node.titleContainer.Add(btn);
 
             AddPort(node, Direction.Input, "input");
+            
+            AddElement(node);
+        }
+
+        public void AddNode(BaseNode baseNode)
+        {
+            var node = new Node();
+
+            node.SetPosition(baseNode.rect);
+            node.title = baseNode.title;
+            
+            node.RefreshPorts();
+            node.RefreshExpandedState();
             
             AddElement(node);
         }

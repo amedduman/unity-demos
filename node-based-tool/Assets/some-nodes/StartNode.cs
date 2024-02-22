@@ -5,6 +5,5 @@ namespace UI_Animator
     [NodeInfo("SomeNodes/Start")]
     public class StartNode : BaseNode 
     {
-        
     }
 }

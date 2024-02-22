@@ -44,7 +44,7 @@ namespace UI_Animator
 
         void InstantiateGraphView()
         {
-            graphView = new BaseGraphView();
+            graphView = new BaseGraphView(this);
             graphView.StretchToParentSize();
             rootVisualElement.Add(graphView);
         }
@@ -54,7 +54,7 @@ namespace UI_Animator
             var tb = new Toolbar();
             
             tb.Add(new Button(SaveData) {text = "Save Data"});
-            tb.Add(new Button(() => { graphView.CreateNode("CreatedNode", new Rect(300, 200, 100, 150)); }) { text = "Create Node" });
+            // tb.Add(new Button(() => { graphView.CreateNode("CreatedNode", new Rect(300, 200, 100, 150)); }) { text = "Create Node" });
             
             rootVisualElement.Add(tb);
         }
