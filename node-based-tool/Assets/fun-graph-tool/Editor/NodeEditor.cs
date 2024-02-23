@@ -18,7 +18,7 @@ namespace Fun
             
             if (info.hasEnter)
             {
-                var p = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(float));
+                var p = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(ExecutionPort));
                 p.portName = "enter";
                 inputContainer.Add(p);
                 
@@ -27,7 +27,7 @@ namespace Fun
             }
             if (info.hasExit)
             {
-                var p = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(float));
+                var p = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(ExecutionPort));
                 p.portName = "exit";
                 outputContainer.Add(p);
                 
@@ -37,15 +37,27 @@ namespace Fun
 
             foreach (var field in t.GetFields())
             {
-                if (field.GetCustomAttribute<ExposedFieldAttribute>() != null)
-                {
-                    var p = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, field.FieldType);
-                    p.portName = field.Name;
-                    inputContainer.Add(p);
+                var att = field.GetCustomAttribute<ExposedFieldAttribute>();
                 
-                    RefreshPorts(); 
-                    RefreshExpandedState();
+                if (att == null) continue;
+
+                var p = InstantiatePort(Orientation.Horizontal, att.direction , Port.Capacity.Single, field.FieldType);
+                p.portName = field.Name;
+                    
+                switch (att.direction)
+                {
+                    case Direction.Input:
+                        inputContainer.Add(p);
+                        break;
+                    case Direction.Output:
+                        outputContainer.Add(p);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
+                
+                RefreshPorts(); 
+                RefreshExpandedState();
             }
 
             SetNode();

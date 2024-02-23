@@ -38,8 +38,9 @@ namespace Fun
             foreach (Port port in ports)
             {
                 if(startPort == port || startPort.node == port.node) continue;
-                
-                compatiblePorts.Add(port);
+
+                if(startPort.portType == port.portType)
+                    compatiblePorts.Add(port);
             }
 
             return compatiblePorts;
