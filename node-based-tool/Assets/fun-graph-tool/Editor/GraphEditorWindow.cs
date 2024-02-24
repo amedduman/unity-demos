@@ -44,7 +44,7 @@ namespace Fun
 
         void InstantiateGraphView()
         {
-            graphView = new BaseGraph(this);
+            graphView = new BaseGraph(this, graphDataContainer);
             graphView.StretchToParentSize();
             rootVisualElement.Add(graphView);
         }
@@ -61,6 +61,7 @@ namespace Fun
         void SaveData()
         {
             GraphSaveUtility.Save(graphDataContainer, graphView);
+            graphView.Save();
         }
 
         void LoadData()

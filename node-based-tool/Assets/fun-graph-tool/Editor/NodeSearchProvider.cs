@@ -73,7 +73,7 @@ namespace Fun
 
             var element = (SearchContextElement)SearchTreeEntry.userData;
             NodeData nodeData = (NodeData)element.target;
-            nodeData.rect = new Rect(graphMousePos, new Vector2(100,100));
+            nodeData.rect = new Rect(graphMousePos, Vector2.zero); // given size seems to be doesn't matter
             nodeData.title = element.title.Split("/").Last();
             graphView.AddNode(nodeData);
             return true;

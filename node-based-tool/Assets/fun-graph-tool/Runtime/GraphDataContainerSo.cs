@@ -5,15 +5,16 @@ namespace Fun
 {
     public class GraphDataContainerSo : ScriptableObject
     {
-        public List<NodeDataToSave> nodes = new List<NodeDataToSave>();
-        public List<EdgeData> edges = new List<EdgeData>();
+        public List<NodeData> nodeDataList = new List<NodeData>();
+        // public List<NodeDataToSave> nodes = new List<NodeDataToSave>();
+        // public List<EdgeData> edges = new List<EdgeData>();
 
-        [ContextMenu("resetData")]
-        public void ResetData()
-        {
-            nodes.Clear();
-            edges.Clear();
-        }
+        // [ContextMenu("resetData")]
+        // public void ResetData()
+        // {
+            // nodes.Clear();
+            // edges.Clear();
+        // }
     }
 
     [System.Serializable]

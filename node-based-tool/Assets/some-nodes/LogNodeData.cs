@@ -7,5 +7,10 @@ namespace Fun
     {
         [ExposedField]
         public string message;
+        
+        public override void Execute()
+        {
+            Debug.Log("log node called");
+        }
     }
 }
