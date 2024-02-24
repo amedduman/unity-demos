@@ -1,11 +1,11 @@
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 
-namespace Fun
+namespace VisualVerse
 {
     public static class GraphSaveUtility
     {
-        public static void Save(GraphDataContainerSo containerSo, BaseGraph graphView)
+        public static void Save(VV_GraphData containerSo, VV_Graph graphView)
         {
             // containerSo.ResetData();
             //
@@ -26,7 +26,7 @@ namespace Fun
             // AssetDatabase.Refresh();
         }
 
-        public static void Load(GraphDataContainerSo containerSo, BaseGraph graphView)
+        public static void Load(VV_GraphData containerSo, VV_Graph graphView)
         {
             // foreach (var node in containerSo.nodes)
             // {

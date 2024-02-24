@@ -2,22 +2,22 @@ using System;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
 
-namespace Fun
+namespace VisualVerse
 {
-    public sealed class NodeEditor : Node
+    public sealed class VV_NodeEditor : Node
     {
-        readonly NodeData nodeData;
+        readonly VV_NodeRuntime vNode;
 
-        public NodeEditor(NodeData nd)
+        public VV_NodeEditor(VV_NodeRuntime n)
         {
-            nodeData = nd;
+            vNode = n;
 
-            nodeData.editorNodeGuid = viewDataKey;
+            vNode.editorNodeGuid = viewDataKey;
             
-            Type t = nodeData.GetType();
+            Type t = vNode.GetType();
             var info = t.GetCustomAttribute<NodeInfoAttribute>();
 
-            if (info.isStartNode) nodeData.isStartNode = true;
+            if (info.isStartNode) vNode.isStartNode = true;
             
             if (info.hasEnter)
             {
@@ -68,8 +68,8 @@ namespace Fun
 
         void SetNode()
         {
-            SetPosition(nodeData.rect);
-            title = nodeData.title;
+            SetPosition(vNode.rect);
+            title = vNode.title;
         }
     }
 }

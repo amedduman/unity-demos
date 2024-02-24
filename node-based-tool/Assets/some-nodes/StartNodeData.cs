@@ -1,9 +1,7 @@
-using UnityEngine;
-
-namespace Fun
+namespace VisualVerse
 {
     [NodeInfo("SomeNodes/Start",false, true, true)]
-    public class StartNodeData : NodeData 
+    public class StartNodeData : VV_NodeRuntime 
     {
         public override void Execute()
         {

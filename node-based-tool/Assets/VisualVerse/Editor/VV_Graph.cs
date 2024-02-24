@@ -5,16 +5,16 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Fun
+namespace VisualVerse
 {
-    public class BaseGraph : GraphView
+    public class VV_Graph : GraphView
     {
         readonly NodeSearchProvider searchProvider;
-        public GraphEditorWindow window { get; private set; }
-        public GraphDataContainerSo graphDataContainerSo;
-        readonly List<NodeData> nodeDataList;
+        public VV_GraphEditorWindow window { get; private set; }
+        public VV_GraphData graphData;
+        readonly List<VV_NodeRuntime> nodeDataList;
         
-        public BaseGraph(GraphEditorWindow window, GraphDataContainerSo graphDataContainerSo)
+        public VV_Graph(VV_GraphEditorWindow window, VV_GraphData graphDataContainerSo)
         {
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
             this.AddManipulator(new ContentDragger());
@@ -22,9 +22,9 @@ namespace Fun
             this.AddManipulator(new RectangleSelector());
 
             this.window = window;
-            this.graphDataContainerSo = graphDataContainerSo;
+            graphData = graphDataContainerSo;
 
-            nodeDataList = new List<NodeData>();
+            nodeDataList = new List<VV_NodeRuntime>();
             
             searchProvider = ScriptableObject.CreateInstance<NodeSearchProvider>();
             searchProvider.graphView = this;
@@ -75,9 +75,9 @@ namespace Fun
             SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchProvider);
         }
         
-        public void AddNode(NodeData nodeData)
+        public void AddNode(VV_NodeRuntime nodeData)
         {
-            var node = new NodeEditor(nodeData);
+            var node = new VV_NodeEditor(nodeData);
 
             nodeDataList.Add(nodeData);
             
@@ -89,8 +89,8 @@ namespace Fun
 
         public void Save()
         {
-            NodeData startNode = null;
-            foreach (NodeData nodeData in nodeDataList)
+            VV_NodeRuntime startNode = null;
+            foreach (VV_NodeRuntime nodeData in nodeDataList)
             {
                 if (nodeData.isStartNode)
                 {
@@ -128,7 +128,7 @@ namespace Fun
                 {
                     Node nextNode = connection.input.node;
                         
-                    foreach (NodeData nodeData in nodeDataList)
+                    foreach (VV_NodeRuntime nodeData in nodeDataList)
                     {
                         if (nodeData.editorNodeGuid == nextNode.viewDataKey)
                         {
@@ -141,7 +141,7 @@ namespace Fun
                 }
             }            
 
-            foreach (NodeData nodeData in nodeDataList)
+            foreach (VV_NodeRuntime nodeData in nodeDataList)
             {
                 Debug.Log(nodeData.title + " " + nodeData.order);
                 nodeData.Execute();

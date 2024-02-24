@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace Fun
+namespace VisualVerse
 {
     [System.Serializable]
-    public class NodeData
+    public class VV_NodeRuntime
     {
         public bool isStartNode { get; set; }
         public int order = -1;

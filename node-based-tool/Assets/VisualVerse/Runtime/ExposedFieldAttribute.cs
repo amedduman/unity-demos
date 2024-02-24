@@ -1,7 +1,7 @@
 using System;
 using UnityEditor.Experimental.GraphView;
 
-namespace Fun
+namespace VisualVerse
 {
     public class ExposedFieldAttribute : Attribute
     {

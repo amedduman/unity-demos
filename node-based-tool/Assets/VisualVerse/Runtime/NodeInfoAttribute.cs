@@ -1,6 +1,6 @@
 using System;
 
-namespace Fun
+namespace VisualVerse
 {
     public class NodeInfoAttribute : Attribute
     {

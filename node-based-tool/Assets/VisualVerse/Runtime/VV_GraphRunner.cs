@@ -1,14 +1,14 @@
 using UnityEngine;
 
-namespace Fun
+namespace VisualVerse
 {
-    public class GraphRunner : MonoBehaviour
+    public class VV_GraphRunner : MonoBehaviour
     {
-        GraphDataContainerSo graph;
+        VV_GraphData graph;
 
         void Start()
         {
-            foreach (NodeData nodeData in graph.nodeDataList)
+            foreach (VV_NodeRuntime nodeData in graph.nodeDataList)
             {
                 if (nodeData.isStartNode)
                     nodeData.FollowFlow();

@@ -1,9 +1,7 @@
-using UnityEngine;
-
-namespace Fun
+namespace VisualVerse
 {
     [NodeInfo("SomeNodes/Log")]
-    public class LogNodeData : NodeData
+    public class LogNodeData : VV_NodeRuntime
     {
         [ExposedField]
         public string message;

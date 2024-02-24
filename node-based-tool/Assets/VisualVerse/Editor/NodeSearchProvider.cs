@@ -6,11 +6,11 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Fun
+namespace VisualVerse
 {
     public class NodeSearchProvider : ScriptableObject, ISearchWindowProvider
     {
-        public BaseGraph graphView;
+        public VV_Graph graphView;
         public VisualElement target;
         public List<SearchContextElement> elements;
         
@@ -72,7 +72,7 @@ namespace Fun
             var graphMousePos = graphView.contentViewContainer.WorldToLocal(windowMousePos);
 
             var element = (SearchContextElement)SearchTreeEntry.userData;
-            NodeData nodeData = (NodeData)element.target;
+            VV_NodeRuntime nodeData = (VV_NodeRuntime)element.target;
             nodeData.rect = new Rect(graphMousePos, Vector2.zero); // given size seems to be doesn't matter
             nodeData.title = element.title.Split("/").Last();
             graphView.AddNode(nodeData);

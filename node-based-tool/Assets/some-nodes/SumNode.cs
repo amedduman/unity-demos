@@ -1,7 +1,7 @@
-namespace Fun
+namespace VisualVerse
 {
     [NodeInfo("SomeNodes/Sum")]
-    public class SumNode : NodeData
+    public class SumNode : VV_NodeRuntime
     {
         [ExposedField] public int a;
         [ExposedField] public int b;
