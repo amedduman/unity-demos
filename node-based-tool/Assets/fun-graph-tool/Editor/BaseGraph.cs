@@ -106,36 +106,46 @@ namespace Fun
 
             int order = 0;
             startNode.order = order;
-            
-            Node nextNode;
-            
+
             Node node = GetNodeByGuid(startNode.editorNodeGuid);
 
-            foreach (Port port in ports)
+            bool isRunning = true;
+            while (isRunning)
             {
-                if (port.node == node && port.portName == "exit")
+                foreach (Port port in ports)
                 {
-                    if (port.connections.Count() > 1)
+                    if (port.node == node && port.portName == "exit")
                     {
-                        Debug.LogError("the exit port capacity should be single");
-                        return;
-                    }
-                    
-                    foreach (var connection in port.connections)
-                    {
-                        nextNode = connection.output.node;
-                        
-                        foreach (NodeData nodeData in nodeDataList)
+                        if (!port.connections.Any())
                         {
-                            if (nodeData.editorNodeGuid == nextNode.viewDataKey)
+                            isRunning = false;
+                            break;
+                        }
+                        // Debug.Log(port.connections.Count() + " " + port.portName + " " + node.title);
+                        if (port.connections.Count() > 1)
+                        {
+                            Debug.LogError("the exit port capacity should be single");
+                            return;
+                        }
+                    
+                        foreach (var connection in port.connections)
+                        {
+                            Node nextNode = connection.input.node;
+                        
+                            foreach (NodeData nodeData in nodeDataList)
                             {
-                                order += 1;
-                                nodeData.order = order;
+                                if (nodeData.editorNodeGuid == nextNode.viewDataKey)
+                                {
+                                    order += 1;
+                                    nodeData.order = order;
+                                }
                             }
+
+                            node = nextNode;
                         }
                     }
                 }
-            }
+            }            
 
             foreach (NodeData nodeData in nodeDataList)
             {

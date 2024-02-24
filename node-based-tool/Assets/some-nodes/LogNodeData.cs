@@ -10,7 +10,7 @@ namespace Fun
         
         public override void Execute()
         {
-            Debug.Log("log node called");
+            // Debug.Log("log node called");
         }
     }
 }
