@@ -7,5 +7,9 @@ namespace VisualVerse
         [ExposedField] public int b;
 
         [ExposedField(false)] public int sum;
+        public override void Execute()
+        {
+            
+        }
     }
 }

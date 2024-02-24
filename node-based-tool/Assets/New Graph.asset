@@ -12,5 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc24578a2174ae4ae3be68cb6e9724a, type: 3}
   m_Name: New Graph
   m_EditorClassIdentifier: 
-  nodes: []
-  edges: []
+  vvNodes:
+  - rid: 3689549264730718209
+  references:
+    version: 2
+    RefIds:
+    - rid: 3689549264730718209
+      type: {class: StartNode, ns: VisualVerse, asm: Assembly-CSharp}
+      data:
+        title: Start
+        order: 0
+        editorNodeGuid: 21c3c900-e271-4a12-9aba-3345fa42fb07

@@ -4,14 +4,16 @@ namespace VisualVerse
 {
     public class VV_GraphRunner : MonoBehaviour
     {
-        VV_GraphData graph;
+        [SerializeField] VV_GraphData graph;
 
         void Start()
         {
-            foreach (VV_NodeRuntime nodeData in graph.nodeDataList)
+            Debug.Log(graph.vvNodes.Count);
+            foreach (var node in graph.vvNodes)
             {
-                if (nodeData.isStartNode)
-                    nodeData.FollowFlow();
+                node.Execute();
+                // if (nodeData.isStartNode)
+                    // nodeData.FollowFlow();
             }
         }
     }

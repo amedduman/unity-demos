@@ -1,11 +1,13 @@
+using UnityEngine;
+
 namespace VisualVerse
 {
     [NodeInfo("SomeNodes/Start",false, true, true)]
-    public class StartNodeData : VV_NodeRuntime 
+    public class StartNode : VV_NodeRuntime 
     {
         public override void Execute()
         {
-            // Debug.Log("start node called");
+            Debug.Log("start node executed");
         }
     }
 }

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace VisualVerse
 {
     public class VV_GraphData : ScriptableObject
     {
-        public List<VV_NodeRuntime> nodeDataList = new List<VV_NodeRuntime>();
+        [SerializeReference] public List<VV_NodeRuntime> vvNodes = new List<VV_NodeRuntime>();
         // public List<NodeDataToSave> nodes = new List<NodeDataToSave>();
         // public List<EdgeData> edges = new List<EdgeData>();
 

@@ -3,12 +3,12 @@ using UnityEngine;
 namespace VisualVerse
 {
     [System.Serializable]
-    public class VV_NodeRuntime
+    public abstract class VV_NodeRuntime
     {
-        public bool isStartNode { get; set; }
-        public int order = -1;
         public string title;
-        public Rect rect;
+        public int order = -1;
+        public bool isStartNode { get; set; }
+        public Rect rect { get; set; }
         public string editorNodeGuid;
         
         public string FollowFlow()
@@ -17,9 +17,6 @@ namespace VisualVerse
             return "";
         }
 
-        public virtual void Execute()
-        {
-            
-        }
+        public abstract void Execute();
     }
 }

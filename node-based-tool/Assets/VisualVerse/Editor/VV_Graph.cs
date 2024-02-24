@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,8 +12,8 @@ namespace VisualVerse
     {
         readonly NodeSearchProvider searchProvider;
         public VV_GraphEditorWindow window { get; private set; }
-        public VV_GraphData graphData;
-        readonly List<VV_NodeRuntime> nodeDataList;
+        readonly VV_GraphData graphData;
+        readonly List<VV_NodeRuntime> vvNodes;
         
         public VV_Graph(VV_GraphEditorWindow window, VV_GraphData graphDataContainerSo)
         {
@@ -24,7 +25,7 @@ namespace VisualVerse
             this.window = window;
             graphData = graphDataContainerSo;
 
-            nodeDataList = new List<VV_NodeRuntime>();
+            vvNodes = new List<VV_NodeRuntime>();
             
             searchProvider = ScriptableObject.CreateInstance<NodeSearchProvider>();
             searchProvider.graphView = this;
@@ -40,11 +41,12 @@ namespace VisualVerse
                 {
                     if (toRemove is Node node)
                     {
-                        for (int i = nodeDataList.Count - 1; i >= 0; i--)
+                        for (int i = vvNodes.Count - 1; i >= 0; i--)
                         {
-                            if (node.viewDataKey == nodeDataList[i].editorNodeGuid)
+                            if (node.viewDataKey == vvNodes[i].editorNodeGuid)
                             {
-                                nodeDataList.Remove(nodeDataList[i]);
+                                Debug.Log(node.title + " " + "got removed");
+                                vvNodes.Remove(vvNodes[i]);
                             }
                         }
                     }
@@ -79,7 +81,7 @@ namespace VisualVerse
         {
             var node = new VV_NodeEditor(nodeData);
 
-            nodeDataList.Add(nodeData);
+            vvNodes.Add(nodeData);
             
             node.RefreshPorts();
             node.RefreshExpandedState();
@@ -90,7 +92,7 @@ namespace VisualVerse
         public void Save()
         {
             VV_NodeRuntime startNode = null;
-            foreach (VV_NodeRuntime nodeData in nodeDataList)
+            foreach (VV_NodeRuntime nodeData in vvNodes)
             {
                 if (nodeData.isStartNode)
                 {
@@ -128,7 +130,7 @@ namespace VisualVerse
                 {
                     Node nextNode = connection.input.node;
                         
-                    foreach (VV_NodeRuntime nodeData in nodeDataList)
+                    foreach (VV_NodeRuntime nodeData in vvNodes)
                     {
                         if (nodeData.editorNodeGuid == nextNode.viewDataKey)
                         {
@@ -141,11 +143,18 @@ namespace VisualVerse
                 }
             }            
 
-            foreach (VV_NodeRuntime nodeData in nodeDataList)
-            {
-                Debug.Log(nodeData.title + " " + nodeData.order);
-                nodeData.Execute();
-            }
+            // foreach (VV_NodeRuntime nodeData in nodeDataList)
+            // {
+            //     Debug.Log(nodeData.title + " " + nodeData.order);
+            //     nodeData.Execute();
+            // }
+            
+            graphData.vvNodes.Clear();
+            graphData.vvNodes = vvNodes.ToList();
+            
+            EditorUtility.SetDirty(graphData);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         Port GetExitPort(Node node)
@@ -159,7 +168,7 @@ namespace VisualVerse
                 }
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("there is a node without an output node named as exit");
         }
 
         // public void CreateNode(string nodeTitle, Rect rect, string guid = "")
