@@ -1,7 +1,6 @@
 using System;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace VisualVerse
@@ -9,7 +8,6 @@ namespace VisualVerse
     public sealed class VV_NodeEditor : Node
     {
         readonly VV_NodeRuntime vNode;
-        int intValue;
 
         public VV_NodeEditor(VV_NodeRuntime n)
         {
@@ -47,21 +45,8 @@ namespace VisualVerse
                 
                 if (att == null) continue;
                 
-                
                 SetFields(field, att);
                     
-                // switch (att.direction)
-                // {
-                //     case Direction.Input:
-                //         inputContainer.Add(p);
-                //         break;
-                //     case Direction.Output:
-                //         outputContainer.Add(p);
-                //         break;
-                //     default:
-                //         throw new ArgumentOutOfRangeException();
-                // }
-                
                 RefreshPorts(); 
                 RefreshExpandedState();
             }
@@ -92,7 +77,10 @@ namespace VisualVerse
                 integerField.RegisterValueChangedCallback(evt => fieldInfo.SetValue(vNode, evt.newValue));
                 fieldAndPortContainer.Add(integerField);
                 
-                inputContainer.Add(fieldAndPortContainer);
+                if(att.direction ==Direction.Input)
+                    inputContainer.Add(fieldAndPortContainer);
+                if(att.direction ==Direction.Output)
+                    outputContainer.Add(fieldAndPortContainer);
             }
             else if (fieldInfo.FieldType == typeof(float))
             {
@@ -101,17 +89,6 @@ namespace VisualVerse
                 floatField.RegisterValueChangedCallback(evt => fieldInfo.SetValue(vNode, evt.newValue));
                 mainContainer.Add(floatField);
             }
-            // IntegerField integerField = new IntegerField("Int Value");
-            // integerField.SetValueWithoutNotify(intValue); // Set the initial value
-            // integerField.RegisterValueChangedCallback(evt => OnIntValueChanged(evt.newValue)); // Callback for value change
-            // mainContainer.Add(integerField);
-        }
-
-        void OnIntValueChanged(int newValue)
-        {
-            // Handle the integer value change
-            intValue = newValue;
-            Debug.Log("New Int Value: " + newValue);
         }
     }
 }

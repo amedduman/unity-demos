@@ -45,7 +45,6 @@ namespace VisualVerse
                         {
                             if (node.viewDataKey == vvNodes[i].editorNodeGuid)
                             {
-                                Debug.Log(node.title + " " + "got removed");
                                 vvNodes.Remove(vvNodes[i]);
                             }
                         }

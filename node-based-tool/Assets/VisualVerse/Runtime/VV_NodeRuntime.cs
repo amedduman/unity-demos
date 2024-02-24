@@ -10,13 +10,9 @@ namespace VisualVerse
         public bool isStartNode { get; set; }
         public Rect rect { get; set; }
         public string editorNodeGuid;
-        
-        public string FollowFlow()
-        {
-            Execute();
-            return "";
-        }
 
-        public abstract void Execute();
+        public abstract void Execute(VV_NodeRuntime previousNode);
+
+        public abstract object GetValue();
     }
 }

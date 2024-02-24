@@ -13,13 +13,32 @@ MonoBehaviour:
   m_Name: New Graph
   m_EditorClassIdentifier: 
   vvNodes:
-  - rid: 3689549264730718209
+  - rid: 3689549264730718210
+  - rid: 3689549264730718211
+  - rid: 3689549264730718212
   references:
     version: 2
     RefIds:
-    - rid: 3689549264730718209
+    - rid: 3689549264730718210
       type: {class: StartNode, ns: VisualVerse, asm: Assembly-CSharp}
       data:
         title: Start
         order: 0
-        editorNodeGuid: 21c3c900-e271-4a12-9aba-3345fa42fb07
+        editorNodeGuid: 74756d86-3580-4152-a0f5-78353208ad01
+    - rid: 3689549264730718211
+      type: {class: SumNode, ns: VisualVerse, asm: Assembly-CSharp}
+      data:
+        title: Sum
+        order: 1
+        editorNodeGuid: 474f5387-5c3c-4869-ad96-fd10b0ba4568
+        a: 5
+        b: 5
+        sum: 0
+    - rid: 3689549264730718212
+      type: {class: LogNode, ns: VisualVerse, asm: Assembly-CSharp}
+      data:
+        title: Log
+        order: 2
+        editorNodeGuid: 6f878aa9-f3e5-4976-88f4-e5214c490a21
+        message: 
+        intMessage: 0

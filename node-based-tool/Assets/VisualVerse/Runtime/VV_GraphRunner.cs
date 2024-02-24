@@ -8,12 +8,17 @@ namespace VisualVerse
 
         void Start()
         {
-            Debug.Log(graph.vvNodes.Count);
-            foreach (var node in graph.vvNodes)
+            for (var i = 0; i < graph.vvNodes.Count; i++)
             {
-                node.Execute();
-                // if (nodeData.isStartNode)
-                    // nodeData.FollowFlow();
+                VV_NodeRuntime node = graph.vvNodes[i];
+                if (i == 0)
+                {
+                    node.Execute(null);
+                }
+                else
+                {
+                    node.Execute(graph.vvNodes[i - 1]);
+                }
             }
         }
     }

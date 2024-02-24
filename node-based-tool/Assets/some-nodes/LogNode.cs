@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace VisualVerse
@@ -7,10 +8,18 @@ namespace VisualVerse
     {
         [ExposedField]
         public string message;
+
+        [ExposedField] public int intMessage;
         
-        public override void Execute()
+        public override void Execute(VV_NodeRuntime previousNode)
         {
-            Debug.Log("log node executed");
+            intMessage = (int)previousNode.GetValue();
+            Debug.Log("log node's message is: " +  intMessage);
+        }
+
+        public override object GetValue()
+        {
+            return null;
         }
     }
 }
