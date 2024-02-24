@@ -1,12 +1,15 @@
 using System;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace VisualVerse
 {
     public sealed class VV_NodeEditor : Node
     {
         readonly VV_NodeRuntime vNode;
+        int intValue;
 
         public VV_NodeEditor(VV_NodeRuntime n)
         {
@@ -38,26 +41,26 @@ namespace VisualVerse
                 RefreshExpandedState();
             }
 
-            foreach (var field in t.GetFields())
+            foreach (FieldInfo field in t.GetFields())
             {
                 var att = field.GetCustomAttribute<ExposedFieldAttribute>();
                 
                 if (att == null) continue;
                 
-                var p = InstantiatePort(Orientation.Horizontal, att.direction , Port.Capacity.Single, field.FieldType);
-                p.portName = field.Name;
+                
+                SetFields(field, att);
                     
-                switch (att.direction)
-                {
-                    case Direction.Input:
-                        inputContainer.Add(p);
-                        break;
-                    case Direction.Output:
-                        outputContainer.Add(p);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                // switch (att.direction)
+                // {
+                //     case Direction.Input:
+                //         inputContainer.Add(p);
+                //         break;
+                //     case Direction.Output:
+                //         outputContainer.Add(p);
+                //         break;
+                //     default:
+                //         throw new ArgumentOutOfRangeException();
+                // }
                 
                 RefreshPorts(); 
                 RefreshExpandedState();
@@ -70,6 +73,45 @@ namespace VisualVerse
         {
             SetPosition(vNode.rect);
             title = vNode.title;
+        }
+        
+        void SetFields(FieldInfo fieldInfo, ExposedFieldAttribute att)
+        {
+            VisualElement fieldAndPortContainer = new VisualElement();
+            fieldAndPortContainer.style.flexDirection = FlexDirection.Row;
+            
+            if (fieldInfo.FieldType == typeof(int))
+            {
+                var p = InstantiatePort(Orientation.Horizontal, att.direction , Port.Capacity.Single, fieldInfo.FieldType);
+                p.portName = fieldInfo.Name;
+                fieldAndPortContainer.Add(p);
+                
+                IntegerField integerField = new IntegerField(fieldInfo.Name);
+                integerField.label = "";
+                integerField.SetValueWithoutNotify((int)fieldInfo.GetValue(vNode));
+                integerField.RegisterValueChangedCallback(evt => fieldInfo.SetValue(vNode, evt.newValue));
+                fieldAndPortContainer.Add(integerField);
+                
+                inputContainer.Add(fieldAndPortContainer);
+            }
+            else if (fieldInfo.FieldType == typeof(float))
+            {
+                FloatField floatField = new FloatField(fieldInfo.Name);
+                floatField.SetValueWithoutNotify((float)fieldInfo.GetValue(vNode));
+                floatField.RegisterValueChangedCallback(evt => fieldInfo.SetValue(vNode, evt.newValue));
+                mainContainer.Add(floatField);
+            }
+            // IntegerField integerField = new IntegerField("Int Value");
+            // integerField.SetValueWithoutNotify(intValue); // Set the initial value
+            // integerField.RegisterValueChangedCallback(evt => OnIntValueChanged(evt.newValue)); // Callback for value change
+            // mainContainer.Add(integerField);
+        }
+
+        void OnIntValueChanged(int newValue)
+        {
+            // Handle the integer value change
+            intValue = newValue;
+            Debug.Log("New Int Value: " + newValue);
         }
     }
 }
