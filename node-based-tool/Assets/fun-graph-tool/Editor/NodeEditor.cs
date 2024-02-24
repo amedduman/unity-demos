@@ -1,24 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine;
 
 namespace Fun
 {
     public sealed class NodeEditor : Node
     {
         readonly NodeData nodeData;
-        readonly Port exitPort;
-        BaseGraph graph;
 
-        public NodeEditor(NodeData nodeData)
+        public NodeEditor(NodeData nd)
         {
-            this.nodeData = nodeData;
+            nodeData = nd;
 
-            this.nodeData.editorNodeGuid = viewDataKey;
-            // this.nodeData.OnGraphSave = SetConnections;
+            nodeData.editorNodeGuid = viewDataKey;
             
             Type t = nodeData.GetType();
             var info = t.GetCustomAttribute<NodeInfoAttribute>();
@@ -40,8 +34,6 @@ namespace Fun
                 p.portName = "exit";
                 outputContainer.Add(p);
 
-                exitPort = p;
-                
                 RefreshPorts(); 
                 RefreshExpandedState();
             }
@@ -79,30 +71,5 @@ namespace Fun
             SetPosition(nodeData.rect);
             title = nodeData.title;
         }
-
-        // public void Update()
-        // {
-        //     // if (exitPort.connections.Count() > 1)
-        //     // {
-        //     //     Debug.LogError("the exit port capacity should be single");
-        //     //     return;
-        //     // }
-        //
-        //     // foreach (var connection in exitPort.connections)
-        //     // {
-        //     //     foreach (var VARIABLE in graph.)
-        //     //     {
-        //     //         
-        //     //     }
-        //     //     connection.output.node.viewDataKey
-        //     //     nodeData.connectedNode = connection.output.node;
-        //     // }
-        //     
-        // }
-
-        // void SetConnections()
-        // {
-        //     
-        // }
     }
 }

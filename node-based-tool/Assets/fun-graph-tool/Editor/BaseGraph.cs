@@ -109,41 +109,35 @@ namespace Fun
 
             Node node = GetNodeByGuid(startNode.editorNodeGuid);
 
-            bool isRunning = true;
-            while (isRunning)
+            while (true)
             {
-                foreach (Port port in ports)
+                var exitPort = GetExitPort(node);
+                
+                if (!exitPort.connections.Any())
                 {
-                    if (port.node == node && port.portName == "exit")
-                    {
-                        if (!port.connections.Any())
-                        {
-                            isRunning = false;
-                            break;
-                        }
-                        // Debug.Log(port.connections.Count() + " " + port.portName + " " + node.title);
-                        if (port.connections.Count() > 1)
-                        {
-                            Debug.LogError("the exit port capacity should be single");
-                            return;
-                        }
+                    break;
+                }
+                
+                if (exitPort.connections.Count() > 1)
+                {
+                    Debug.LogError("the exit port capacity should be single");
+                    return;
+                }
                     
-                        foreach (var connection in port.connections)
-                        {
-                            Node nextNode = connection.input.node;
+                foreach (var connection in exitPort.connections)
+                {
+                    Node nextNode = connection.input.node;
                         
-                            foreach (NodeData nodeData in nodeDataList)
-                            {
-                                if (nodeData.editorNodeGuid == nextNode.viewDataKey)
-                                {
-                                    order += 1;
-                                    nodeData.order = order;
-                                }
-                            }
-
-                            node = nextNode;
+                    foreach (NodeData nodeData in nodeDataList)
+                    {
+                        if (nodeData.editorNodeGuid == nextNode.viewDataKey)
+                        {
+                            order += 1;
+                            nodeData.order = order;
                         }
                     }
+
+                    node = nextNode;
                 }
             }            
 
@@ -152,6 +146,20 @@ namespace Fun
                 Debug.Log(nodeData.title + " " + nodeData.order);
                 nodeData.Execute();
             }
+        }
+
+        Port GetExitPort(Node node)
+        {
+            var nodePorts = node.outputContainer.Query<Port>().ToList();
+            foreach (var port in nodePorts)
+            {
+                if (port.portName == "exit")
+                {
+                    return port;
+                }
+            }
+
+            throw new NotImplementedException();
         }
 
         // public void CreateNode(string nodeTitle, Rect rect, string guid = "")
