@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,26 +10,40 @@ namespace WordGame
         #region fields
 
         [SerializeField] OnGridCreated onGridCreated;
+        [SerializeField] OnGenerateBtnClicked onGenerateBtnClicked;
         [SerializeField] Grid grid;
-        [SerializeField] int rows = 3;
-        [SerializeField] int columns = 4;
         [SerializeField] Tile tilePrefab; 
         [SerializeField] Vector2 buffer;
-        List<Tile> tiles;
+        readonly List<Tile> tiles= new List<Tile>();
         
         #endregion
 
-        void Start()
+        void OnEnable()
         {
-            GenerateTiles();
-            SetCam();
+            onGenerateBtnClicked.AddListener(Generate);
+        }
+
+        void OnDisable()
+        {
+            onGenerateBtnClicked.RemoveListener(Generate);
         }
         
-        void GenerateTiles()
+        void Generate(OnGenerateBtnClicked.Data obj)
+        {
+            for (int i = tiles.Count - 1; i >= 0; i--)
+            {
+                Destroy(tiles[i].gameObject);
+            }
+            
+            tiles.Clear();
+            
+            GenerateTiles(obj.rows , obj.columns);
+            SetCam(obj.rows , obj.columns);
+        }
+
+        void GenerateTiles(int rows, int columns)
         {
             // int index = 0;
-
-            tiles = new List<Tile>();
             
             for (int r = 0; r < rows; r++)
             {
@@ -47,7 +62,7 @@ namespace WordGame
             }
         }
 
-        void SetCam()
+        void SetCam(int rows, int columns)
         {
             Bounds bounds = new Bounds();
             foreach (Tile tile in tiles)
