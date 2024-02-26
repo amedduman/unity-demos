@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 881597733d9b14349bcbddd59dc25b35, type: 3}
-  m_Name: OnGenerateBtnClicked
+  m_Script: {fileID: 11500000, guid: 8459213fd24134cfc8e1b78a02702e92, type: 3}
+  m_Name: GridData
   m_EditorClassIdentifier: 
-  <DoWaitForListeners>k__BackingField: 0
+  <columns>k__BackingField: 5
+  <rows>k__BackingField: 8

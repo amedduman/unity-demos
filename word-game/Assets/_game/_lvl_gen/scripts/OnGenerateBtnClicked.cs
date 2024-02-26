@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace WordGame
@@ -5,9 +6,15 @@ namespace WordGame
     [CreateAssetMenu(menuName = "_game/events/OnGenerateBtnClicked")]
     public class OnGenerateBtnClicked : EventSO<OnGenerateBtnClicked.Data>
     {
-        public int rows;
-        public int columns;
-        
+        int rows;
+        int columns;
+
+        void OnEnable()
+        {
+            rows = 0;
+            columns = 0;
+        }
+
         public void CallTheEvent()
         {
             Invoke(new Data(rows, columns));

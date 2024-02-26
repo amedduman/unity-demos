@@ -9,12 +9,10 @@ namespace WordGame
     public class InputHandler : ScriptableObject, GameInputActions.IGameplayActions
     {
         public Vector2 mousePos { get; private set; }
-        public event UnityAction TouchStart = delegate { };
-        public event UnityAction TouchEnd = delegate { };
         public event Action OnTap;
         GameInputActions gameInputActions;
 
-        public void OnEnable()
+        public void Enable()
         {
             if (gameInputActions == null)
             {
@@ -31,20 +29,28 @@ namespace WordGame
 
         public void OnTouch(InputAction.CallbackContext context)
         {
-            switch (context.phase)
-            {
-                case InputActionPhase.Started:
-                    TouchStart.Invoke();
-                    break;
-                case InputActionPhase.Canceled:
-                    TouchEnd.Invoke();
-                    break;
-            }
+            
         }
 
         public void OnTapClick(InputAction.CallbackContext context)
         {
-            OnTap?.Invoke();
+            switch (context.phase)
+            {
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Started:
+                    break;
+                case InputActionPhase.Performed:
+                    OnTap?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
         }
     }
 }

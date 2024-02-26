@@ -7,7 +7,7 @@ namespace WordGame
     public class Tile : MonoBehaviour
     {
         public SpriteRenderer spriteRenderer;
-
+        public Vector3Int cellPos;
 
     }
 }

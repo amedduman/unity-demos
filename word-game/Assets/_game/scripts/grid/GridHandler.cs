@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace WordGame
@@ -11,12 +12,19 @@ namespace WordGame
 
         [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] OnGenerateBtnClicked onGenerateBtnClicked;
+        [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
         [SerializeField] Vector2 buffer;
         readonly List<Tile> tiles= new List<Tile>();
         
+        
         #endregion
+
+        void Awake()
+        {
+            gridData.ResetTileData();
+        }
 
         void OnEnable()
         {
@@ -36,9 +44,12 @@ namespace WordGame
             }
             
             tiles.Clear();
+            gridData.ResetTileData();
             
             GenerateTiles(obj.rows , obj.columns);
             SetCam(obj.rows , obj.columns);
+
+            gridData.SetTileData(this, tiles.ToList());
         }
 
         void GenerateTiles(int rows, int columns)
@@ -54,6 +65,8 @@ namespace WordGame
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
                     
                     tile.gameObject.name = $"{c}, {r}";
+
+                    tile.cellPos = cellPos;
                     
                     tiles.Add(tile);
 

@@ -9,8 +9,6 @@ namespace WordGame
     {
         List<( Action<T>, int)> listeners = new List<(Action<T>, int)>();
         
-        [field: SerializeField] bool DoWaitForListeners { get; set; } = false;
-
         public void AddListener(Action<T> listener, int order = 0)
         {
             listeners.Add((listener, order));

@@ -569,7 +569,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.55
+  m_fontSize: 77.85
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -726,6 +726,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGridCreated: {fileID: 11400000, guid: d4cdc3cb7fba149c48ccdf3b052430c5, type: 2}
   cam: {fileID: 519420031}
+--- !u!1 &528191854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 528191856}
+  - component: {fileID: 528191855}
+  m_Layer: 0
+  m_Name: LevelGenManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &528191855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528191854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7df1ba2919d4edaaf278bbd7834ecf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
+  gridData: {fileID: 11400000, guid: 070d2cf029ce24c02955d7bf88cfaa25, type: 2}
+  grid: {fileID: 537691744}
+  cam: {fileID: 519420031}
+--- !u!4 &528191856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528191854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &537691741
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,6 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onGridCreated: {fileID: 11400000, guid: d4cdc3cb7fba149c48ccdf3b052430c5, type: 2}
   onGenerateBtnClicked: {fileID: 11400000, guid: b505979f4ade34f4da1936ffb9d6ce1c, type: 2}
+  gridData: {fileID: 11400000, guid: 070d2cf029ce24c02955d7bf88cfaa25, type: 2}
   grid: {fileID: 537691744}
   tilePrefab: {fileID: 3356703375856460640, guid: 7267f31af13614d349c11636f452e3fa, type: 3}
   buffer: {x: 1, y: 1}
@@ -1124,19 +1173,7 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: b505979f4ade34f4da1936ffb9d6ce1c, type: 2}
-        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
-        m_MethodName: SetColumnsValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1154,7 +1191,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b505979f4ade34f4da1936ffb9d6ce1c, type: 2}
+        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
+        m_MethodName: SetColumnsValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1506,7 +1555,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.55
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1656,19 +1705,7 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: b505979f4ade34f4da1936ffb9d6ce1c, type: 2}
-        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
-        m_MethodName: SetRowsValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
@@ -1686,7 +1723,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b505979f4ade34f4da1936ffb9d6ce1c, type: 2}
+        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
+        m_MethodName: SetRowsValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1908,3 +1957,4 @@ SceneRoots:
   - {fileID: 537691742}
   - {fileID: 736191774}
   - {fileID: 1191778234}
+  - {fileID: 528191856}
