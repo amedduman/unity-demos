@@ -19,5 +19,10 @@ namespace WordGame
         {
             myTiles = in_tiles;
         }
+
+        void OnDisable()
+        {
+            ResetTileData();
+        }
     }
 }

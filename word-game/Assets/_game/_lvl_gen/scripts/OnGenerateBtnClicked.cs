@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace WordGame
@@ -9,7 +8,7 @@ namespace WordGame
         int rows;
         int columns;
 
-        void OnEnable()
+        void OnDisable()
         {
             rows = 0;
             columns = 0;

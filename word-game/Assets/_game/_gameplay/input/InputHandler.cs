@@ -12,13 +12,14 @@ namespace WordGame
         public event Action OnTap;
         GameInputActions gameInputActions;
 
-        public void Enable()
+        public void OnEnable()
         {
             if (gameInputActions == null)
             {
                 gameInputActions = new GameInputActions();
                 gameInputActions.gameplay.SetCallbacks(this);
             }
+
             gameInputActions.Enable();
         }
 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace WordGame
@@ -9,11 +8,6 @@ namespace WordGame
         [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Camera cam;
-
-        void Awake()
-        {
-            inputHandler.Enable();
-        }
 
         void OnEnable()
         {
