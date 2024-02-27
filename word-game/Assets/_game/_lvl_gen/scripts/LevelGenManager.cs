@@ -26,7 +26,8 @@ namespace WordGame
 
             if (TryGetTileInTheCell(out Tile tile, cellUnderCursor))
             {
-                tile.spriteRenderer.color = Color.blue;
+                tile.OnTileSelected();
+                inputHandler.Disable();
             }
         }
         

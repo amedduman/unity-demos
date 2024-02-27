@@ -8,6 +8,11 @@ namespace WordGame
     {
         public SpriteRenderer spriteRenderer;
         public Vector3Int cellPos;
+        [SerializeField] GameObject Buttons;
 
+        public void OnTileSelected()
+        {
+            Buttons.SetActive(true);
+        }
     }
 }
