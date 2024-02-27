@@ -7,9 +7,11 @@ namespace WordGame
 {
     public class TileButtons : MonoBehaviour
     {
+        [SerializeField] Tile tile;
+        [SerializeField] WordCreationDirectionE dir;
         void OnMouseDown()
         {
-            Debug.Log("mouse down");
+            tile.HandleWordCreationBtnClicked(dir);
         }
     }
 }

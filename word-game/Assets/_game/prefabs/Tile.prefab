@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 9104396039152945744}
   cellPos: {x: 0, y: 0, z: 0}
+  wordCreationData: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
   Buttons: {fileID: 1907346303808056265}
 --- !u!1 &1907346303808056265
 GameObject:
@@ -233,6 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b760566acd744d309955c027b86cd2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile: {fileID: 3356703375856460640}
+  dir: 20
 --- !u!61 &3426179561373224794
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -377,6 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b760566acd744d309955c027b86cd2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tile: {fileID: 3356703375856460640}
+  dir: 10
 --- !u!61 &8949213846141269064
 BoxCollider2D:
   m_ObjectHideFlags: 0
