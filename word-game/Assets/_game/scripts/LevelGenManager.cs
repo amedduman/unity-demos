@@ -56,7 +56,7 @@ namespace WordGame
             {
                 if (TryGetTileInTheCell(out Tile tile, cell))
                 {
-                    tile.spriteRenderer.color = Color.blue;
+                    tile.SetLetter(Game.wordInputData.word[i]);
                 }
                 else
                 {

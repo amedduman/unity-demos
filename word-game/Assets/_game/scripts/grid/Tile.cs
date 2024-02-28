@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace WordGame
@@ -7,7 +8,8 @@ namespace WordGame
         public SpriteRenderer spriteRenderer;
         [HideInInspector] public Vector3Int cellPos;
         [SerializeField] GameObject Buttons;
-
+        [SerializeField] TextMeshPro letter;
+ 
         void Awake()
         {
             Buttons.SetActive(false);
@@ -21,6 +23,11 @@ namespace WordGame
         void ActivateButtons()
         {
             Buttons.SetActive(true);
+        }
+
+        public void SetLetter(char l)
+        {
+            letter.text = l.ToString();
         }
 
         public void SetWordDirection(WordCreationDirectionE dir)
