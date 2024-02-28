@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec7f789ad88d24bb092701d4fa773326, type: 3}
-  m_Name: WordCreationData
+  m_Name: WordCreationAction
   m_EditorClassIdentifier: 

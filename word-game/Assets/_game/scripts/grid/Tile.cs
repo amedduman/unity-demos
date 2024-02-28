@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace WordGame
@@ -8,7 +6,7 @@ namespace WordGame
     {
         public SpriteRenderer spriteRenderer;
         [HideInInspector] public Vector3Int cellPos;
-        [SerializeField] WordCreationData wordCreationData;
+        [SerializeField] WordCreationAction wordCreationAction;
         [SerializeField] GameObject Buttons;
 
         public void OnTileSelected()
@@ -24,7 +22,7 @@ namespace WordGame
         public void HandleWordCreationBtnClicked(WordCreationDirectionE dir)
         {
             Buttons.SetActive(false);
-            wordCreationData.SetData(this, this, dir);
+            wordCreationAction.SetData(this, this, dir);
         }
     }
 }

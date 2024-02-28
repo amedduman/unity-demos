@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 9104396039152945744}
   cellPos: {x: 0, y: 0, z: 0}
-  wordCreationData: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
+  wordCreationAction: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
   Buttons: {fileID: 1907346303808056265}
 --- !u!1 &1907346303808056265
 GameObject:

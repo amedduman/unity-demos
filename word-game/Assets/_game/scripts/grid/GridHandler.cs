@@ -22,7 +22,7 @@ namespace WordGame
 
         void Awake()
         {
-            gridData.ResetTileData();
+            gridData.ResetData();
         }
 
         void OnEnable()
@@ -43,12 +43,12 @@ namespace WordGame
             }
             
             tiles.Clear();
-            gridData.ResetTileData();
+            gridData.ResetData();
             
             GenerateTiles(obj.rows , obj.columns);
             SetCam(obj.rows , obj.columns);
 
-            gridData.SetTileData(this, tiles.ToList());
+            gridData.SetTileData(this, tiles.ToList(), in_rows:obj.rows, in_columns:obj.columns);
         }
 
         void GenerateTiles(int rows, int columns)

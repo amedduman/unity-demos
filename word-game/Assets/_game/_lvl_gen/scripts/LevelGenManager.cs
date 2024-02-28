@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace WordGame
@@ -5,6 +7,7 @@ namespace WordGame
     public class LevelGenManager : MonoBehaviour
     {
         [SerializeField] InputHandler inputHandler;
+        [SerializeField] WordCreationAction wordCreationAction;
         [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Camera cam;
@@ -12,11 +15,13 @@ namespace WordGame
         void OnEnable()
         {
             inputHandler.OnTap += HandleOnTap;
+            wordCreationAction.AddListener(HandleWordCreation);
         }
 
         void OnDisable()
         {
             inputHandler.OnTap -= HandleOnTap;
+            wordCreationAction.RemoveListener(HandleWordCreation);
         }
 
         void HandleOnTap()
@@ -28,6 +33,40 @@ namespace WordGame
             {
                 tile.OnTileSelected();
                 inputHandler.Disable();
+            }
+        }
+        
+        void HandleWordCreation(WordCreationAction.Data obj)
+        {
+            var cell = obj.tile.cellPos;
+            Vector3Int dir = Vector3Int.zero;
+            switch (obj.dir)
+            {
+                case WordCreationDirectionE.none:
+                    Debug.LogError("direction shouldn't be none");
+                    break;
+                case WordCreationDirectionE.right:
+                    dir = Vector3Int.right;
+                    break;
+                case WordCreationDirectionE.down:
+                    dir = Vector3Int.down;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            for (int i = 0; i < obj.word.Length; i++)
+            {
+                if (TryGetTileInTheCell(out Tile tile, cell))
+                {
+                    tile.spriteRenderer.color = Color.blue;
+                }
+                else
+                {
+                    break;
+                }
+
+                cell += dir;
             }
         }
         
