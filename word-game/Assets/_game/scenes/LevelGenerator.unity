@@ -1013,7 +1013,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdc456f2d00f4b1fa0256abeecb6fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onGridCreated: {fileID: 11400000, guid: d4cdc3cb7fba149c48ccdf3b052430c5, type: 2}
   cam: {fileID: 519420031}
 --- !u!1 &528191854
 GameObject:
@@ -1046,7 +1045,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
   wordCreationAction: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
-  gridData: {fileID: 11400000, guid: 070d2cf029ce24c02955d7bf88cfaa25, type: 2}
   grid: {fileID: 537691744}
   cam: {fileID: 519420031}
 --- !u!4 &528191856
@@ -1109,9 +1107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cf31119b8af647adb49ffb8c6ecf9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onGridCreated: {fileID: 11400000, guid: d4cdc3cb7fba149c48ccdf3b052430c5, type: 2}
-  onGenerateBtnClicked: {fileID: 11400000, guid: e465df13246704b62b15124624e69606, type: 2}
-  gridData: {fileID: 11400000, guid: 070d2cf029ce24c02955d7bf88cfaa25, type: 2}
   grid: {fileID: 537691744}
   tilePrefab: {fileID: 3356703375856460640, guid: 7267f31af13614d349c11636f452e3fa, type: 3}
   buffer: {x: 1, y: 1}
@@ -1534,19 +1529,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: e465df13246704b62b15124624e69606, type: 2}
-        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
-        m_MethodName: SetColumnsValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2187,19 +2170,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1227489421}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: e465df13246704b62b15124624e69606, type: 2}
-        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
-        m_MethodName: CallTheEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1227489421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2542,19 +2513,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: e465df13246704b62b15124624e69606, type: 2}
-        m_TargetAssemblyTypeName: WordGame.OnGenerateBtnClicked, Assembly-CSharp
-        m_MethodName: SetRowsValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2623,6 +2582,7 @@ GameObject:
   - component: {fileID: 1670323172}
   - component: {fileID: 1670323171}
   - component: {fileID: 1670323173}
+  - component: {fileID: 1670323174}
   m_Layer: 5
   m_Name: GridDimensionsInputPanel
   m_TagString: Untagged
@@ -2716,6 +2676,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1670323174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670323169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e8aac04bb6f4e5caa5429d071d0881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowsInput: {fileID: 1588387770}
+  columnsInput: {fileID: 896865165}
+  generateButton: {fileID: 1227489420}
 --- !u!1 &1770874576
 GameObject:
   m_ObjectHideFlags: 0

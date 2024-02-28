@@ -9,9 +9,9 @@ namespace WordGame
     {
         #region fields
 
-        [SerializeField] OnGridCreated onGridCreated;
-        [SerializeField] OnGenerateBtnClicked onGenerateBtnClicked;
-        [SerializeField] GridData gridData;
+        // [SerializeField] OnGridCreated onGridCreated;
+        // [SerializeField] OnGenerateBtnClicked onGenerateBtnClicked;
+        // [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab; 
         [SerializeField] Vector2 buffer;
@@ -22,17 +22,17 @@ namespace WordGame
 
         void Awake()
         {
-            gridData.ResetData();
+            // gridData.ResetData();
         }
 
         void OnEnable()
         {
-            onGenerateBtnClicked.AddListener(Generate);
+            Game.onGenerateBtnClicked.AddListener(Generate);
         }
 
         void OnDisable()
         {
-            onGenerateBtnClicked.RemoveListener(Generate);
+            Game.onGenerateBtnClicked.RemoveListener(Generate);
         }
         
         void Generate(OnGenerateBtnClicked.Data obj)
@@ -43,12 +43,12 @@ namespace WordGame
             }
             
             tiles.Clear();
-            gridData.ResetData();
+            Game.gridData.ResetData();
             
             GenerateTiles(obj.rows , obj.columns);
             SetCam(obj.rows , obj.columns);
 
-            gridData.SetTileData(this, tiles.ToList(), in_rows:obj.rows, in_columns:obj.columns);
+            Game.gridData.SetTileData(tiles.ToList(), in_rows:obj.rows, in_columns:obj.columns);
         }
 
         void GenerateTiles(int rows, int columns)
@@ -88,7 +88,8 @@ namespace WordGame
             var gridTopRightPos = grid.CellToWorld(new Vector3Int(columns, rows));
             var camPos = gridTopRightPos / 2;
             
-            onGridCreated.Invoke(new GridCreatedEventData(camPos, bounds, boundsBeforeBuffer));
+            // onGridCreated.Invoke(new GridCreatedEventData());
+            Game.onGridCreated.Invoke(new OnGridCreated.Data(camPos, bounds, boundsBeforeBuffer));
         }
     }
 }

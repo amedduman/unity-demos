@@ -5,23 +5,23 @@ namespace WordGame
     [RequireComponent(typeof(Camera))]
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] OnGridCreated onGridCreated;
+        // [SerializeField] OnGridCreated onGridCreated;
         [SerializeField] Camera cam;
         // [SerializeField] SpriteRenderer frame;
         // [SerializeField] Transform outerFrame;
 
         void OnEnable()
         {
-            onGridCreated.AddListener(SetPositionAndOrthographicSize);
+            Game.onGridCreated.AddListener(SetPositionAndOrthographicSize);
         }
         
         void OnDisable()
         {
-            onGridCreated.RemoveListener(SetPositionAndOrthographicSize);
+            Game.onGridCreated.RemoveListener(SetPositionAndOrthographicSize);
         }
          
-
-        public void SetPositionAndOrthographicSize(GridCreatedEventData gridCreatedEventData)
+        
+        public void SetPositionAndOrthographicSize(OnGridCreated.Data gridCreatedEventData)
         {
             var vertical = gridCreatedEventData.bounds.size.y;
             var horizontal = gridCreatedEventData.bounds.size.x * ((float)cam.pixelHeight / cam.pixelWidth);

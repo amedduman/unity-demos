@@ -8,7 +8,7 @@ namespace WordGame
     {
         [SerializeField] InputHandler inputHandler;
         [SerializeField] WordCreationAction wordCreationAction;
-        [SerializeField] GridData gridData;
+        // [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Camera cam;
 
@@ -72,7 +72,7 @@ namespace WordGame
         
         bool TryGetTileInTheCell(out Tile tile, Vector3Int cell)
         {
-            foreach (Tile t in gridData.tiles)
+            foreach (Tile t in Game.gridData.tiles)
             {
                 if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
                 {
