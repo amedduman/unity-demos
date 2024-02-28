@@ -101,6 +101,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 9104396039152945744}
   cellPos: {x: 0, y: 0, z: 0}
   wordCreationAction: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
+  startEnteringWordEvent: {fileID: 11400000, guid: 390553fe7b8fd4ce58691c567a399fb9, type: 2}
   Buttons: {fileID: 1907346303808056265}
 --- !u!1 &1907346303808056265
 GameObject:

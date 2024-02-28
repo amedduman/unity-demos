@@ -15,7 +15,7 @@ namespace WordGame
         void OnEnable()
         {
             inputHandler.OnTap += HandleOnTap;
-            wordCreationAction.AddListener(HandleWordCreation);
+            wordCreationAction.AddListener(HandleWordCreation, 0);
         }
 
         void OnDisable()
@@ -31,7 +31,7 @@ namespace WordGame
 
             if (TryGetTileInTheCell(out Tile tile, cellUnderCursor))
             {
-                tile.OnTileSelected();
+                tile.Select();
                 inputHandler.Disable();
             }
         }

@@ -11,7 +11,7 @@ namespace WordGame
         [SerializeField] WordCreationDirectionE dir;
         void OnMouseDown()
         {
-            tile.HandleWordCreationBtnClicked(dir);
+            tile.SetWordDirection(dir);
         }
     }
 }
