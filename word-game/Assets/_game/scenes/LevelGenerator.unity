@@ -1044,7 +1044,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 11400000, guid: 6df3c0945204548bdb9be919c3db9df9, type: 2}
-  wordCreationAction: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
   grid: {fileID: 537691744}
   cam: {fileID: 519420031}
 --- !u!4 &528191856
@@ -1171,9 +1170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed40f7eb362fa452faf51d248b8a6af9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wordCreationAction: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
-  startEnteringWordEvent: {fileID: 11400000, guid: 390553fe7b8fd4ce58691c567a399fb9, type: 2}
   panel: {fileID: 1115901002}
+  wordInputField: {fileID: 1085938029}
+  enterButton: {fileID: 1120478108}
 --- !u!1 &566328427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,19 +1703,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
-        m_TargetAssemblyTypeName: WordGame.WordCreationAction, Assembly-CSharp
-        m_MethodName: SetWord
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1959,19 +1946,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120478109}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 07156bb5c10654e56befe955fc0b1e3e, type: 2}
-        m_TargetAssemblyTypeName: WordGame.WordCreationAction, Assembly-CSharp
-        m_MethodName: InvokeEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1120478109
 MonoBehaviour:
   m_ObjectHideFlags: 0

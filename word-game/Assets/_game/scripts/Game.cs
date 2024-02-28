@@ -8,7 +8,8 @@ namespace WordGame
 
         #region Data
 
-        public static GridData gridData = new GridData();
+        public static GridData gridData { get; private set; } = new GridData();
+        public static WordInputData wordInputData = new WordInputData();
 
         #endregion
 
@@ -16,6 +17,10 @@ namespace WordGame
 
         public static OnGridCreated onGridCreated { get; private set; } = new OnGridCreated();
         public static OnGenerateBtnClicked onGenerateBtnClicked { get; private set; } = new OnGenerateBtnClicked();
+        public static OnStartingTileAndDirectionSet onStartingTileAndDirectionSet { get; private set; } =
+            new OnStartingTileAndDirectionSet();
+        public static OnWordCreationPanelEnterButtonPressed
+            onWordCreationPanelEnterButtonPressed { get; private set; } = new OnWordCreationPanelEnterButtonPressed();
 
         #endregion
         
@@ -24,7 +29,9 @@ namespace WordGame
         {
         }
     }
-    
+
+    #region Data
+
     public class GridData
     {
         public GridData()
@@ -50,12 +57,18 @@ namespace WordGame
             rows = in_rows;
             columns = in_columns;
         }
-
-        void OnDisable()
-        {
-            ResetData();
-        }
     }
+    
+    public struct WordInputData
+    {
+        public Tile tile;
+        public WordCreationDirectionE dir;
+        public string word;
+    }
+
+    #endregion
+
+    #region Events
 
     public class OnGridCreated : MyEvent<OnGridCreated.Data>
     {
@@ -92,5 +105,18 @@ namespace WordGame
                 this.columns = columns;
             }
         }
+    }
+
+    public class OnStartingTileAndDirectionSet : MyEventParameterless { }
+
+    public class OnWordCreationPanelEnterButtonPressed : MyEventParameterless {}
+
+    #endregion
+    
+    public enum WordCreationDirectionE
+    {
+        none = 0,
+        right = 10,
+        down = 20,
     }
 }

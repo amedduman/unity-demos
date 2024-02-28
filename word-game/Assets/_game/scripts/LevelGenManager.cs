@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 namespace WordGame
@@ -7,21 +6,19 @@ namespace WordGame
     public class LevelGenManager : MonoBehaviour
     {
         [SerializeField] InputHandler inputHandler;
-        [SerializeField] WordCreationAction wordCreationAction;
-        // [SerializeField] GridData gridData;
         [SerializeField] Grid grid;
         [SerializeField] Camera cam;
 
         void OnEnable()
         {
             inputHandler.OnTap += HandleOnTap;
-            wordCreationAction.AddListener(HandleWordCreation, 0);
+            Game.onWordCreationPanelEnterButtonPressed.AddListener(WriteWordToGrid);
         }
 
         void OnDisable()
         {
             inputHandler.OnTap -= HandleOnTap;
-            wordCreationAction.RemoveListener(HandleWordCreation);
+            Game.onWordCreationPanelEnterButtonPressed.RemoveListener(WriteWordToGrid);
         }
 
         void HandleOnTap()
@@ -36,11 +33,11 @@ namespace WordGame
             }
         }
         
-        void HandleWordCreation(WordCreationAction.Data obj)
+        void WriteWordToGrid()
         {
-            var cell = obj.tile.cellPos;
+            var cell = Game.wordInputData.tile.cellPos;
             Vector3Int dir = Vector3Int.zero;
-            switch (obj.dir)
+            switch (Game.wordInputData.dir)
             {
                 case WordCreationDirectionE.none:
                     Debug.LogError("direction shouldn't be none");
@@ -54,8 +51,8 @@ namespace WordGame
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            for (int i = 0; i < obj.word.Length; i++)
+        
+            for (int i = 0; i < Game.wordInputData.word.Length; i++)
             {
                 if (TryGetTileInTheCell(out Tile tile, cell))
                 {
@@ -65,7 +62,7 @@ namespace WordGame
                 {
                     break;
                 }
-
+        
                 cell += dir;
             }
         }

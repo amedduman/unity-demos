@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace WordGame
@@ -7,8 +6,6 @@ namespace WordGame
     {
         public SpriteRenderer spriteRenderer;
         [HideInInspector] public Vector3Int cellPos;
-        [SerializeField] WordCreationAction wordCreationAction;
-        [SerializeField] OnStartEnteringWord startEnteringWordEvent;
         [SerializeField] GameObject Buttons;
 
         void Awake()
@@ -29,8 +26,9 @@ namespace WordGame
         public void SetWordDirection(WordCreationDirectionE dir)
         {
             Buttons.SetActive(false);
-            wordCreationAction.SetData(this, this, dir);
-            startEnteringWordEvent.Invoke(new OnStartEnteringWord.Data());
+            Game.wordInputData.tile = this;
+            Game.wordInputData.dir = dir;
+            Game.onStartingTileAndDirectionSet.Invoke();
         }
     }
 }

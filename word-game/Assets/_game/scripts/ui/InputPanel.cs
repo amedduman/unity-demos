@@ -1,16 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace WordGame
 {
     public class InputPanel : MonoBehaviour
     {
-        [SerializeField] WordCreationAction wordCreationAction;
-        [SerializeField] OnStartEnteringWord startEnteringWordEvent;
         [SerializeField] GameObject panel;
-
+        [SerializeField] TMP_InputField wordInputField;
+        [SerializeField] Button enterButton;
+        
         void Awake()
         {
             panel.SetActive(false);
@@ -18,24 +17,26 @@ namespace WordGame
 
         void OnEnable()
         {
-            startEnteringWordEvent.AddListener(HandleStartEnteringWord);
-            wordCreationAction.AddListener(HandleWordCreationActon);
-        }
-
-        void HandleWordCreationActon(WordCreationAction.Data obj)
-        {
-            panel.SetActive(false);
-        }
-
-        void HandleStartEnteringWord(OnStartEnteringWord.Data obj)
-        {
-            panel.SetActive(true);
+            Game.onStartingTileAndDirectionSet.AddListener(ShowPanel);
+            enterButton.onClick.AddListener(HandleEntering);
         }
 
         void OnDisable()
         {
-            startEnteringWordEvent.RemoveListener(HandleStartEnteringWord);
-            wordCreationAction.RemoveListener(HandleWordCreationActon);
+            Game.onStartingTileAndDirectionSet.RemoveListener(ShowPanel);
+            enterButton.onClick.RemoveListener(HandleEntering);
+        }
+
+        void ShowPanel()
+        {
+            panel.SetActive(true);
+        }
+        
+        void HandleEntering()
+        {
+            panel.SetActive(false);
+            Game.wordInputData.word = wordInputField.text;
+            Game.onWordCreationPanelEnterButtonPressed.Invoke();
         }
     }
 }
