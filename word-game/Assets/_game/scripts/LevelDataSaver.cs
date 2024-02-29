@@ -8,6 +8,10 @@ namespace WordGame
 {
     public static class LevelDataSaver
     {
+        public const string dimensionIndicator = "[dim]";
+        public const string emptyTileIndicator = "[emp]";
+        public const string fullTileIndicator = "[full]";
+        public const string wordIndicator = "[word]";
         public static void Save(string fileName)
         {
             // Specify the path to your text file
@@ -17,18 +21,23 @@ namespace WordGame
             // Use StreamWriter within a using block to ensure proper resource disposal
             using (StreamWriter writer = new StreamWriter(filePath))
             {
-                writer.Write(Game.gridData.columns + " " + Game.gridData.rows);
+                writer.Write(dimensionIndicator + " " +Game.gridData.columns + " " + Game.gridData.rows);
                 writer.Write(writer.NewLine);
 
                 foreach (Tile tile in Game.gridData.tiles)
                 {
-                    writer.Write(tile.cellPos.x + " " + tile.cellPos.y + " " + tile.GetLetter());
+                    var prefix = string.Empty;
+                    if (string.IsNullOrEmpty(tile.GetLetter()))
+                        prefix = emptyTileIndicator;
+                    else
+                        prefix = fullTileIndicator;
+                    writer.Write( prefix + " " + tile.cellPos.x + " " + tile.cellPos.y + " " + tile.GetLetter());
                     writer.Write(writer.NewLine);
                 }
                 
                 foreach (var word in Game.words)
                 {
-                    writer.Write(word);
+                    writer.Write(wordIndicator + " " + word);
                     writer.Write(writer.NewLine);
                 }
             }
