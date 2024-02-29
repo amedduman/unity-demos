@@ -12,15 +12,15 @@ namespace WordGame
         void OnEnable()
         {
             inputHandler.OnTap += HandleOnTap;
-            Game.onWordCreationPanelEnterButtonPressed.AddListener(WriteWordToGrid);
+            Game.onWordCreationPanelEnterButtonPressed.AddListener(HandleEnteringWord);
         }
 
         void OnDisable()
         {
             inputHandler.OnTap -= HandleOnTap;
-            Game.onWordCreationPanelEnterButtonPressed.RemoveListener(WriteWordToGrid);
+            Game.onWordCreationPanelEnterButtonPressed.RemoveListener(HandleEnteringWord);
         }
-
+        
         void HandleOnTap()
         {
             var worldPos = cam.ScreenToWorldPoint(new Vector3(inputHandler.mousePos.x, inputHandler.mousePos.y, 0));
@@ -31,6 +31,12 @@ namespace WordGame
                 tile.Select();
                 inputHandler.Disable();
             }
+        }
+
+        void HandleEnteringWord()
+        {
+            WriteWordToGrid();
+            inputHandler.Enable();
         }
         
         void WriteWordToGrid()

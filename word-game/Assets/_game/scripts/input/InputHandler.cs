@@ -28,6 +28,11 @@ namespace WordGame
             gameInputActions.Disable();
         }
 
+        public void Enable()
+        {
+            gameInputActions.Enable();
+        }
+
         public void OnMousePos(InputAction.CallbackContext context)
         {
             mousePos = context.ReadValue<Vector2>();
