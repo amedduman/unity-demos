@@ -1,5 +1,8 @@
 using System.IO;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace WordGame
 {
@@ -11,17 +14,29 @@ namespace WordGame
             string relativeFilePath = "_game/texts/" + fileName + ".txt";
             string filePath = Path.Combine(Application.dataPath, relativeFilePath);
 
-            // Example content to write to the file
-            string contentToWrite = "Hello, this is some text to write to the file.";
-
             // Use StreamWriter within a using block to ensure proper resource disposal
             using (StreamWriter writer = new StreamWriter(filePath))
             {
-                // Write the content to the file
-                writer.Write(contentToWrite);
+                writer.Write(Game.gridData.columns + " " + Game.gridData.rows);
+                writer.Write(writer.NewLine);
+
+                foreach (Tile tile in Game.gridData.tiles)
+                {
+                    writer.Write(tile.cellPos.x + " " + tile.cellPos.y + " " + tile.GetLetter());
+                    writer.Write(writer.NewLine);
+                }
+                
+                foreach (var word in Game.words)
+                {
+                    writer.Write(word);
+                    writer.Write(writer.NewLine);
+                }
             }
 
             Debug.Log("File written successfully at: " + filePath);
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
         }
     }
 }

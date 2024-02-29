@@ -10,6 +10,7 @@ namespace WordGame
 
         public static GridData gridData { get; private set; } = new GridData();
         public static WordInputData wordInputData = new WordInputData();
+        public static List<string> words = new List<string>();
 
         #endregion
 

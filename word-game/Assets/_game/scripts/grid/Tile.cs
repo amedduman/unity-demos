@@ -30,6 +30,11 @@ namespace WordGame
             letter.text = l.ToString();
         }
 
+        public string GetLetter()
+        {
+            return letter.text;
+        }
+
         public void SetWordDirection(WordCreationDirectionE dir)
         {
             Buttons.SetActive(false);

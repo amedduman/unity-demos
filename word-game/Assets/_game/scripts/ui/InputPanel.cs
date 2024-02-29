@@ -34,8 +34,10 @@ namespace WordGame
         
         void HandleEntering()
         {
+            if (string.IsNullOrEmpty(wordInputField.text)) return;
             panel.SetActive(false);
             Game.wordInputData.word = wordInputField.text;
+            Game.words.Add(wordInputField.text);
             Game.onWordCreationPanelEnterButtonPressed.Invoke();
         }
     }
