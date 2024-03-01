@@ -1,39 +1,52 @@
-[dim] 6 6
+[dim] 7 7
 [emp] 0 0 
-[emp] 1 0 
+[full] 1 0 g
 [emp] 2 0 
 [emp] 3 0 
 [emp] 4 0 
 [emp] 5 0 
+[emp] 6 0 
 [emp] 0 1 
-[emp] 1 1 
+[full] 1 1 n
 [emp] 2 1 
 [emp] 3 1 
 [emp] 4 1 
 [emp] 5 1 
+[emp] 6 1 
 [emp] 0 2 
-[emp] 1 2 
-[full] 2 2 d
+[full] 1 2 a
+[emp] 2 2 
 [emp] 3 2 
 [emp] 4 2 
 [emp] 5 2 
+[emp] 6 2 
 [emp] 0 3 
-[emp] 1 3 
-[full] 2 3 r
-[full] 3 3 e
-[full] 4 3 a
-[full] 5 3 l
-[emp] 0 4 
-[emp] 1 4 
-[full] 2 4 o
-[emp] 3 4 
+[full] 1 3 r
+[emp] 2 3 
+[emp] 3 3 
+[emp] 4 3 
+[emp] 5 3 
+[emp] 6 3 
+[full] 0 4 s
+[full] 1 4 o
+[full] 2 4 m
+[full] 3 4 e
 [emp] 4 4 
 [emp] 5 4 
+[emp] 6 4 
 [emp] 0 5 
 [emp] 1 5 
-[full] 2 5 w
+[emp] 2 5 
 [emp] 3 5 
 [emp] 4 5 
 [emp] 5 5 
-[word] word
-[word] real
+[emp] 6 5 
+[emp] 0 6 
+[emp] 1 6 
+[emp] 2 6 
+[emp] 3 6 
+[emp] 4 6 
+[emp] 5 6 
+[emp] 6 6 
+[word] some 0,4 right
+[word] orange 1,4 down

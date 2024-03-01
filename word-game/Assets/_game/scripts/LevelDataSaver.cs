@@ -35,9 +35,10 @@ namespace WordGame
                     writer.Write(writer.NewLine);
                 }
                 
-                foreach (var word in Game.words)
+                foreach (var wordInputData in Game.WordInputDataList)
                 {
-                    writer.Write(wordIndicator + " " + word);
+                    writer.Write($"{wordIndicator} {wordInputData.word} {wordInputData.tile.cellPos.x},{wordInputData.tile.cellPos.y} {wordInputData.dir}");
+                    // writer.Write(wordIndicator + " " + word);
                     writer.Write(writer.NewLine);
                 }
             }

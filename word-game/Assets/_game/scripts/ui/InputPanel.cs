@@ -38,6 +38,13 @@ namespace WordGame
             panel.SetActive(false);
             Game.wordInputData.word = wordInputField.text;
             Game.words.Add(wordInputField.text);
+
+            var input = new WordInputData();
+            input.tile = Game.wordInputData.tile;
+            input.word = Game.wordInputData.word;
+            input.dir = Game.wordInputData.dir;
+            Game.WordInputDataList.Add(input);
+            
             Game.onWordCreationPanelEnterButtonPressed.Invoke();
         }
     }

@@ -11,6 +11,15 @@ namespace WordGame
         [SerializeField] Tile tilePrefab; 
         [SerializeField] Vector2 buffer;
         readonly List<Tile> tiles= new List<Tile>();
+        public List<WordData> wordDataList = new List<WordData>();
+
+        [System.Serializable]
+        public struct WordData
+        {
+            public Vector3Int cellPos;
+            public string word;
+            public WordCreationDirectionE dir;
+        }
         
         void Start()
         {
@@ -54,12 +63,46 @@ namespace WordGame
                         tile.SetLetter(lineSegments[3].ToCharArray()[0]);
                         tiles.Add(tile);
                     }
+                    else if (parts[0] == LevelDataSaver.wordIndicator)
+                    {
+                        var lineSegments = line.Split(" ");
+                        var wordData = new WordData();
+                        wordData.word = lineSegments[1];
+                        var numbers = lineSegments[2].Split(",");
+                        wordData.cellPos = new Vector3Int(int.Parse(numbers[0]), int.Parse(numbers[1]));
+                        if (lineSegments[3] == "down")
+                        {
+                            wordData.dir = WordCreationDirectionE.down;
+                        }
+                        else if (lineSegments[3] == "right")
+                        {
+                            wordData.dir = WordCreationDirectionE.right;
+                        }
+                        wordDataList.Add(wordData);
+                    }
                     // Debug.Log("Line: " + line.Trim()); // Trim removes leading and trailing whitespaces
                 }
             }
             
             SetCam(rows, columns);
         }
+
+        // bool TryMatchWord(string word)
+        // {
+        //     if (words.Contains(word) == false) return false;
+        //     foreach (var tile in tiles)
+        //     {
+        //         var currentTile = tile;
+        //         while (true)
+        //         {
+        //             if (currentTile.GetLetter() == word.Substring(0,1))
+        //             {
+        //             
+        //             }
+        //         }
+        //         
+        //     }
+        // }
         
         void SetCam(int rows, int columns)
         {
