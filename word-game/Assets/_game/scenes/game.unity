@@ -156,7 +156,7 @@ MonoBehaviour:
   levelText: {fileID: 4900000, guid: 5a29f37788c034239b6b185645592d59, type: 3}
   grid: {fileID: 107059662}
   tilePrefab: {fileID: 3356703375856460640, guid: 7267f31af13614d349c11636f452e3fa, type: 3}
-  buffer: {x: 2, y: 6}
+  buffer: {x: 0, y: 0}
   wordDataList: []
 --- !u!4 &107059661
 Transform:
@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 107059659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

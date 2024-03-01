@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -99,13 +100,13 @@ namespace WordGame
             {
                 return false;
             }
-            
-            RevealWord(x);
+
+            StartCoroutine(RevealWord(x));
             
             return true;
         }
 
-        void RevealWord(WordData data)
+        IEnumerator RevealWord(WordData data)
         {
             Vector3Int dir = Vector3Int.zero;
 
@@ -130,6 +131,7 @@ namespace WordGame
                 if (TryGetTileInTheCell(out Tile tile, pos))
                 {
                     tile.RevealLetter();
+                    yield return null;
                 }
 
                 pos += dir;

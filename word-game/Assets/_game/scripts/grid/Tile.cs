@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -51,6 +52,9 @@ namespace WordGame
         public void RevealLetter()
         {
             letter.enabled = true;
+            var sc = letter.transform.localScale;
+            letter.transform.localScale = Vector3.zero;
+            letter.transform.DOScale(sc, .2f);
         }
     }
 }
