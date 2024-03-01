@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace WordGame
@@ -50,6 +52,7 @@ namespace WordGame
                         var cellPos = new Vector3Int(int.Parse(lineSegments[1]), int.Parse(lineSegments[2]), 0);
                         var tileWorldPos = grid.GetCellCenterWorld(cellPos);
                         var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
+                        tile.cellPos = cellPos;
                         // tile.SetLetter(lineSegments[3].ToCharArray()[0]);
                         tiles.Add(tile);
                         tile.gameObject.SetActive(false);
@@ -60,7 +63,9 @@ namespace WordGame
                         var cellPos = new Vector3Int(int.Parse(lineSegments[1]), int.Parse(lineSegments[2]), 0);
                         var tileWorldPos = grid.GetCellCenterWorld(cellPos);
                         var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
+                        tile.cellPos = cellPos;
                         tile.SetLetter(lineSegments[3].ToCharArray()[0]);
+                        tile.HideLetter();
                         tiles.Add(tile);
                     }
                     else if (parts[0] == LevelDataSaver.wordIndicator)
@@ -87,22 +92,64 @@ namespace WordGame
             SetCam(rows, columns);
         }
 
-        // bool TryMatchWord(string word)
-        // {
-        //     if (words.Contains(word) == false) return false;
-        //     foreach (var tile in tiles)
-        //     {
-        //         var currentTile = tile;
-        //         while (true)
-        //         {
-        //             if (currentTile.GetLetter() == word.Substring(0,1))
-        //             {
-        //             
-        //             }
-        //         }
-        //         
-        //     }
-        // }
+        public bool TryMatchWord(string word)
+        {
+            var x = wordDataList.FirstOrDefault(w =>  w.word == word);
+            if (x.word == default)
+            {
+                return false;
+            }
+            
+            RevealWord(x);
+            
+            return true;
+        }
+
+        void RevealWord(WordData data)
+        {
+            Vector3Int dir = Vector3Int.zero;
+
+            switch (data.dir)
+            {
+                case WordCreationDirectionE.none:
+                    break;
+                case WordCreationDirectionE.right:
+                    dir += Vector3Int.right;
+                    break;
+                case WordCreationDirectionE.down:
+                    dir += Vector3Int.down;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            var pos = data.cellPos;
+                
+            for (int i = 0; i < data.word.Length; i++)
+            {
+                if (TryGetTileInTheCell(out Tile tile, pos))
+                {
+                    tile.RevealLetter();
+                }
+
+                pos += dir;
+            }
+        }
+        
+        bool TryGetTileInTheCell(out Tile tile, Vector3Int cell)
+        {
+            foreach (Tile t in tiles)
+            {
+                if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
+                {
+                    tile = t;
+                    return true;
+                }
+            }
+
+            tile = null;
+            return false;
+        }
         
         void SetCam(int rows, int columns)
         {

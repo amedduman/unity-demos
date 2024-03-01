@@ -42,5 +42,15 @@ namespace WordGame
             Game.wordInputData.dir = dir;
             Game.onStartingTileAndDirectionSet.Invoke();
         }
+
+        public void HideLetter()
+        {
+            letter.enabled = false;
+        }
+
+        public void RevealLetter()
+        {
+            letter.enabled = true;
+        }
     }
 }
