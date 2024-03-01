@@ -10,6 +10,8 @@ namespace WordGame
     {
         public Vector2 mousePos { get; private set; }
         public event Action OnTap;
+        public event Action OnTouchStart;
+        public event Action OnTouchEnd;
         GameInputActions gameInputActions;
 
         public void OnEnable()
@@ -40,7 +42,23 @@ namespace WordGame
 
         public void OnTouch(InputAction.CallbackContext context)
         {
-            
+            switch (context.phase)
+            {
+                case InputActionPhase.Disabled:
+                    break;
+                case InputActionPhase.Waiting:
+                    break;
+                case InputActionPhase.Started:
+                    break;
+                case InputActionPhase.Performed:
+                    OnTouchStart?.Invoke();
+                    break;
+                case InputActionPhase.Canceled:
+                    OnTouchEnd?.Invoke();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void OnTapClick(InputAction.CallbackContext context)

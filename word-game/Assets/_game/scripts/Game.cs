@@ -24,6 +24,8 @@ namespace WordGame
         public static OnWordCreationPanelEnterButtonPressed
             onWordCreationPanelEnterButtonPressed { get; private set; } = new OnWordCreationPanelEnterButtonPressed();
 
+        public static OnLevelGenerated onLevelGenerated { get; private set; } = new OnLevelGenerated();
+
         #endregion
         
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -112,6 +114,11 @@ namespace WordGame
     public class OnStartingTileAndDirectionSet : MyEventParameterless { }
 
     public class OnWordCreationPanelEnterButtonPressed : MyEventParameterless {}
+
+    public class OnLevelGenerated : MyEvent<List<WordData>>
+    {
+        
+    }
 
     #endregion
     

@@ -7,6 +7,14 @@ using UnityEngine;
 
 namespace WordGame
 {
+    [System.Serializable]
+    public struct WordData
+    {
+        public Vector3Int cellPos;
+        public string word;
+        public WordCreationDirectionE dir;
+    }
+    
     public class LevelGenerator : MonoBehaviour
     {
         [SerializeField] TextAsset levelText;
@@ -15,14 +23,9 @@ namespace WordGame
         [SerializeField] Vector2 buffer;
         readonly List<Tile> tiles= new List<Tile>();
         public List<WordData> wordDataList = new List<WordData>();
+        [SerializeField] InputHandler inputHandler;
 
-        [System.Serializable]
-        public struct WordData
-        {
-            public Vector3Int cellPos;
-            public string word;
-            public WordCreationDirectionE dir;
-        }
+        
         
         void Start()
         {
@@ -91,6 +94,8 @@ namespace WordGame
             }
             
             SetCam(rows, columns);
+            
+            Game.onLevelGenerated.Invoke(wordDataList);
         }
 
         public bool TryMatchWord(string word)
