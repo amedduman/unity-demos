@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace WordGame
@@ -57,6 +55,8 @@ namespace WordGame
             
             levelGenerator.TryMatchWord(word);
 
+            line.positionCount = 0;
+
             word = string.Empty;
 
             foreach (var letterButton in letterButtons)
@@ -67,6 +67,7 @@ namespace WordGame
 
         void HandleTouchStart()
         {
+            line.positionCount = 2;
             canLineFollowMouse = true;
         }
 
