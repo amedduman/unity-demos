@@ -52,6 +52,7 @@ namespace WordGame
         public void SetLinePointToLetter(Vector3 pos)
         {
             line.positionCount++;
+            pos = new Vector3(pos.x, pos.y, transform.position.z);
             var index = line.positionCount - 2;
             // Debug.Log(hit.point);
             line.SetPosition(index, pos);
