@@ -34,6 +34,7 @@ namespace WordGame
         void OnMouseEnter()
         {
             if (hasRegistered) return;
+            letterWheel.SetLinePointToLetter(transform.position);
             hasRegistered = true;
             img.color = Color.cyan;
             letterWheel.AddLetterToWord(text.text);

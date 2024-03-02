@@ -49,6 +49,14 @@ namespace WordGame
             }
         }
 
+        public void SetLinePointToLetter(Vector3 pos)
+        {
+            line.positionCount++;
+            var index = line.positionCount - 2;
+            // Debug.Log(hit.point);
+            line.SetPosition(index, pos);
+        }
+
         void HandleTouchEnd()
         {
             canLineFollowMouse = false;
