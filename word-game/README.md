@@ -3,7 +3,7 @@
 ### Description:
 In this project, I rapidly prototyped a simplified version of the popular 'Word of Wonders' game using Unity. The focus was on capturing the core game mechanics to showcase my ability to conceptualize and implement key features efficiently.
 
-[[Here is the showcase video](https://www.youtube.com/watch?v=HWIzrYosOno)]
+[[Here is the showcase video](https://youtu.be/E9pgKs-Tgaw)]
 
 ### Key Features:
 * Word Puzzles: Implemented fundamental word puzzle mechanics to create an engaging and interactive prototype.
