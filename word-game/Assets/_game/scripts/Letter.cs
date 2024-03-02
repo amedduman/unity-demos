@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace WordGame
 {
-    public class Letter : MonoBehaviour, IPointerMoveHandler
+    public class Letter : MonoBehaviour
     {
         [SerializeField] TextMeshPro text;
         [SerializeField] SpriteRenderer img;
@@ -30,17 +30,7 @@ namespace WordGame
             hasRegistered = false;
             img.color = Color.white;
         }
-
-        void OnMouseDown()
-        {
-            throw new NotImplementedException();
-        }
-
-        void OnMouseDrag()
-        {
-            Debug.Log("drag");
-        }
-
+        
         void OnMouseEnter()
         {
             if (hasRegistered) return;
@@ -49,17 +39,23 @@ namespace WordGame
             letterWheel.AddLetterToWord(text.text);
         }
 
-        void OnMouseOver()
-        {
-            
-        }
+        // void OnMouseDown()
+        // {
+        //     throw new NotImplementedException();
+        // }
+        //
+        // void OnMouseDrag()
+        // {
+        //     Debug.Log("drag");
+        // }
+        
 
-        public void OnPointerMove(PointerEventData eventData)
-        {
-            // if (hasRegistered) return;
-            // hasRegistered = true;
-            // img.color = Color.cyan;
-            // letterWheel.AddLetterToWord(text.text);
-        }
+        // public void OnPointerMove(PointerEventData eventData)
+        // {
+        //     // if (hasRegistered) return;
+        //     // hasRegistered = true;
+        //     // img.color = Color.cyan;
+        //     // letterWheel.AddLetterToWord(text.text);
+        // }
     }
 }
