@@ -10,8 +10,8 @@ namespace WordGame
 {
     public class Letter : MonoBehaviour, IPointerMoveHandler
     {
-        [SerializeField] TextMeshProUGUI text;
-        [SerializeField] Image img;
+        [SerializeField] TextMeshPro text;
+        [SerializeField] SpriteRenderer img;
         LetterWheel letterWheel;
         bool hasRegistered;
 
@@ -31,12 +31,35 @@ namespace WordGame
             img.color = Color.white;
         }
 
-        public void OnPointerMove(PointerEventData eventData)
+        void OnMouseDown()
+        {
+            throw new NotImplementedException();
+        }
+
+        void OnMouseDrag()
+        {
+            Debug.Log("drag");
+        }
+
+        void OnMouseEnter()
         {
             if (hasRegistered) return;
             hasRegistered = true;
             img.color = Color.cyan;
             letterWheel.AddLetterToWord(text.text);
+        }
+
+        void OnMouseOver()
+        {
+            
+        }
+
+        public void OnPointerMove(PointerEventData eventData)
+        {
+            // if (hasRegistered) return;
+            // hasRegistered = true;
+            // img.color = Color.cyan;
+            // letterWheel.AddLetterToWord(text.text);
         }
     }
 }
