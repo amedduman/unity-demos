@@ -30,6 +30,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _Offset: 0.205
-    - _Slope: 0.272
-    m_Colors: []
+    - _Slope: 0.351
+    - _mValue: 2.11
+    m_Colors:
+    - _PointA: {r: 0.1, g: 0.1, b: 0, a: 0}
+    - _PointB: {r: 0.9, g: 0.9, b: 0, a: 0}
+    - _PointM: {r: 0, g: 0, b: 0, a: 0}
+    - _Position2D: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

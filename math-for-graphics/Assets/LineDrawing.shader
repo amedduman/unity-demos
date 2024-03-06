@@ -7,6 +7,11 @@ Shader "Unlit/LineDrawing"
         _Slope ("Slope", Range(0, 1)) = 0.0
         // define a float property for the offset
         _Offset ("Offset", Range(0, 1)) = 0.0
+        // define a vector2 property for point and point b
+        [ShowAsVector2] _PointA("Point a", Vector) = (0, 0, 0, 0)
+        [ShowAsVector2] _PointB("Point b", Vector) = (0, 0, 0, 0)
+        // define float value named mValue
+        _mValue ("mValue", Float) = 0
     }
     SubShader
     {
@@ -25,7 +30,10 @@ Shader "Unlit/LineDrawing"
             float4 _MainTex_ST;
             float _Slope;
             float _Offset;
-
+            float2 _PointA;
+            float2 _PointB;
+            float _mValue;
+            
             struct appdata
             {
                 float4 vertex : POSITION;
@@ -46,9 +54,9 @@ Shader "Unlit/LineDrawing"
                 return o;
             }
 
-            bool IsApproximatelyEqual(float a, float b)
+            bool IsApproximatelyEqual(float a, float b, float epsilon = 0.001f)
             {
-                float epsilon = 0.001f;
+                // float epsilon = 0.001f;
                 return abs(a - b) < epsilon;
             }
 
@@ -57,10 +65,21 @@ Shader "Unlit/LineDrawing"
                 float4 col = 0;
                 float x = i.uv.x;
                 float y = i.uv.y;
-                if(IsApproximatelyEqual(y, _Slope * x + _Offset))
-                {
-                    col = 1;
-                }
+
+                if(IsApproximatelyEqual(_PointA.y, y, .01f) && IsApproximatelyEqual(_PointA.x, x, .01f))
+                    col.x = 1;
+
+                if(IsApproximatelyEqual(_PointB.y, y, .01f) && IsApproximatelyEqual(_PointB.x, x, .01f))
+                    col.x = .2f;
+
+                float m = (_PointA.y - _PointB.y) / (_PointA.x - _PointB.x);
+                
+                float b = _PointB.y - m * _PointB.x;
+
+                if(IsApproximatelyEqual(y, m * x + b))
+                    col.yz = 1;
+
+                // col = m;
                 return col;
             }
             ENDCG
