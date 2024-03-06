@@ -3,15 +3,9 @@ Shader "Unlit/LineDrawing"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        // define a float property for the slope
-        _Slope ("Slope", Range(0, 1)) = 0.0
-        // define a float property for the offset
-        _Offset ("Offset", Range(0, 1)) = 0.0
         // define a vector2 property for point and point b
         [ShowAsVector2] _PointA("Point a", Vector) = (0, 0, 0, 0)
         [ShowAsVector2] _PointB("Point b", Vector) = (0, 0, 0, 0)
-        // define float value named mValue
-        _mValue ("mValue", Float) = 0
     }
     SubShader
     {
@@ -28,11 +22,8 @@ Shader "Unlit/LineDrawing"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float _Slope;
-            float _Offset;
             float2 _PointA;
             float2 _PointB;
-            float _mValue;
             
             struct appdata
             {
@@ -46,18 +37,19 @@ Shader "Unlit/LineDrawing"
                 float4 vertex : SV_POSITION;
             };
 
+            bool IsApproximatelyEqual(float a, float b, float epsilon = 0.001f)
+            {
+                return abs(a - b) < epsilon;
+            }
+
             v2f vert (appdata v)
             {
                 v2f o;
+                
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                return o;
-            }
 
-            bool IsApproximatelyEqual(float a, float b, float epsilon = 0.001f)
-            {
-                // float epsilon = 0.001f;
-                return abs(a - b) < epsilon;
+                return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
@@ -65,21 +57,24 @@ Shader "Unlit/LineDrawing"
                 float4 col = 0;
                 float x = i.uv.x;
                 float y = i.uv.y;
-
+                
                 if(IsApproximatelyEqual(_PointA.y, y, .01f) && IsApproximatelyEqual(_PointA.x, x, .01f))
                     col.x = 1;
-
+                
                 if(IsApproximatelyEqual(_PointB.y, y, .01f) && IsApproximatelyEqual(_PointB.x, x, .01f))
-                    col.x = .2f;
-
+                    col.x = 1;
+                
                 float m = (_PointA.y - _PointB.y) / (_PointA.x - _PointB.x);
                 
                 float b = _PointB.y - m * _PointB.x;
-
-                if(IsApproximatelyEqual(y, m * x + b))
+                
+                for (int j = -8; j <8; ++j)
+                {
+                    float fraction = j * .1f;
+                    if(IsApproximatelyEqual(y, m * x + b + fraction, .01f))
                     col.yz = 1;
+                }
 
-                // col = m;
                 return col;
             }
             ENDCG
