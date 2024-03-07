@@ -63,17 +63,18 @@ Shader "Unlit/LineDrawing"
                 
                 if(IsApproximatelyEqual(_PointB.y, y, .01f) && IsApproximatelyEqual(_PointB.x, x, .01f))
                     col.x = 1;
-                
-                float m = (_PointA.y - _PointB.y) / (_PointA.x - _PointB.x);
-                
-                float b = _PointB.y - m * _PointB.x;
-                
-                for (int j = -8; j <8; ++j)
+
+                if (IsApproximatelyEqual(_PointA.x - _PointB.x, 0))
                 {
-                    float fraction = j * .1f;
-                    if(IsApproximatelyEqual(y, m * x + b + fraction, .01f))
-                    col.yz = 1;
+                    return 1;
                 }
+                
+                const float m = (_PointA.y - _PointB.y) / (_PointA.x - _PointB.x);
+                const float b = _PointB.y - m * _PointB.x;
+
+
+                if(IsApproximatelyEqual(y, m * x + b))
+                    col.yz = 1;
 
                 return col;
             }
