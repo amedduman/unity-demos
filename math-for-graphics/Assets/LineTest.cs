@@ -10,14 +10,19 @@ public class LineTest : MonoBehaviour
     {
         MarkCenter();
 
-        float x = 0;
-        float y1Cross = 2 * x + 7;
-        float y2Cross = .6f * x + 3;
+        float m = 2;
+        float b = 7;
+
+        float n = 0.6666667F;
+        float c =  3;
         
-        DrawPoint(new Vector3(-2.8571f,1.28571f,0));
+        float crossPointX = (c - b) / (m - n);
+        float crossPointY = m * crossPointX + b;
+        var crossPoint = new Vector3(crossPointX, crossPointY, 0);
+        DrawPoint(crossPoint);
         
-        DrawLine(xA, xB, 2, 7);
-        DrawLine(xA, xB, 0.6666667F, 3);
+        DrawLine(xA, xB, m, b);
+        DrawLine(xA, xB, n, c);
     }
 
     void DrawLine(float x1, float x2, float m, float b)
