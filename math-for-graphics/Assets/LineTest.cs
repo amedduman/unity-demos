@@ -10,35 +10,55 @@ public class LineTest : MonoBehaviour
     {
         MarkCenter();
 
-        float m = 2;
-        float b = 7;
+        var a1 = new Vector2(0, 7);
+        var a2 = new Vector2(4, 15);
 
-        float n = 0.6666667F;
-        float c =  3;
+        var b1 = new Vector2(-6, -1);
+        var b2 = new Vector2(6, 7);
+
+        float mA = (a2.y - a1.y) / (a2.x - a1.x);
+        float kA = a1.y - (mA * a1.x);
+
+        float mB = (b2.y - b1.y) / (b2.x - b1.x);
+        float kB = b1.y - (mB * b1.x);
         
-        float crossPointX = (c - b) / (m - n);
-        float crossPointY = m * crossPointX + b;
-        var crossPoint = new Vector3(crossPointX, crossPointY, 0);
-        DrawPoint(crossPoint);
+        DrawLine(mA, kA, Color.green);
+        DrawLine(mB, kB, Color.red);
         
-        DrawLine(xA, xB, m, b);
-        DrawLine(xA, xB, n, c);
+        TryMarkIntersection(mA,kA, mB, kB);
     }
 
-    void DrawLine(float x1, float x2, float m, float b)
+    void TryMarkIntersection(float m1, float k1, float m2, float k2)
     {
-        float y1 = GetY(x1, m, b);
-        float y2 = GetY(x2, m, b);
-        var pointA = new Vector3(x1, y1, 0);
-        var pointB = new Vector3(x2, y2, 0);
+        float x = (k2 - k1) / (m1 - m2);
+        float y = GetY(x, m1, k1);
         
-        Gizmos.color = Color.red;
+        if(IsApproximatelyEqual(m1 * x + k1, m2 * x + k2, .01f))
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(new Vector3(x,y,0), 1);    
+            Gizmos.color = Color.white;
+        }
+    }
+
+    void DrawLine(float m, float b, Color color)
+    {
+        float y1 = GetY(xA, m, b);
+        float y2 = GetY(xB, m, b);
+        var pointA = new Vector3(xA, y1, 0);
+        var pointB = new Vector3(xB, y2, 0);
+        
+        Gizmos.color = color;
         Gizmos.DrawWireSphere(pointA, 1f);
-        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(pointB, 1f);
         
-        Debug.DrawLine(pointA, pointB);
+        Debug.DrawLine(pointA, pointB, color);
         Gizmos.color = Color.white;
+    }
+
+    void DrawLine(Vector2 a, Vector2 b)
+    {
+        Debug.DrawLine(a, b);
     }
 
     void DrawPoint(Vector3 point, float m, float k)
