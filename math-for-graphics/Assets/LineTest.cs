@@ -10,22 +10,8 @@ public class LineTest : MonoBehaviour
     {
         MarkCenter();
 
-        var a1 = new Vector2(0, 7);
-        var a2 = new Vector2(4, 15);
-
-        var b1 = new Vector2(-6, -1);
-        var b2 = new Vector2(6, 7);
-
-        float mA = (a2.y - a1.y) / (a2.x - a1.x);
-        float kA = a1.y - (mA * a1.x);
-
-        float mB = (b2.y - b1.y) / (b2.x - b1.x);
-        float kB = b1.y - (mB * b1.x);
-        
-        DrawLine(mA, kA, Color.green);
-        DrawLine(mB, kB, Color.red);
-        
-        TryMarkIntersection(mA,kA, mB, kB);
+        DrawLine(.6f, 3, Color.green);
+        DrawLine(1, 2, Color.red);
     }
 
     void TryMarkIntersection(float m1, float k1, float m2, float k2)
