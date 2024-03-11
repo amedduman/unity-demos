@@ -14,7 +14,6 @@ namespace Tetris
         [SerializeField] int rows, columns = 5;
         [SerializeField] Vector2 buffer;
 
-        [SerializeField] Collider col;
         // Vector3 cellSize;
         readonly List<Tile> tiles = new List<Tile>();
 
@@ -22,7 +21,6 @@ namespace Tetris
         public void OnStart(CameraController cam)
         {
             // cellSize = grid.cellSize;
-            UnityEngine.Debug.Log(col.bounds.center);
             GenerateTiles();
             SetCam(cam);
         }
@@ -50,10 +48,6 @@ namespace Tetris
         void SetCam(CameraController cam)
         {
             Bounds bounds = new Bounds();
-            // foreach (Tile tile in tiles)
-            // {
-            //     bounds.Encapsulate(tile.spriteRenderer.bounds);
-            // }
             
             float width = (columns * tiles[0].spriteRenderer.bounds.size.x);
             float height = (rows * tiles[0].spriteRenderer.bounds.size.y);
@@ -66,25 +60,11 @@ namespace Tetris
                 0
             );
             bounds.center = transform.position + gridLocalCenter;
-
-
-            bo = bounds;
             
             Bounds boundsBeforeBuffer = bounds;
             bounds.Expand(new Vector3(buffer.x, buffer.y, 0));
             
-            // var gridTopRightPos = grid.CellToWorld(new Vector3Int(columns, rows));
-            // float halfW = (columns * tiles[0].spriteRenderer.bounds.size.x) / 2;
-            // float halfH = (rows * tiles[0].spriteRenderer.bounds.size.y) / 2;
-            // Vector3 gridLocalCenter = new Vector3(halfW, halfH, 0);
-            // var camPos = gridTopRightPos / 2;
-            
-            cam.SetPositionAndOrthographicSize(transform.position, gridLocalCenter, bounds, boundsBeforeBuffer);
-        }
-
-        void OnDrawGizmos()
-        {
-            Gizmos.DrawCube(bo.center, bo.size);
+            cam.SetPositionAndOrthographicSize(bounds, boundsBeforeBuffer);
         }
     }
 }

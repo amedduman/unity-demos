@@ -2,7 +2,7 @@
 
 public class Enemy : MonoBehaviour
 {
-    GameManager _gameManager;
+    GameLoopExampleGameManager _gameManager;
 
     [SerializeField] CharacterController _characterController;
     [SerializeField] float _moveSpeed = 2f;
@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     
     public bool IsDead { get; set; }
 
-    public void OnCreated(GameManager gameManager)
+    public void OnCreated(GameLoopExampleGameManager gameManager)
     {
         _gameManager = gameManager;
         _elapsed = 0f;

@@ -2,18 +2,18 @@
 
 public class Menu : MonoBehaviour
 {
-    GameManager _gameManager;
+    GameLoopExampleGameManager _gameManager;
 
     public bool IsOpen { get; set; }
     
-    public void OnCreated(GameManager gameManager)
+    public void OnCreated(GameLoopExampleGameManager gameManager)
     {
         _gameManager = gameManager;
         IsOpen = false;
         gameObject.SetActive(false);
     }
 
-    public void OnUpdate(GameManager.GameInput input)
+    public void OnUpdate(GameLoopExampleGameManager.GameInput input)
     {
         // Do some menu stuff
     }

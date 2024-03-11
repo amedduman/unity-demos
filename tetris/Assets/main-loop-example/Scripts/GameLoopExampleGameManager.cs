@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameLoopExampleGameManager : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] Player _player;
