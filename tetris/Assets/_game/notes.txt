@@ -1,0 +1,8 @@
+TODO:
+    if Grid game object is not at (0,0,0) pos the cam pos is not being set up correctly. Fix it.
+
+TODO:
+    make sure the grid creation system is working with any cell size and any cell gap.
+    
+TODO:
+    create a package for grid creation code to be able to share between projects.
