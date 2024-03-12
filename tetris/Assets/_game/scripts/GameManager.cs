@@ -6,10 +6,12 @@ namespace Tetris
     {
         [SerializeField] CameraController cameraController;
         [SerializeField] GridHandler gridHandler;
+        [SerializeField] BlockSpawner blockSpawner;
         
         void Start()
         {
             gridHandler.OnStart(cameraController);
+            blockSpawner.OnStart();
         }
     }
 }
