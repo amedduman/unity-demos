@@ -356,7 +356,6 @@ GameObject:
   - component: {fileID: 1496316737}
   - component: {fileID: 1496316738}
   - component: {fileID: 1496316739}
-  - component: {fileID: 1496316740}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -405,30 +404,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 1496316738}
   tilePrefab: {fileID: -5222169815803822027, guid: 93ad930fe790f47a28b83c5fe06ecb95, type: 3}
-  rows: 8
-  columns: 5
+  width: 5
+  height: 8
   buffer: {x: 0, y: 2}
---- !u!65 &1496316740
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1496316736}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2103279582
 PrefabInstance:
   m_ObjectHideFlags: 0
