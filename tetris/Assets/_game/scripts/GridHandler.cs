@@ -14,10 +14,12 @@ namespace Tetris
         [SerializeField] Vector2 buffer;
 
         readonly List<Tile> tiles = new List<Tile>();
+        Vector3Int cellSize = new Vector3Int(1,1,1);
 
         public (Coroutine, Data) Init(CameraController cam)
         {
             Data data = new Data(this);
+            cellSize = new Vector3Int((int)grid.cellSize.x, (int)grid.cellSize.y, (int)grid.cellSize.z);
             var co = StartCoroutine(GenerateTiles());
             SetCam(cam);
             return (co, data);
@@ -71,6 +73,31 @@ namespace Tetris
             public IReadOnlyList<Tile> tiles => instance.tiles;
             public int width => instance.width;
             public int height => instance.height;
+            public Vector3Int TopBlockCellPos
+            {
+                get
+                {
+                    var index = (instance.height * instance.width) - Mathf.FloorToInt((float)instance.width/2 + 1);
+                    // instance.tiles[index].spriteRenderer.color = Color.cyan;
+                    return instance.tiles[index].cellPos;
+                }
+            }
+
+            public bool TryGetDownTile(Vector3Int cell, out Tile tile)
+            {
+                cell.y -= instance.cellSize.y;
+                foreach (var t in instance.tiles)
+                {
+                    if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
+                    {
+                        tile = t;
+                        return true;
+                    }
+                }
+
+                tile = null;
+                return false;
+            }
 
             public Data(GridHandler g)
             {
