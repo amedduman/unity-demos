@@ -9,7 +9,7 @@ namespace Tetris
     {
         public void Move(Vector3Int cellPos)
         {
-            transform.DOMove(cellPos, .2f).SetEase(Ease.Linear);
+            transform.DOMove(cellPos, 1f).SetEase(Ease.Linear);
         }
     }
 }

@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 953200210}
   - component: {fileID: 953200211}
   m_Layer: 0
-  m_Name: Game Manager
+  m_Name: Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -449,7 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65de0a0dbe7824f9eb3b763ef8ab7053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 519420033}
   grid: {fileID: 1496316738}
   tilePrefab: {fileID: -5222169815803822027, guid: 93ad930fe790f47a28b83c5fe06ecb95, type: 3}
   width: 5

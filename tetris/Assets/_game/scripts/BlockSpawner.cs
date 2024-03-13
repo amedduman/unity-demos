@@ -9,12 +9,15 @@ namespace Tetris
     public class BlockSpawner : MonoBehaviour
     {
         [SerializeField] List<Block> blockPrefabs;
+        Vector3Int topBlockPos;
         Vector3 spawnPos;
-        // Block currentBlock;
 
-        void Start()
+        public void Init(GridHandler.Data data)
         {
-            spawnPos = new Vector3(0, 20, 0);
+            var index = (data.height * data.width) - Mathf.FloorToInt((float)data.width/2 + 1);
+            data.tiles[index].spriteRenderer.color = Color.cyan;
+            topBlockPos = data.tiles[index].cellPos;
+            spawnPos = new Vector3(topBlockPos.x, topBlockPos.y + 2, 0);
             StartCoroutine(SpawnCo());
         }
 
@@ -26,25 +29,10 @@ namespace Tetris
 
                 yield return new WaitForSeconds(1);
             
-                // var currentBlock = Instantiate(blockPrefab, spawnPos, Quaternion.identity);
+                var currentBlock = Instantiate(blockPrefab, spawnPos, Quaternion.identity);
 
-                var data = GridHandler.data;
-                var index = (data.height * data.width) - Random.Range(1, data.width + 1);
-                Vector3Int blockPos = data.tiles[index].cellPos;
-                data.tiles[index].spriteRenderer.color = Color.cyan;
-                Debug.Log(index);
-                // currentBlock.Move(blockPos);
+                currentBlock.Move(topBlockPos);
             }
         }
-
-        // public Block GetCurrentSpawnedBlock()
-        // {
-        //     if (currentBlock == null)
-        //     {
-        //         throw new SystemException("you are requesting new block but there is no block.");
-        //     }
-        //
-        //     return currentBlock;
-        // }
     }
 }

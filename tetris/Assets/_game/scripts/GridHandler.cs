@@ -7,25 +7,20 @@ namespace Tetris
     [RequireComponent(typeof(Grid))]
     public class GridHandler : MonoBehaviour
     {
-        public static Data data;
-        
-        [SerializeField] CameraController cam;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab;
         [SerializeField] int width = 5;
         [SerializeField] int height = 5;
         [SerializeField] Vector2 buffer;
 
-        [SerializeField] List<Tile> tiles = new List<Tile>();
+        readonly List<Tile> tiles = new List<Tile>();
 
-        void Awake() => data = new Data(this);
-
-        void OnDestroy() => data = null; 
-
-        public void Start()
+        public (Coroutine, Data) Init(CameraController cam)
         {
-            StartCoroutine(GenerateTiles());
-            SetCam();
+            Data data = new Data(this);
+            var co = StartCoroutine(GenerateTiles());
+            SetCam(cam);
+            return (co, data);
         }
         
         IEnumerator GenerateTiles()
@@ -47,7 +42,7 @@ namespace Tetris
             }
         }
 
-        void SetCam()
+        void SetCam(CameraController cam)
         {
             Bounds gridBounds = new Bounds();
 
