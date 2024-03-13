@@ -10,8 +10,8 @@ namespace Tetris
         
         void Start()
         {
-            gridHandler.OnStart(cameraController);
-            blockSpawner.OnStart();
+            // gridHandler.Init(cameraController);
+            // blockSpawner.Init();
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tetris
@@ -5,19 +7,28 @@ namespace Tetris
     [RequireComponent(typeof(Grid))]
     public class GridHandler : MonoBehaviour
     {
+        public static Data data;
+        
+        [SerializeField] CameraController cam;
         [SerializeField] Grid grid;
         [SerializeField] Tile tilePrefab;
         [SerializeField] int width = 5;
         [SerializeField] int height = 5;
         [SerializeField] Vector2 buffer;
 
-        public void OnStart(CameraController cam)
+        [SerializeField] List<Tile> tiles = new List<Tile>();
+
+        void Awake() => data = new Data(this);
+
+        void OnDestroy() => data = null; 
+
+        public void Start()
         {
-            GenerateTiles();
-            SetCam(cam);
+            StartCoroutine(GenerateTiles());
+            SetCam();
         }
         
-        void GenerateTiles()
+        IEnumerator GenerateTiles()
         {
             for (int y = 0; y < height; y++)
             {
@@ -30,11 +41,13 @@ namespace Tetris
                     
                     tile.gameObject.name = $"{x}, {y}";
                     tile.cellPos = cellPos;
+                    tiles.Add(tile);
+                    yield return null;
                 }
             }
         }
 
-        void SetCam(CameraController cam)
+        void SetCam()
         {
             Bounds gridBounds = new Bounds();
 
@@ -55,6 +68,20 @@ namespace Tetris
             gridBounds.Expand(new Vector3(buffer.x, buffer.y, 0));
             
             cam.SetPositionAndOrthographicSize(gridBounds, gridBoundsBeforeBuffer);
+        }
+        
+        public class Data
+        {
+            readonly GridHandler instance;
+            public IReadOnlyList<Tile> tiles => instance.tiles;
+            public int width => instance.width;
+            public int height => instance.height;
+
+            public Data(GridHandler g)
+            {
+                instance = g;
+            }
+            
         }
     }
 }
