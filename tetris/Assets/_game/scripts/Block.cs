@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,23 +5,29 @@ namespace Tetris
 {
     public class Block : MonoBehaviour
     {
-        GridHandler.Data gridData;
-        
-        public void OnSpawn(Vector3Int cellPos, GridHandler.Data in_gridData)
+        public void OnSpawn(Vector3Int cellPos)
         {
-            gridData = in_gridData;
             Move(cellPos);
         }
         
         void Move(Vector3Int cellPos)
         {
-            transform.DOMove(cellPos, 1f).SetEase(Ease.Linear).SetSpeedBased().OnComplete(() =>
+            transform.DOMove(cellPos, 1f)
+                .SetEase(Ease.Linear)
+                .SetSpeedBased()
+                .OnComplete(OnMoveComplete);
+
+            void OnMoveComplete()
             {
-                if (gridData.TryGetDownTile(cellPos, out Tile tile))
+                if (GridHandler.TryGetDownTileCellPos(cellPos, out Vector3Int downCellPos))
                 {
-                    Move(tile.cellPos);
+                    Move(downCellPos);
                 }
-            });
+                else
+                {
+                    GameplaySequenceHandler.
+                }
+            }
         }
     }
 }

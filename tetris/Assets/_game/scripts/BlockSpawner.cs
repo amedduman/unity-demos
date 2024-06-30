@@ -9,14 +9,12 @@ namespace Tetris
     public class BlockSpawner : MonoBehaviour
     {
         [SerializeField] List<Block> blockPrefabs;
-        GridHandler.Data gridData;
         Vector3Int topBlockPos;
         Vector3 spawnPos;
 
-        public void Init(GridHandler.Data in_gridData)
+        public void Init()
         {
-            gridData = in_gridData;
-            topBlockPos = gridData.TopBlockCellPos;
+            topBlockPos = GridHandler.TopBlockCellPos;
             spawnPos = new Vector3(topBlockPos.x, topBlockPos.y + 2, 0);
             StartCoroutine(SpawnCo());
         }
@@ -31,7 +29,7 @@ namespace Tetris
             
                 var currentBlock = Instantiate(blockPrefab, spawnPos, Quaternion.identity);
 
-                currentBlock.OnSpawn(topBlockPos, gridData);
+                currentBlock.OnSpawn(topBlockPos);
             }
         }
     }

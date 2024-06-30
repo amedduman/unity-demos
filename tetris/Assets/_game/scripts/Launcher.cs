@@ -12,8 +12,9 @@ namespace Tetris
         IEnumerator Start()
         {
             var gridInitProcess = gridHandler.Init(cameraController);
-            yield return gridInitProcess.Item1;
-            blockSpawner.Init(gridInitProcess.Item2);
+            yield return gridInitProcess;
+            GameplaySequenceHandler gameplaySequenceHandler = new GameplaySequenceHandler(gridHandler);
+            blockSpawner.Init();
         }
     }
 }

@@ -13,16 +13,16 @@ namespace Tetris
         [SerializeField] int height = 5;
         [SerializeField] Vector2 buffer;
 
+        public static GridHandler instance;
         readonly List<Tile> tiles = new List<Tile>();
         Vector3Int cellSize = new Vector3Int(1,1,1);
 
-        public (Coroutine, Data) Init(CameraController cam)
+        public Coroutine Init(CameraController cam)
         {
-            Data data = new Data(this);
             cellSize = new Vector3Int((int)grid.cellSize.x, (int)grid.cellSize.y, (int)grid.cellSize.z);
             var co = StartCoroutine(GenerateTiles());
             SetCam(cam);
-            return (co, data);
+            return co;
         }
         
         IEnumerator GenerateTiles()
@@ -35,7 +35,7 @@ namespace Tetris
                     
                     var tileWorldPos = grid.GetCellCenterWorld(cellPos);
                     var tile = Instantiate(tilePrefab, tileWorldPos, Quaternion.identity, transform);
-                    
+
                     tile.gameObject.name = $"{x}, {y}";
                     tile.cellPos = cellPos;
                     tiles.Add(tile);
@@ -67,43 +67,41 @@ namespace Tetris
             cam.SetPositionAndOrthographicSize(gridBounds, gridBoundsBeforeBuffer);
         }
         
-        public class Data
+        public bool SetTilesOccupied()
         {
-            readonly GridHandler instance;
-            public IReadOnlyList<Tile> tiles => instance.tiles;
-            public int width => instance.width;
-            public int height => instance.height;
-            public Vector3Int TopBlockCellPos
-            {
-                get
-                {
-                    var index = (instance.height * instance.width) - Mathf.FloorToInt((float)instance.width/2 + 1);
-                    // instance.tiles[index].spriteRenderer.color = Color.cyan;
-                    return instance.tiles[index].cellPos;
-                }
-            }
-
-            public bool TryGetDownTile(Vector3Int cell, out Tile tile)
-            {
-                cell.y -= instance.cellSize.y;
-                foreach (var t in instance.tiles)
-                {
-                    if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
-                    {
-                        tile = t;
-                        return true;
-                    }
-                }
-
-                tile = null;
-                return false;
-            }
-
-            public Data(GridHandler g)
-            {
-                instance = g;
-            }
-            
+            width = 4;
+            return true;
         }
+
+        #region static
+
+        public static int Width => instance.width;
+        public static int Height => instance.height;
+        public static Vector3Int TopBlockCellPos
+        {
+            get
+            {
+                var index = (instance.height * instance.width) - Mathf.FloorToInt((float)instance.width/2 + 1);
+                return instance.tiles[index].cellPos;
+            }
+        }
+        
+        public static bool TryGetDownTileCellPos(Vector3Int cell, out Vector3Int downCell)
+        {
+            cell.y -= instance.cellSize.y;
+            foreach (var t in instance.tiles)
+            {
+                if (t.cellPos.x == cell.x && t.cellPos.y == cell.y)
+                {
+                    downCell = t.cellPos;
+                    return true;
+                }
+            }
+
+            downCell = Vector3Int.zero;
+            return false;
+        }
+
+        #endregion
     }
 }
